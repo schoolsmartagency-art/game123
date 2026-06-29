@@ -11,7 +11,8 @@
   --latte2:#d4a87a;--shadow:rgba(28,10,0,.15);--red:#c0392b;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px;overflow-x:hidden}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px;overflow:hidden}
 .serif{font-family:'Playfair Display',serif}
 
 /* HEADER */
@@ -181,6 +182,23 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
 
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--latte2);border-radius:3px}
+
+/* Phase height — no page scroll */
+#phase-morning.active,#phase-day.active,#phase-decor.active{height:calc(100vh - 82px);overflow:hidden}
+#phase-evening.active{height:calc(100vh - 82px);overflow-y:auto}
+#phase-morning .panel{max-height:calc(100vh - 112px);overflow-y:auto}
+#phase-day>div>.panel{max-height:calc(100vh - 112px);overflow-y:auto}
+#phase-decor .panel{max-height:calc(100vh - 112px);overflow-y:auto}
+.nb:disabled{opacity:.35;cursor:not-allowed}
+/* Goals */
+.goal-item{display:flex;align-items:center;gap:7px;padding:6px 8px;background:var(--cream);border-radius:8px;margin-bottom:4px}
+.goal-chk{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.goal-desc{flex:1;font-size:11px;font-weight:600}
+.goal-rwd{font-size:11px;font-weight:700;color:var(--caramel);white-space:nowrap}
+.goal-item.done{background:rgba(74,124,89,.12)}
+.goal-item.done .goal-desc{color:rgba(28,10,0,.4);text-decoration:line-through}
+.demand-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.demand-tag{background:rgba(200,135,58,.14);border:1px solid rgba(200,135,58,.4);color:var(--caramel);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -207,7 +225,7 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
 <div id="nw"></div>
 
 <!-- RECIPE BOOK MODAL -->
-<div id="rb-overlay">
+<div id="rb-overlay" onclick="if(event.target===this)closeRB()">
   <div id="rb-modal">
     <h2>📖 Книга рецептов</h2>
     <div class="sub">Перетащите ингредиенты на стол, чтобы создать блюдо</div>
@@ -251,6 +269,14 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
     <div id="sc-empty" style="color:rgba(28,10,0,.4);font-size:13px;text-align:center;padding:18px">Витрина пуста</div>
     <div style="margin-top:10px"><button class="btn btn-p" style="width:100%" onclick="openBakery()">Открыть кофейню ☀️</button></div>
     <div style="margin-top:8px;font-size:11px;color:rgba(28,10,0,.4)">Позиций: <span id="cap-used">0</span>/20</div>
+    <div id="goals-sec" style="margin-top:10px;display:none">
+      <div class="rm-label">🎯 Цели дня</div>
+      <div id="goals-list"></div>
+    </div>
+    <div id="demand-sec" style="margin-top:10px;display:none">
+      <div class="rm-label">📋 Вчера спрашивали</div>
+      <div id="demand-list" class="demand-row"></div>
+    </div>
   </div>
 </div>
 
@@ -299,6 +325,11 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
     <div class="sc"><div class="v" id="ev-rep">0%</div><div class="l">Репутация</div></div>
   </div>
   <div id="ts" class="panel" style="margin-bottom:14px"><h3>Топ продаж</h3><div id="sales-bars"></div></div>
+  <div id="goals-ev-sec" class="panel" style="margin-bottom:14px;display:none">
+    <h3>Цели дня</h3>
+    <div id="goals-ev-list"></div>
+    <div id="goals-bonus" style="margin-top:8px;font-size:14px;font-weight:700;color:var(--sage)"></div>
+  </div>
   <div class="lft-sec panel" style="margin-bottom:14px">
     <h3>Остатки</h3>
     <div id="lft-list"></div>
@@ -384,13 +415,31 @@ const DECORS = [
   {id:'jazz',name:'Живая музыка',desc:'+30% терпение',price:1200,icon:'🎵'},
 ];
 
+const GOAL_POOL=[
+  {id:'earn300',desc:'Заработать 300₽',check:()=>S.dayStats.earned>=300,reward:60},
+  {id:'earn600',desc:'Заработать 600₽',check:()=>S.dayStats.earned>=600,reward:120},
+  {id:'earn1000',desc:'Заработать 1000₽',check:()=>S.dayStats.earned>=1000,reward:200},
+  {id:'sell5',desc:'Продать 5 блюд',check:()=>Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0)>=5,reward:60},
+  {id:'sell10',desc:'Продать 10 блюд',check:()=>Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0)>=10,reward:120},
+  {id:'nounhappy',desc:'Ни одного недовольного',check:()=>S.dayStats.unhappy===0,reward:100},
+  {id:'rep70',desc:'Репутация выше 70%',check:()=>S.rep>=70,reward:80},
+  {id:'variety',desc:'Продать 3 вида блюд',check:()=>Object.keys(S.dayStats.sold).filter(k=>S.dayStats.sold[k]>0).length>=3,reward:70},
+  {id:'coffee3',desc:'Продать 3 кофе',check:()=>['espresso','cappuccino','latte','matcha_latte'].reduce((a,id)=>a+(S.dayStats.sold[id]||0),0)>=3,reward:60},
+  {id:'hipster',desc:'Обслужить хипстера',check:()=>(S.dayStats.byType||{}).hipster>=1,reward:40},
+  {id:'tourist',desc:'Обслужить туриста',check:()=>(S.dayStats.byType||{}).tourist>=1,reward:50},
+  {id:'exp1',desc:'Провести эксперимент',check:()=>S.dayStats.exp>=1,reward:30},
+  {id:'sell15',desc:'Продать 15 блюд',check:()=>Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0)>=15,reward:180},
+  {id:'granny',desc:'Обслужить пенсионерку',check:()=>(S.dayStats.byType||{}).granny>=1,reward:35},
+];
+
 // ─── STATE ────────────────────────────────────────────────
 let S = {
   day:1, money:500, rep:50, weather:WEATHERS[0],
-  showcase:{}, table:[], dayStats:{earned:0,sold:{},unhappy:0,exp:0},
+  showcase:{}, table:[], dayStats:{earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}},
   unlocked:['croissant','cinnamon_bun','muffin','baguette','eclair','espresso','cappuccino','latte','lemonade'],
   decor:{}, totalStats:{croissants:0,maxDay:0,repDays:0,day5:false,exps:0},
-  autoSell:false, dayEarned:0,
+  autoSell:false, dayEarned:0, goals:[], dayOpen:false, dayDone:false, goalsRewarded:false,
+  prevWantedMissing:{},
 };
 let budgetUsed = 0;
 
@@ -471,7 +520,14 @@ function updateHdr(){
 }
 
 // ─── PHASE SWITCH ─────────────────────────────────────────
+function updateNavState(){
+  document.getElementById('nav-day').disabled=!S.dayOpen;
+  document.getElementById('nav-evening').disabled=!S.dayDone;
+}
+
 function switchPhase(p){
+  if(p==='day'&&!S.dayOpen){notify('Сначала откройте кофейню утром!','b');return;}
+  if(p==='evening'&&!S.dayDone){notify('Сначала завершите рабочий день!','b');return;}
   ['morning','day','evening','decor'].forEach(x=>{
     const el=document.getElementById(`phase-${x}`);
     el.classList.remove('active');el.style.display='none';
@@ -482,13 +538,49 @@ function switchPhase(p){
   ph.style.display=p==='evening'?'block':'grid';
   ph.classList.add('active');
   if(p==='morning')renderMorning();
-  if(p==='day')initDay();
+  if(p==='day'&&!dayRunning)initDay();
   if(p==='evening')renderEvening();
   if(p==='decor')renderDecor();
 }
 
 // ─── MORNING ─────────────────────────────────────────────
-function renderMorning(){renderIngs();renderSidebar();updateBudget();}
+function pickGoals(){
+  const pool=[...GOAL_POOL];
+  const easy=pool.filter(g=>g.reward<=80),hard=pool.filter(g=>g.reward>80);
+  const picks=[];
+  for(let i=0;i<2&&easy.length;i++){const j=Math.floor(Math.random()*easy.length);picks.push(easy.splice(j,1)[0]);}
+  for(let i=picks.length;i<3&&hard.length;i++){const j=Math.floor(Math.random()*hard.length);picks.push(hard.splice(j,1)[0]);}
+  S.goals=picks;
+}
+
+function renderGoals(){
+  const sec=document.getElementById('goals-sec'),list=document.getElementById('goals-list');
+  if(!S.goals||!S.goals.length){sec.style.display='none';return;}
+  sec.style.display='block';list.innerHTML='';
+  S.goals.forEach(g=>{
+    const el=document.createElement('div');el.className='goal-item';
+    el.innerHTML=`<span class="goal-chk">🎯</span><span class="goal-desc">${g.desc}</span><span class="goal-rwd">+${g.reward}₽</span>`;
+    list.appendChild(el);
+  });
+}
+
+function renderDemand(){
+  const sec=document.getElementById('demand-sec'),list=document.getElementById('demand-list');
+  const wm=S.prevWantedMissing||{};
+  const items=Object.entries(wm).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  if(!items.length){sec.style.display='none';return;}
+  sec.style.display='block';list.innerHTML='';
+  items.forEach(([id,cnt])=>{
+    const r=RECIPES.find(x=>x.id===id);if(!r)return;
+    const tag=document.createElement('span');tag.className='demand-tag';
+    tag.textContent=`${r.name} ×${cnt}`;list.appendChild(tag);
+  });
+}
+
+function renderMorning(){
+  if(!S.goals||!S.goals.length)pickGoals();
+  renderIngs();renderSidebar();updateBudget();renderGoals();renderDemand();
+}
 
 function renderIngs(){
   const l=document.getElementById('ing-list');l.innerHTML='';
@@ -497,6 +589,7 @@ function renderIngs(){
     d.innerHTML=ingIcon(ing.id,24)+`<span>${ing.name}</span>`;
     d.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',ing.id);d.style.opacity='.4';});
     d.addEventListener('dragend',()=>d.style.opacity='1');
+    d.addEventListener('click',()=>{if(S.table.length<5){S.table.push(ing.id);brew();renderTable();checkMatch();}else notify('Максимум 5 ингредиентов','b');});
     l.appendChild(d);
   });
 }
@@ -533,8 +626,16 @@ function checkMatch(){
     if(!S.unlocked.includes(r.id))continue;
     if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){m=r;break;}
   }
-  if(m){res.innerHTML=`<div class="rm-card">${recipeIcon(m.id,28)}<strong>${m.name}</strong><span>${m.price} ₽</span></div>`;exp.style.display='none';}
-  else if(sorted.length>=2){res.innerHTML='<span style="color:rgba(28,10,0,.45);font-size:13px">Неизвестная комбинация</span>';exp.style.display='block';}
+  if(m){res.innerHTML=`<div class="rm-card">${recipeIcon(m.id,28)}<strong>${m.name}</strong><span>${m.price} ₽</span></div>`;exp.style.display='none';return;}
+  // Check locked recipes — show them as locked
+  for(const r of RECIPES){
+    if(S.unlocked.includes(r.id))continue;
+    if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){
+      res.innerHTML=`<div class="rm-card" style="background:#888;opacity:.85">${recipeIcon(r.id,28)}<strong>🔒 ${r.name}</strong><span>Нужно разблокировать</span></div>`;
+      exp.style.display='none';return;
+    }
+  }
+  if(sorted.length>=2){res.innerHTML='<span style="color:rgba(28,10,0,.45);font-size:13px">Неизвестная комбинация</span>';exp.style.display='block';}
   else{res.innerHTML='<span style="opacity:.4">Добавьте ещё...</span>';exp.style.display='none';}
 }
 
@@ -605,7 +706,9 @@ function updateBudget(){
 
 function openBakery(){
   if(!Object.keys(S.showcase).length){notify('Витрина пуста!','b');return;}
-  S.dayStats={earned:0,sold:{},unhappy:0,exp:0};S.dayEarned=0;
+  S.dayStats={earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}};S.dayEarned=0;
+  S.dayOpen=true;S.dayDone=false;S.goalsRewarded=false;
+  updateNavState();
   switchPhase('day');
 }
 
@@ -645,12 +748,13 @@ class Cust{
     const w=[3,2,3,2,3,1];let roll=Math.random()*14,acc=0,idx=0;
     for(let i=0;i<w.length;i++){acc+=w[i];if(roll<acc){idx=i;break;}}
     this.type=CTYPES[idx];
-    const avail=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
-    if(!avail.length){this.want=null;}
-    else if(this.type.prefs){
-      const pf=this.type.prefs.filter(p=>avail.includes(p));
-      this.want=pf.length?pf[Math.floor(Math.random()*pf.length)]:avail[Math.floor(Math.random()*avail.length)];
-    }else{this.want=avail[Math.floor(Math.random()*avail.length)];}
+    // Customers want items based on their preferences, regardless of today's showcase
+    if(this.type.prefs){
+      const prefs=this.type.prefs.filter(id=>S.unlocked.includes(id));
+      this.want=prefs.length?prefs[Math.floor(Math.random()*prefs.length)]:S.unlocked[Math.floor(Math.random()*S.unlocked.length)];
+    }else{
+      this.want=S.unlocked[Math.floor(Math.random()*S.unlocked.length)];
+    }
     this.x=-60;this.y=218;
     this.targetX=470+Math.random()*20;
     this.state='walking';// walking|waiting|served|eating|leaving
@@ -745,7 +849,10 @@ function leaveAngry(c){
 
 function updateCustUI(){
   if(!activeCust)return;
-  document.getElementById('cust-info').textContent=`${activeCust.type.name} хочет: ${activeCust.wantName()}`;
+  const avail=(S.showcase[activeCust.want]||0)>0;
+  const clr=avail?'var(--sage)':'var(--red)';
+  const suffix=avail?'':'&nbsp;❌ нет сегодня';
+  document.getElementById('cust-info').innerHTML=`${activeCust.type.name} хочет: <span style="color:${clr};font-weight:700">${activeCust.wantName()}${suffix}</span>`;
 }
 
 function sellToCust(){
@@ -755,11 +862,17 @@ function sellToCust(){
 function doSell(){
   const c=activeCust;
   const r=RECIPES.find(x=>x.id===c.want);
-  if(!r||!S.showcase[c.want]||S.showcase[c.want]<=0){notify('Закончилось!','b');rejectCust();return;}
+  if(!r||!S.showcase[c.want]||S.showcase[c.want]<=0){
+    if(c.want)S.dayStats.wantedMissing[c.want]=(S.dayStats.wantedMissing[c.want]||0)+1;
+    notify(`${c.type.name} расстроен — нет ${c.wantName()}!`,'b');
+    rejectCust();return;
+  }
   S.showcase[c.want]--;
   const tip=Math.round(r.price*c.type.tip),earned=r.price+tip;
   S.money+=earned;S.dayEarned+=earned;S.dayStats.earned+=earned;
   S.dayStats.sold[c.want]=(S.dayStats.sold[c.want]||0)+1;
+  if(!S.dayStats.byType)S.dayStats.byType={};
+  S.dayStats.byType[c.type.id]=(S.dayStats.byType[c.type.id]||0)+1;
   S.totalStats.croissants+=(c.want==='croissant'?1:0);
   // find free seat
   const si=TABLE_SEATS.findIndex((_,i)=>!seatOccupied[i]);
@@ -895,7 +1008,8 @@ function draw(){
     drawCust(ctx,c,c.x,c.y+bob,c.flip);
     if(c.state==='waiting'){
       const r=RECIPES.find(x=>x.id===c.want);
-      drawBubble(ctx,c.x,c.y-10,r?r.name:'...');
+      const avail=(S.showcase[c.want]||0)>0;
+      drawBubble(ctx,c.x,c.y-10,(r?r.name:'...')+(avail?'':' ❌'),!avail);
       const pct=Math.max(0,1-c.waitTime/c.patience);
       ctx.fillStyle=pct>.5?'#4a7c59':pct>.25?'#e67e22':'#c0392b';
       ctx.fillRect(c.x-22,c.y-58,44*pct,5);
@@ -1142,18 +1256,18 @@ function drawEatingItem(ctx,x,y,id){
   }
 }
 
-function drawBubble(ctx,x,y,text){
+function drawBubble(ctx,x,y,text,warn=false){
   ctx.save();ctx.translate(x,y-55);
-  const w=Math.max(80,text.length*6+20),h=34;
-  ctx.fillStyle='#fff';ctx.strokeStyle='#c8873a';ctx.lineWidth=2;
+  const w=Math.max(82,text.length*6.2+20),h=34;
+  const accent=warn?'#c0392b':'#c8873a';
+  ctx.fillStyle='#fff';ctx.strokeStyle=accent;ctx.lineWidth=2;
   ctx.beginPath();
-  if(ctx.roundRect)ctx.roundRect(-w/2,-h,w,h,8);
-  else ctx.rect(-w/2,-h,w,h);
+  if(ctx.roundRect)ctx.roundRect(-w/2,-h,w,h,8);else ctx.rect(-w/2,-h,w,h);
   ctx.fill();ctx.stroke();
   ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(-7,0);ctx.lineTo(7,0);ctx.lineTo(0,10);ctx.closePath();ctx.fill();
-  ctx.strokeStyle='#c8873a';ctx.lineWidth=1;ctx.moveTo(-7,0);ctx.lineTo(0,10);ctx.lineTo(7,0);ctx.stroke();
-  ctx.fillStyle='#1C0A00';ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='center';
-  ctx.fillText(text,-0,-h/2+4);
+  ctx.strokeStyle=accent;ctx.lineWidth=1;ctx.moveTo(-7,0);ctx.lineTo(0,10);ctx.lineTo(7,0);ctx.stroke();
+  ctx.fillStyle=warn?'#c0392b':'#1C0A00';ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='center';
+  ctx.fillText(text,0,-h/2+4);
   ctx.restore();
 }
 
@@ -1386,6 +1500,7 @@ function endDay(){
   const sold=Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0);
   if(sold>10)S.rep=Math.min(100,S.rep+3);
   if(S.dayStats.unhappy>3)S.rep=Math.max(0,S.rep-3);
+  S.dayDone=true;updateNavState();
   save();switchPhase('evening');
 }
 
@@ -1415,6 +1530,25 @@ function renderEvening(){
     ll.appendChild(d);
   });
   if(!hasL)ll.innerHTML='<div style="color:rgba(28,10,0,.4);font-size:13px">Всё продано! 🎉</div>';
+  // Goals evaluation
+  const goalsEv=document.getElementById('goals-ev-sec');
+  if(S.goals&&S.goals.length){
+    goalsEv.style.display='block';
+    const gl=document.getElementById('goals-ev-list');gl.innerHTML='';
+    let bonus=0;
+    S.goals.forEach(g=>{
+      const done=g.check&&g.check();
+      if(done)bonus+=g.reward;
+      const el=document.createElement('div');el.className='goal-item'+(done?' done':'');
+      el.innerHTML=`<span class="goal-chk">${done?'✅':'❌'}</span><span class="goal-desc">${g.desc}</span><span class="goal-rwd">${done?'+'+g.reward+'₽':'—'}</span>`;
+      gl.appendChild(el);
+    });
+    const bonusEl=document.getElementById('goals-bonus');
+    if(bonus>0&&!S.goalsRewarded){
+      S.goalsRewarded=true;S.money+=bonus;updateHdr();
+      bonusEl.textContent=`🎉 Бонус за цели: +${bonus}₽`;fanfare();save();
+    }else{bonusEl.textContent=bonus>0?`Бонус за цели: +${bonus}₽ (уже начислен)`:(bonus===0?'Цели не выполнены':'');}
+  }else{goalsEv.style.display='none';}
   checkUnlocks();
 }
 
@@ -1444,7 +1578,12 @@ function throwLeftovers(){S.showcase={};notify('Остатки выброшен�
 
 function nextDay(){
   S.day++;S.weather=WEATHERS[Math.floor(Math.random()*WEATHERS.length)];
-  S.showcase={};budgetUsed=0;S.dayStats={earned:0,sold:{},unhappy:0,exp:0};S.dayEarned=0;
+  S.showcase={};budgetUsed=0;
+  S.prevWantedMissing={...(S.dayStats.wantedMissing||{})};
+  S.dayStats={earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}};
+  S.dayEarned=0;S.dayOpen=false;S.dayDone=false;S.goalsRewarded=false;
+  S.goals=[];pickGoals();
+  updateNavState();
   S.money+=50;updateHdr();save();switchPhase('morning');
 }
 
@@ -1519,7 +1658,13 @@ function buyDecor(id){
 // ─── INIT ─────────────────────────────────────────────────
 async function init(){
   await load();
-  updateHdr();
+  // Ensure new state fields exist after load
+  if(!S.goals)S.goals=[];
+  if(!S.prevWantedMissing)S.prevWantedMissing={};
+  if(!S.dayStats.byType)S.dayStats.byType={};
+  if(!S.dayStats.wantedMissing)S.dayStats.wantedMissing={};
+  if(S.goals.length===0)pickGoals();
+  updateHdr();updateNavState();
   switchPhase('morning');
 }
 init();
