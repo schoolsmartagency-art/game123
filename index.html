@@ -102,17 +102,22 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
 .rb-section{font-family:'Playfair Display',serif;font-size:14px;margin:12px 0 6px;color:var(--caramel)}
 
 /* ===== DAY ===== */
-#phase-day{display:none;padding:16px 20px;gap:14px;grid-template-columns:200px 1fr}
+#phase-day{display:none;padding:12px 16px;gap:12px;grid-template-columns:210px 1fr}
 #phase-day.active{display:grid}
 
-.sd-item{display:flex;align-items:center;gap:7px;padding:7px 8px;background:var(--cream);border-radius:9px;margin-bottom:5px;transition:all .2s}
+.sd-item{display:flex;align-items:center;gap:7px;padding:6px 8px;background:var(--cream);border-radius:9px;margin-bottom:4px;transition:all .2s}
 .sd-item.out{opacity:.35}
 .sd-item .dn{flex:1;font-size:12px;font-weight:600}
 .sd-item .dq{font-size:11px;color:var(--caramel);font-weight:700}
+.cook-item{display:flex;align-items:center;gap:6px;padding:5px 7px;background:var(--cream);border-radius:8px;margin-bottom:3px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.cook-item:hover{border-color:var(--sage);background:rgba(74,124,89,.08)}
+.cook-item .cn{flex:1;font-size:11px;font-weight:600}
+.cook-item .cc{font-size:10px;font-weight:700;color:var(--sage)}
 
-#canvas-wrap{position:relative}
-#gc{display:block;width:100%;border-radius:14px;background:#e8d8b8}
-#day-timer{position:absolute;top:10px;right:14px;background:rgba(28,10,0,.65);color:var(--cream);padding:3px 10px;border-radius:14px;font-size:12px;font-weight:700}
+#canvas-wrap{position:relative;line-height:0}
+#gc{display:block;width:100%;max-width:720px;height:auto;border-radius:12px;background:#e8d8b8}
+#day-timer{position:absolute;top:8px;left:10px;background:rgba(28,10,0,.7);color:var(--cream);padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700}
+#day-timebar{position:absolute;bottom:0;left:0;height:4px;background:var(--caramel);border-radius:0 0 0 12px;transition:width .5s linear}
 
 #sell-area{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}
 #cust-info{text-align:center;font-size:14px;font-weight:600;min-height:24px;margin-top:6px}
@@ -285,20 +290,22 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
   <div class="panel" style="overflow-y:auto;max-height:calc(100vh - 140px)">
     <h3>Витрина</h3>
     <div id="day-sc"></div>
-    <div style="margin-top:10px;padding:9px;background:var(--cream);border-radius:9px">
-      <div style="font-size:11px;color:rgba(28,10,0,.5)">Выручка</div>
-      <div id="day-earned" style="font-size:22px;font-weight:700;color:var(--caramel)">0 ₽</div>
+    <div style="margin-top:8px;padding:8px;background:var(--cream);border-radius:9px">
+      <div style="font-size:10px;color:rgba(28,10,0,.5);text-transform:uppercase;letter-spacing:.4px">Выручка</div>
+      <div id="day-earned" style="font-size:20px;font-weight:700;color:var(--caramel)">0 ₽</div>
+    </div>
+    <div style="margin-top:8px">
+      <div class="rm-label" style="margin-bottom:4px">🍳 Приготовить ещё</div>
+      <div id="day-cook" style="max-height:160px;overflow-y:auto"></div>
     </div>
     <div style="margin-top:8px"><button class="btn btn-o" style="width:100%;font-size:12px" onclick="endDay()">Закрыть кофейню 🌙</button></div>
   </div>
   <div>
     <div class="panel" style="padding:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <h3 style="margin:0;font-size:14px">Зал кофейни</h3>
-        <div id="day-timer">00:00</div>
-      </div>
       <div id="canvas-wrap">
-        <canvas id="gc" width="760" height="420"></canvas>
+        <canvas id="gc" width="720" height="400"></canvas>
+        <div id="day-timer">08:00</div>
+        <div id="day-timebar" style="width:0%"></div>
       </div>
       <div id="cust-info">Ждём первых гостей...</div>
       <div id="sell-area">
@@ -735,11 +742,15 @@ const ctx=cv.getContext('2d');
 let custs=[],queue=[],dayRunning=false,dayTime=0,lastSpawn=0,nextSpawnIn=10;
 let activeCust=null,animId=null,bobT=0;
 
-// TABLE SEATS: 3 tables × 2 seats each
+const DAY_DURATION = 8 * 60; // 8 real minutes = 8 game hours (08:00–16:00)
+
+// TABLE_SEATS: must match chair draw positions in drawTables
+// Tables at x=130,260,390; chairs at dx=±50; cy = H*0.60 - 10 = 230
+// seat.y chosen so customer.y = seat.y-40 = 230 → seat.y = 270
 const TABLE_SEATS=[
-  {x:120,y:280},{x:155,y:280},
-  {x:240,y:290},{x:275,y:290},
-  {x:355,y:275},{x:390,y:275},
+  {x:80, y:270},{x:180,y:270},
+  {x:220,y:270},{x:320,y:270},
+  {x:360,y:270},{x:460,y:270},
 ];
 const seatOccupied={};
 
@@ -766,15 +777,34 @@ class Cust{
   wantName(){const r=RECIPES.find(x=>x.id===this.want);return r?r.name:'что-нибудь';}
 }
 
+function renderDayCook(){
+  const w=document.getElementById('day-cook');if(!w)return;w.innerHTML='';
+  const total=Object.values(S.showcase).reduce((a,b)=>a+b,0);
+  S.unlocked.forEach(id=>{
+    const r=RECIPES.find(x=>x.id===id);if(!r)return;
+    const cost=Math.round(r.price*.3);
+    const d=document.createElement('div');d.className='cook-item';
+    d.innerHTML=`${recipeIcon(id,18)}<span class="cn">${r.name}</span><span class="cc">−${cost}₽</span>`;
+    d.onclick=()=>{
+      if(total>=20){notify('Витрина полна!','b');return;}
+      if(S.money<cost){notify('Не хватает денег!','b');return;}
+      S.money-=cost;S.showcase[id]=(S.showcase[id]||0)+1;
+      updateHdr();renderDaySC();renderDayCook();brew();
+      notify(`+1 ${r.name} в витрину`,'g');
+    };
+    w.appendChild(d);
+  });
+}
+
 function initDay(){
   custs=[];queue=[];dayRunning=true;dayTime=0;lastSpawn=0;
-  nextSpawnIn=8+Math.random()*7;activeCust=null;S.dayEarned=0;
+  nextSpawnIn=6+Math.random()*5;activeCust=null;S.dayEarned=0;
   Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
   document.getElementById('day-earned').textContent='0 ₽';
   document.getElementById('day-log').innerHTML='';
-  renderDaySC();
+  renderDaySC();renderDayCook();
   // First customer arrives early
-  setTimeout(spawnCust, 2000);
+  setTimeout(spawnCust, 1500);
   if(animId)cancelAnimationFrame(animId);
   let last=null;
   function loop(ts){
@@ -782,14 +812,19 @@ function initDay(){
     if(!last)last=ts;
     const dt=Math.min((ts-last)/1000,.05);last=ts;
     bobT+=dt*3;dayTime+=dt;lastSpawn+=dt;
-    // timer
-    const mm=String(Math.floor(dayTime/60)).padStart(2,'0'),ss=String(Math.floor(dayTime%60)).padStart(2,'0');
-    document.getElementById('day-timer').textContent=`${mm}:${ss}`;
+    // game clock: 08:00–16:00
+    const pct=Math.min(1,dayTime/DAY_DURATION);
+    const gameMin=Math.floor((dayTime%60)/60*60); // minutes within game hour
+    const gameHour=8+Math.floor(dayTime/60);
+    document.getElementById('day-timer').textContent=`${gameHour}:${gameMin.toString().padStart(2,'0')}`;
+    document.getElementById('day-timebar').style.width=(pct*100)+'%';
+    // auto-end
+    if(dayTime>=DAY_DURATION){notify('Рабочий день окончен!','i');endDay();return;}
     // spawn
     if(lastSpawn>=nextSpawnIn&&custs.filter(c=>c.state==='waiting').length<5){
       spawnCust();
-      if(Math.random()<.15){setTimeout(spawnCust,2000);setTimeout(spawnCust,4000);}
-      lastSpawn=0;nextSpawnIn=8+Math.random()*7;
+      if(Math.random()<.2){setTimeout(spawnCust,1800);setTimeout(spawnCust,3600);}
+      lastSpawn=0;nextSpawnIn=6+Math.random()*6;
     }
     // update
     custs.forEach(c=>{
@@ -819,7 +854,7 @@ function initDay(){
       }
       if(c.state==='leaving_seat'){
         seatOccupied[c.seatIdx]=false;
-        c.flip=true;c.state='walking';c.targetX=cv.width+100;
+        c.flip=false;c.state='walking';c.targetX=cv.width+100;
       }
       if(c.state==='leaving'){c.x+=c.type.speed*70*dt;if(c.x>cv.width+80)c.state='gone';}
     });
@@ -877,7 +912,7 @@ function doSell(){
   // find free seat
   const si=TABLE_SEATS.findIndex((_,i)=>!seatOccupied[i]);
   if(si>=0){seatOccupied[si]=true;c.seatIdx=si;c.state='served';}
-  else{c.state='leaving';c.flip=true;}
+  else{c.state='leaving';c.flip=false;}
   queue=queue.filter(x=>x!==c);activeCust=null;
   document.getElementById('day-earned').textContent=`${S.dayEarned} ₽`;
   updateHdr();renderDaySC();ding();
@@ -890,7 +925,7 @@ function doSell(){
 
 function rejectCust(){
   if(!activeCust)return;
-  const c=activeCust;c.state='leaving';c.flip=true;
+  const c=activeCust;c.state='leaving';c.flip=false;
   S.rep=Math.max(0,S.rep-1);
   queue=queue.filter(x=>x!==c);activeCust=null;
   addLog(`${c.type.name} ушёл без покупки`,'n');updateHdr();updateQD();
@@ -1092,7 +1127,7 @@ function drawPlant(ctx,x,y){
 
 function drawTables(ctx,H){
   const tableBaseY=H*.60;
-  [[100,tableBaseY],[230,tableBaseY],[350,tableBaseY]].forEach(([tx,ty])=>{
+  [[130,tableBaseY],[270,tableBaseY],[410,tableBaseY]].forEach(([tx,ty])=>{
     // Chair backs (drawn first, behind table)
     [-50,50].forEach(dx=>{
       const cx=tx+dx,cy=ty-10;
