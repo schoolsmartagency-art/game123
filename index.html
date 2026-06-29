@@ -4,1509 +4,1280 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Fournée — Пекарня-кофейня</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --espresso: #1C0A00;
-  --cream: #F5E6C8;
-  --caramel: #C8873A;
-  --sage: #4A7C59;
-  --latte: #E8C4A0;
-  --latte-dark: #d4a87a;
-  --shadow: rgba(28,10,0,0.15);
+:root{
+  --espresso:#1C0A00;--cream:#F5E6C8;--caramel:#C8873A;--sage:#4A7C59;--latte:#E8C4A0;
+  --latte2:#d4a87a;--shadow:rgba(28,10,0,.15);--red:#c0392b;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px;overflow-x:hidden}
-h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px;overflow-x:hidden}
+.serif{font-family:'Playfair Display',serif}
 
 /* HEADER */
-#header{background:var(--espresso);color:var(--cream);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
-#header .brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:1px}
-#header .brand span{color:var(--caramel)}
-#hdr-center{display:flex;flex-direction:column;align-items:center;gap:2px}
-#hdr-day{font-size:13px;opacity:0.8}
-#hdr-weather{font-size:13px;color:var(--caramel)}
-#hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-#hdr-money{font-size:18px;font-weight:600;color:var(--caramel)}
-#hdr-rep{font-size:12px;opacity:0.8}
-#rep-bar{display:inline-block;width:80px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;vertical-align:middle;margin-left:6px}
-#rep-fill{height:100%;background:var(--sage);border-radius:3px;transition:width 0.5s}
+#hdr{background:var(--espresso);color:var(--cream);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:1px}
+.brand em{color:var(--caramel);font-style:normal}
+#hdr-mid{display:flex;flex-direction:column;align-items:center;gap:1px}
+#hdr-day{font-size:13px;opacity:.75;font-weight:600}
+#hdr-wx{font-size:13px;color:var(--caramel);font-weight:600}
+#hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+#hdr-money{font-size:20px;font-weight:700;color:var(--caramel)}
+.rep-row{display:flex;align-items:center;gap:6px;font-size:12px;opacity:.8}
+#rep-bar{width:90px;height:6px;background:rgba(255,255,255,.18);border-radius:3px}
+#rep-fill{height:100%;background:var(--sage);border-radius:3px;transition:width .5s}
 
 /* NAV */
-#nav{background:var(--latte);border-bottom:2px solid var(--caramel);display:flex;gap:0}
-.nav-btn{flex:1;padding:10px 8px;border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--espresso);transition:background 0.2s,color 0.2s;border-right:1px solid var(--latte-dark)}
-.nav-btn:last-child{border-right:none}
-.nav-btn:hover{background:var(--caramel);color:#fff}
-.nav-btn.active{background:var(--caramel);color:#fff;font-weight:600}
-.nav-btn svg{display:block;margin:0 auto 2px}
+#nav{background:var(--latte);border-bottom:2px solid var(--caramel);display:flex}
+.nb{flex:1;padding:9px 6px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--espresso);transition:background .18s,color .18s;border-right:1px solid var(--latte2)}
+.nb:last-child{border-right:none}
+.nb:hover{background:rgba(200,135,58,.18)}
+.nb.active{background:var(--caramel);color:#fff}
 
-/* MAIN */
-#main{min-height:calc(100vh - 100px)}
-
-/* ========== MORNING PHASE ========== */
-#phase-morning{display:none;padding:20px 24px;gap:20px;grid-template-columns:240px 1fr 280px}
-#phase-morning.active{display:grid}
-
-.panel{background:var(--latte);border-radius:12px;padding:16px;box-shadow:0 2px 8px var(--shadow)}
-.panel h3{font-family:'Playfair Display',serif;font-size:16px;margin-bottom:12px;color:var(--espresso);border-bottom:2px solid var(--caramel);padding-bottom:6px}
-
-/* Ingredients list */
-.ingredient-item{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;background:var(--cream);border-radius:8px;cursor:grab;border:2px solid transparent;transition:all 0.2s;user-select:none}
-.ingredient-item:hover{border-color:var(--caramel);transform:translateX(2px)}
-.ingredient-item:active{cursor:grabbing;opacity:0.7}
-.ingredient-item svg{flex-shrink:0}
-.ingredient-item span{font-size:13px;font-weight:500}
-
-/* Drop table */
-#drop-table{min-height:180px;border:2px dashed var(--caramel);border-radius:10px;padding:12px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;transition:background 0.2s}
-#drop-table.drag-over{background:rgba(200,135,58,0.1)}
-.dropped-ingredient{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--cream);border-radius:20px;border:2px solid var(--caramel);font-size:12px;cursor:pointer;transition:all 0.2s}
-.dropped-ingredient:hover{background:var(--caramel);color:#fff}
-#table-hint{color:rgba(28,10,0,0.4);font-size:12px;text-align:center;width:100%;padding:20px 0}
-
-/* Recipe match */
-#recipe-match{padding:10px;background:rgba(74,124,89,0.1);border-radius:8px;min-height:60px;margin-bottom:12px}
-#recipe-match .match-label{font-size:11px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
-#recipe-match .matched-recipe{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;background:var(--sage);color:#fff;border-radius:6px;font-size:13px}
-
-.btn{padding:10px 18px;border:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;transition:all 0.2s}
-.btn-primary{background:var(--caramel);color:#fff}
-.btn-primary:hover{background:#a66d28;transform:translateY(-1px);box-shadow:0 3px 8px var(--shadow)}
-.btn-secondary{background:var(--sage);color:#fff}
-.btn-secondary:hover{background:#3a6447;transform:translateY(-1px)}
-.btn-outline{background:transparent;color:var(--caramel);border:2px solid var(--caramel)}
-.btn-outline:hover{background:var(--caramel);color:#fff}
+/* PANELS */
+.panel{background:var(--latte);border-radius:14px;padding:16px;box-shadow:0 2px 10px var(--shadow)}
+.panel h3{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:12px;border-bottom:2px solid var(--caramel);padding-bottom:6px}
+.btn{padding:9px 16px;border:none;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;transition:all .18s}
+.btn-p{background:var(--caramel);color:#fff}
+.btn-p:hover{background:#a66d28;transform:translateY(-1px);box-shadow:0 3px 8px var(--shadow)}
+.btn-s{background:var(--sage);color:#fff}
+.btn-s:hover{background:#3a6447;transform:translateY(-1px)}
+.btn-o{background:transparent;color:var(--caramel);border:2px solid var(--caramel)}
+.btn-o:hover{background:var(--caramel);color:#fff}
 .btn:active{transform:translateY(0)!important}
 
-/* Showcase */
-#showcase-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.showcase-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--cream);border-radius:8px}
-.showcase-item .item-name{flex:1;font-size:13px}
-.showcase-item .item-price{font-size:12px;color:var(--caramel);font-weight:600}
-.qty-control{display:flex;align-items:center;gap:4px}
-.qty-btn{width:22px;height:22px;border:1px solid var(--caramel);background:none;border-radius:4px;cursor:pointer;font-size:14px;line-height:1;color:var(--caramel);transition:all 0.15s}
-.qty-btn:hover{background:var(--caramel);color:#fff}
-.qty-val{font-size:13px;font-weight:600;min-width:20px;text-align:center}
+/* ===== MORNING ===== */
+#phase-morning{display:none;padding:16px 20px;gap:16px;grid-template-columns:200px 1fr 260px}
+#phase-morning.active{display:grid}
 
-/* Budget bar */
-#budget-bar{background:var(--cream);border-radius:8px;padding:10px;margin-bottom:12px;font-size:13px}
-#budget-bar .lbl{color:rgba(28,10,0,0.6);margin-bottom:4px}
-#budget-progress{height:8px;background:rgba(28,10,0,0.1);border-radius:4px;overflow:hidden;margin-top:6px}
-#budget-fill{height:100%;background:var(--caramel);border-radius:4px;transition:width 0.3s}
+/* Ingredients */
+.ing-item{display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:5px;background:var(--cream);border-radius:10px;cursor:grab;border:2px solid transparent;transition:all .18s;user-select:none}
+.ing-item:hover{border-color:var(--caramel);transform:translateX(3px)}
+.ing-item:active{cursor:grabbing;opacity:.6}
+.ing-item span{font-size:12px;font-weight:600}
 
-/* Experiment banner */
-#experiment-banner{display:none;padding:8px 12px;background:rgba(74,124,89,0.15);border-radius:8px;font-size:12px;color:var(--sage);margin-bottom:10px}
+/* Table / Drop zone */
+#drop-zone{min-height:160px;border:2.5px dashed var(--caramel);border-radius:12px;padding:10px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;transition:background .18s;position:relative}
+#drop-zone.over{background:rgba(200,135,58,.1)}
+.di{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;background:var(--cream);border-radius:10px;border:2px solid var(--caramel);cursor:pointer;transition:all .18s;min-width:64px}
+.di:hover{background:var(--caramel);color:#fff}
+.di span{font-size:10px;font-weight:600}
+#drop-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(28,10,0,.3);font-size:13px;pointer-events:none}
 
-/* ========== DAY PHASE ========== */
-#phase-day{display:none;padding:20px 24px;gap:16px;grid-template-columns:220px 1fr}
+/* Recipe match box */
+#rec-match{padding:10px;background:rgba(74,124,89,.1);border-radius:10px;margin-bottom:10px;min-height:54px}
+.rm-label{font-size:10px;font-weight:700;color:var(--sage);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.rm-card{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sage);color:#fff;border-radius:8px;font-size:13px;font-weight:600}
+#exp-hint{font-size:11px;color:var(--sage);background:rgba(74,124,89,.1);border-radius:8px;padding:6px 10px;margin-bottom:8px;display:none}
+
+/* Showcase sidebar (morning) */
+.sc-item{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--cream);border-radius:9px;margin-bottom:5px}
+.sc-item .iname{flex:1;font-size:12px;font-weight:600}
+.sc-item .iprice{font-size:11px;color:var(--caramel);font-weight:700}
+.qty{display:flex;align-items:center;gap:3px}
+.qb{width:20px;height:20px;border:1.5px solid var(--caramel);background:none;border-radius:4px;cursor:pointer;font-size:13px;color:var(--caramel);transition:all .15s;line-height:1}
+.qb:hover{background:var(--caramel);color:#fff}
+.qv{font-size:12px;font-weight:700;min-width:18px;text-align:center}
+#budget-bar{background:var(--cream);border-radius:8px;padding:9px;margin-bottom:10px;font-size:12px}
+#bprog{height:7px;background:rgba(28,10,0,.1);border-radius:4px;margin-top:4px;overflow:hidden}
+#bfill{height:100%;background:var(--caramel);border-radius:4px;transition:width .3s}
+
+/* Recipe book btn */
+#rec-book-btn{width:100%;margin-bottom:8px}
+
+/* ===== RECIPE BOOK MODAL ===== */
+#rb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
+#rb-overlay.active{display:flex}
+#rb-modal{background:var(--cream);border-radius:18px;padding:24px;width:680px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.35)}
+#rb-modal h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:4px}
+#rb-modal .sub{font-size:13px;color:rgba(28,10,0,.5);margin-bottom:16px}
+.rb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rb-card{background:var(--latte);border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid transparent;transition:all .18s}
+.rb-card.unlocked{border-color:rgba(200,135,58,.4)}
+.rb-card.locked{opacity:.45;filter:grayscale(.6)}
+.rb-card .rc-name{font-size:12px;font-weight:700;text-align:center}
+.rb-card .rc-price{font-size:13px;color:var(--caramel);font-weight:700}
+.rb-card .rc-ings{font-size:10px;color:rgba(28,10,0,.5);text-align:center}
+.rb-section{font-family:'Playfair Display',serif;font-size:14px;margin:12px 0 6px;color:var(--caramel)}
+
+/* ===== DAY ===== */
+#phase-day{display:none;padding:16px 20px;gap:14px;grid-template-columns:200px 1fr}
 #phase-day.active{display:grid}
 
-#day-showcase{overflow-y:auto;max-height:calc(100vh-200px)}
-.showcase-day-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--cream);border-radius:8px;margin-bottom:6px;transition:all 0.2s}
-.showcase-day-item.sold-out{opacity:0.4}
-.showcase-day-item .d-name{flex:1;font-size:13px;font-weight:500}
-.showcase-day-item .d-qty{font-size:12px;color:var(--caramel);font-weight:600}
+.sd-item{display:flex;align-items:center;gap:7px;padding:7px 8px;background:var(--cream);border-radius:9px;margin-bottom:5px;transition:all .2s}
+.sd-item.out{opacity:.35}
+.sd-item .dn{flex:1;font-size:12px;font-weight:600}
+.sd-item .dq{font-size:11px;color:var(--caramel);font-weight:700}
 
 #canvas-wrap{position:relative}
-#game-canvas{width:100%;height:380px;border-radius:12px;background:#f0e0c4;display:block}
-#sell-controls{display:flex;gap:10px;justify-content:center;margin-top:12px}
-#active-customer-info{text-align:center;margin-top:8px;min-height:36px}
-#cust-want{font-size:14px;font-weight:500;color:var(--espresso)}
-#btn-sell{background:var(--sage);color:#fff;font-size:16px;padding:12px 32px}
-#btn-sell:hover{background:#3a6447}
-#btn-no{background:var(--espresso);color:var(--cream);font-size:16px;padding:12px 32px}
-#btn-no:hover{background:#3a1a00}
+#gc{display:block;width:100%;border-radius:14px;background:#e8d8b8}
+#day-timer{position:absolute;top:10px;right:14px;background:rgba(28,10,0,.65);color:var(--cream);padding:3px 10px;border-radius:14px;font-size:12px;font-weight:700}
+
+#sell-area{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}
+#cust-info{text-align:center;font-size:14px;font-weight:600;min-height:24px;margin-top:6px}
+#btn-sell{background:var(--sage);color:#fff;font-size:15px;padding:11px 30px}
+#btn-no{background:var(--espresso);color:var(--cream);font-size:15px;padding:11px 30px}
 #btn-auto{font-size:12px;padding:8px 14px}
 
-#queue-status{display:flex;gap:6px;align-items:center;margin-top:10px;justify-content:center}
-.queue-dot{width:10px;height:10px;border-radius:50%;background:rgba(28,10,0,0.15);transition:all 0.3s}
-.queue-dot.filled{background:var(--caramel)}
-.queue-dot.angry{background:#c0392b}
+#queue-row{display:flex;gap:5px;align-items:center;justify-content:center;margin-top:8px}
+.qd{width:10px;height:10px;border-radius:50%;background:rgba(28,10,0,.12);transition:all .3s}
+.qd.on{background:var(--caramel)}
+.qd.angry{background:var(--red)}
 
-#day-log{margin-top:10px;max-height:100px;overflow-y:auto;padding:8px;background:var(--latte);border-radius:8px}
-.log-entry{font-size:11px;padding:2px 0;border-bottom:1px solid rgba(28,10,0,0.05)}
-.log-entry.good{color:var(--sage)}
-.log-entry.bad{color:#c0392b}
-.log-entry.neutral{color:rgba(28,10,0,0.6)}
+#day-log{margin-top:8px;max-height:90px;overflow-y:auto;padding:7px 9px;background:var(--latte);border-radius:9px}
+.le{font-size:11px;padding:2px 0;border-bottom:1px solid rgba(28,10,0,.05);font-weight:500}
+.le.g{color:var(--sage)}.le.b{color:var(--red)}.le.n{color:rgba(28,10,0,.55)}
 
-#day-timer{position:absolute;top:12px;right:16px;background:rgba(28,10,0,0.6);color:var(--cream);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
-
-/* ========== EVENING PHASE ========== */
-#phase-evening{display:none;padding:24px;max-width:900px;margin:0 auto}
+/* ===== EVENING ===== */
+#phase-evening{display:none;padding:24px;max-width:860px;margin:0 auto}
 #phase-evening.active{display:block}
+#ev-title{font-family:'Playfair Display',serif;font-size:30px;text-align:center;margin-bottom:4px}
+#ev-sub{text-align:center;color:rgba(28,10,0,.45);margin-bottom:22px;font-size:14px}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.sc{background:var(--latte);border-radius:12px;padding:18px;text-align:center;box-shadow:0 2px 8px var(--shadow)}
+.sc .v{font-family:'Playfair Display',serif;font-size:34px;color:var(--caramel);font-weight:700}
+.sc .l{font-size:11px;color:rgba(28,10,0,.5);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+#ts h3,.lft-sec h3{font-family:'Playfair Display',serif;margin-bottom:12px}
+.sbr{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.sbr .nm{font-size:13px;width:140px;flex-shrink:0;font-weight:600}
+.bar-bg{flex:1;height:16px;background:rgba(28,10,0,.07);border-radius:8px;overflow:hidden}
+.bar-f{height:100%;background:var(--caramel);border-radius:8px;transition:width 1s ease}
+.sbr .cnt{font-size:12px;color:var(--caramel);font-weight:700;width:28px;text-align:right}
+.lft-item{display:flex;align-items:center;gap:9px;padding:7px;background:var(--cream);border-radius:8px;margin-bottom:5px}
+.lft-item .ln{flex:1;font-size:13px;font-weight:600}
+.lft-item .lq{font-size:11px;color:rgba(28,10,0,.5)}
+#unlock-sec{display:none;background:linear-gradient(135deg,var(--sage),#2d5c3f);border-radius:16px;padding:22px;margin-bottom:14px;color:#fff;text-align:center;animation:upop .6s ease}
+@keyframes upop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+#unlock-sec h3{font-family:'Playfair Display',serif;font-size:20px}
+#unlock-name{font-size:26px;font-weight:700;color:#ffeb99;margin:6px 0}
 
-#evening-title{font-family:'Playfair Display',serif;font-size:32px;text-align:center;margin-bottom:6px}
-#evening-subtitle{text-align:center;color:rgba(28,10,0,0.5);margin-bottom:24px}
-
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.stat-card{background:var(--latte);border-radius:12px;padding:20px;text-align:center;box-shadow:0 2px 8px var(--shadow)}
-.stat-card .val{font-family:'Playfair Display',serif;font-size:36px;color:var(--caramel);font-weight:700}
-.stat-card .lbl{font-size:12px;color:rgba(28,10,0,0.5);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
-
-#top-sales{background:var(--latte);border-radius:12px;padding:16px;margin-bottom:16px}
-#top-sales h3{font-family:'Playfair Display',serif;margin-bottom:12px}
-.sale-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.sale-bar-row .name{font-size:13px;width:150px;flex-shrink:0}
-.sale-bar-bg{flex:1;height:18px;background:rgba(28,10,0,0.08);border-radius:9px;overflow:hidden}
-.sale-bar-fill{height:100%;background:var(--caramel);border-radius:9px;transition:width 1s ease}
-.sale-bar-row .count{font-size:12px;color:var(--caramel);font-weight:600;width:30px;text-align:right}
-
-#leftover-section{background:var(--latte);border-radius:12px;padding:16px;margin-bottom:16px}
-#leftover-section h3{font-family:'Playfair Display',serif;margin-bottom:12px}
-.leftover-item{display:flex;align-items:center;gap:10px;padding:8px;background:var(--cream);border-radius:8px;margin-bottom:6px}
-.leftover-item .lft-name{flex:1;font-size:13px}
-.leftover-item .lft-qty{font-size:12px;color:rgba(28,10,0,0.5)}
-
-#unlock-section{display:none;background:linear-gradient(135deg,var(--sage),#2d5c3f);border-radius:16px;padding:24px;margin-bottom:16px;color:#fff;text-align:center;animation:unlockPop 0.6s ease}
-@keyframes unlockPop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-#unlock-section h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px}
-#unlock-section p{opacity:0.85;font-size:14px}
-#unlock-name{font-size:28px;font-weight:700;color:#ffeb99;margin:8px 0}
-
-/* ========== DECOR PHASE ========== */
-#phase-decor{display:none;padding:20px 24px;gap:20px;grid-template-columns:1fr 320px}
+/* ===== DECOR ===== */
+#phase-decor{display:none;padding:16px 20px;gap:16px;grid-template-columns:1fr 300px}
 #phase-decor.active{display:grid}
+#dc{display:block;width:100%;border-radius:12px}
+.di-item{background:var(--cream);border-radius:10px;padding:11px;margin-bottom:9px;display:flex;align-items:center;gap:9px}
+.di-item .dico{font-size:22px;flex-shrink:0}
+.di-item .dinfo{flex:1}
+.di-item .dtitle{font-size:13px;font-weight:700}
+.di-item .ddesc{font-size:10px;color:rgba(28,10,0,.5)}
+.di-item .dprice{color:var(--caramel);font-weight:700;font-size:13px}
+.owned-badge{display:inline-block;padding:2px 8px;background:var(--sage);color:#fff;border-radius:8px;font-size:10px;font-weight:700}
 
-#decor-preview{background:var(--latte);border-radius:12px;padding:16px;min-height:400px;position:relative;overflow:hidden}
-#decor-preview h3{font-family:'Playfair Display',serif;margin-bottom:12px}
-#decor-canvas-wrap{width:100%;height:340px;background:#e8d5b0;border-radius:10px;position:relative;overflow:hidden}
+/* NOTIFS */
+#nw{position:fixed;top:76px;right:18px;z-index:900;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.notif{padding:9px 15px;border-radius:10px;font-size:13px;font-weight:600;animation:nin .3s ease;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+@keyframes nin{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
+.notif.g{background:var(--sage);color:#fff}
+.notif.b{background:var(--red);color:#fff}
+.notif.i{background:var(--espresso);color:var(--cream)}
+.notif.out{animation:nout .3s ease forwards}
+@keyframes nout{to{transform:translateX(80px);opacity:0}}
 
-.decor-shop-item{background:var(--cream);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;transition:all 0.2s}
-.decor-shop-item:hover{border-color:var(--caramel)}
-.decor-shop-item .d-icon{flex-shrink:0}
-.decor-shop-item .d-info{flex:1}
-.decor-shop-item .d-title{font-size:14px;font-weight:600}
-.decor-shop-item .d-desc{font-size:11px;color:rgba(28,10,0,0.5)}
-.decor-shop-item .d-price{color:var(--caramel);font-weight:700;font-size:14px}
-.d-owned{display:inline-block;padding:2px 8px;background:var(--sage);color:#fff;border-radius:10px;font-size:11px;font-weight:600}
+/* Steam */
+@keyframes steam{0%,100%{opacity:0;transform:translateY(0) scaleX(1)}50%{opacity:.55;transform:translateY(-10px) scaleX(1.3)}}
+.sp{animation:steam 2s ease-in-out infinite}
+.sp:nth-child(2){animation-delay:.35s}
+.sp:nth-child(3){animation-delay:.7s}
 
-/* NOTIFICATIONS */
-#notif-wrap{position:fixed;top:80px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.notif{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;animation:notifIn 0.3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-@keyframes notifIn{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
-.notif-good{background:var(--sage);color:#fff}
-.notif-bad{background:#c0392b;color:#fff}
-.notif-info{background:var(--espresso);color:var(--cream)}
-.notif-exit{animation:notifOut 0.3s ease forwards}
-@keyframes notifOut{to{transform:translateX(100px);opacity:0}}
-
-/* MODAL */
-#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;align-items:center;justify-content:center}
-#modal-overlay.active{display:flex}
-#modal-box{background:var(--cream);border-radius:16px;padding:28px;max-width:480px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-#modal-box h2{font-family:'Playfair Display',serif;margin-bottom:12px}
-
-/* STEAM ANIMATION */
-@keyframes steam{0%,100%{opacity:0;transform:translateY(0) scaleX(1)}50%{opacity:0.6;transform:translateY(-12px) scaleX(1.2)}}
-.steam-path{animation:steam 2s ease-in-out infinite}
-.steam-path:nth-child(2){animation-delay:0.4s}
-.steam-path:nth-child(3){animation-delay:0.8s}
-
-/* WALK ANIMATION */
-@keyframes walkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-
-/* transitions */
-.phase-panel{transition:opacity 0.3s}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--latte-dark);border-radius:3px}
-
-/* Coffee bubble animation */
-@keyframes bubblePop{0%{transform:scale(0) translateY(0);opacity:1}100%{transform:scale(1.5) translateY(-20px);opacity:0}}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--latte2);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div id="header">
-  <div class="brand">☕ La <span>Fournée</span></div>
-  <div id="hdr-center">
+<div id="hdr">
+  <div class="brand">☕ La <em>Fournée</em></div>
+  <div id="hdr-mid">
     <div id="hdr-day">День 1 · Понедельник</div>
-    <div id="hdr-weather">🌤 Солнечно</div>
+    <div id="hdr-wx">🌤 Солнечно</div>
   </div>
-  <div id="hdr-right">
+  <div id="hdr-r">
     <div id="hdr-money">500 ₽</div>
-    <div id="hdr-rep">Репутация: <span id="rep-pct">50%</span><span id="rep-bar"><span id="rep-fill" style="width:50%"></span></span></div>
+    <div class="rep-row">Репутация: <span id="rep-pct">50%</span><div id="rep-bar"><div id="rep-fill" style="width:50%"></div></div></div>
   </div>
 </div>
 
-<!-- NAV -->
 <div id="nav">
-  <button class="nav-btn active" id="nav-morning" onclick="switchPhase('morning')">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-    🌅 Утро — Подготовка
-  </button>
-  <button class="nav-btn" id="nav-day" onclick="switchPhase('day')">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-    ☀️ День — Торговля
-  </button>
-  <button class="nav-btn" id="nav-evening" onclick="switchPhase('evening')">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
-    🌙 Вечер — Итоги
-  </button>
-  <button class="nav-btn" id="nav-decor" onclick="switchPhase('decor')">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    🏠 Интерьер
-  </button>
+  <button class="nb active" id="nav-morning" onclick="switchPhase('morning')">🌅 Утро</button>
+  <button class="nb" id="nav-day" onclick="switchPhase('day')">☀️ День</button>
+  <button class="nb" id="nav-evening" onclick="switchPhase('evening')">🌙 Вечер</button>
+  <button class="nb" id="nav-decor" onclick="switchPhase('decor')">🏠 Интерьер</button>
 </div>
 
-<!-- NOTIFICATIONS -->
-<div id="notif-wrap"></div>
+<div id="nw"></div>
 
-<!-- MODAL -->
-<div id="modal-overlay">
-  <div id="modal-box">
-    <h2 id="modal-title"></h2>
-    <p id="modal-body" style="margin:10px 0 20px;color:rgba(28,10,0,0.7);font-size:14px"></p>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-outline" onclick="closeModal()">Отмена</button>
-      <button class="btn btn-primary" id="modal-confirm">Подтвердить</button>
+<!-- RECIPE BOOK MODAL -->
+<div id="rb-overlay">
+  <div id="rb-modal">
+    <h2>📖 Книга рецептов</h2>
+    <div class="sub">Перетащите ингредиенты на стол, чтобы создать блюдо</div>
+    <div class="rb-section">Выпечка</div>
+    <div class="rb-grid" id="rb-bakery"></div>
+    <div class="rb-section">Напитки</div>
+    <div class="rb-grid" id="rb-drinks"></div>
+    <div class="rb-section" id="rb-special-hdr" style="display:none">Особые</div>
+    <div class="rb-grid" id="rb-special"></div>
+    <div style="margin-top:18px;text-align:right">
+      <button class="btn btn-o" onclick="closeRB()">Закрыть</button>
     </div>
   </div>
 </div>
 
-<!-- ========== MORNING PHASE ========== -->
+<!-- MORNING -->
 <div id="phase-morning" class="active">
-  <!-- Column 1: Ingredients -->
   <div class="panel">
     <h3>Ингредиенты</h3>
-    <div id="ingredients-list"></div>
-    <div style="margin-top:12px;padding:8px;background:var(--cream);border-radius:8px;font-size:12px;color:rgba(28,10,0,0.6)">
-      Перетащите ингредиенты на стол, чтобы создать рецепт
-    </div>
+    <div id="ing-list"></div>
   </div>
-
-  <!-- Column 2: Table / Recipe crafting -->
   <div class="panel">
     <h3>Рабочий стол</h3>
-    <div id="drop-table">
-      <div id="table-hint">Перетащите ингредиенты сюда</div>
-    </div>
-    <div id="experiment-banner">
-      ✨ Неизвестная комбинация — попробуйте, вдруг получится что-то новое!
-    </div>
-    <div id="recipe-match">
-      <div class="match-label">Распознан рецепт</div>
-      <div id="match-result" style="color:rgba(28,10,0,0.4);font-size:13px">Пока ничего...</div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-primary" onclick="addToShowcase()" id="btn-add-showcase">Добавить в витрину</button>
-      <button class="btn btn-outline" onclick="clearTable()" style="padding:10px 14px">Очистить</button>
-      <button class="btn" style="background:var(--sage);color:#fff;padding:10px 14px" onclick="tryExperiment()" id="btn-experiment">Эксперимент</button>
+    <div id="drop-zone"><div id="drop-hint">Перетащите ингредиенты сюда</div></div>
+    <div id="exp-hint">✨ Неизвестная комбинация — попробуйте эксперимент!</div>
+    <div id="rec-match"><div class="rm-label">Распознан рецепт</div><div id="rm-res" style="color:rgba(28,10,0,.4);font-size:13px">Пока ничего...</div></div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <button class="btn btn-p" onclick="addToShowcase()">Добавить в витрину</button>
+      <button class="btn btn-s" onclick="tryExp()">Эксперимент 🧪</button>
+      <button class="btn btn-o" onclick="clearTable()">Очистить</button>
     </div>
   </div>
-
-  <!-- Column 3: Showcase & budget -->
   <div class="panel">
     <h3>Витрина</h3>
+    <button class="btn btn-o" id="rec-book-btn" onclick="openRB()">📖 Книга рецептов</button>
     <div id="budget-bar">
-      <div class="lbl">Бюджет: <strong id="budget-left">500 ₽</strong> из 500 ₽</div>
-      <div id="budget-progress"><div id="budget-fill" style="width:0%"></div></div>
+      <div>Бюджет: <strong id="bleft">500 ₽</strong></div>
+      <div id="bprog"><div id="bfill" style="width:0%"></div></div>
     </div>
-    <div id="showcase-list"></div>
-    <div id="showcase-empty" style="color:rgba(28,10,0,0.4);font-size:13px;text-align:center;padding:20px">Витрина пуста — добавьте товары</div>
-    <div style="margin-top:12px">
-      <button class="btn btn-primary" style="width:100%" onclick="openBakery()">Открыть кофейню ☀️</button>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:rgba(28,10,0,0.4)">
-      Вместимость: <span id="cap-used">0</span>/20 позиций
-    </div>
+    <div id="sc-list"></div>
+    <div id="sc-empty" style="color:rgba(28,10,0,.4);font-size:13px;text-align:center;padding:18px">Витрина пуста</div>
+    <div style="margin-top:10px"><button class="btn btn-p" style="width:100%" onclick="openBakery()">Открыть кофейню ☀️</button></div>
+    <div style="margin-top:8px;font-size:11px;color:rgba(28,10,0,.4)">Позиций: <span id="cap-used">0</span>/20</div>
   </div>
 </div>
 
-<!-- ========== DAY PHASE ========== -->
+<!-- DAY -->
 <div id="phase-day">
-  <!-- Showcase sidebar -->
-  <div class="panel" id="day-showcase-panel">
+  <div class="panel" style="overflow-y:auto;max-height:calc(100vh - 140px)">
     <h3>Витрина</h3>
-    <div id="day-showcase"></div>
-    <div style="margin-top:12px;padding:10px;background:var(--cream);border-radius:8px">
-      <div style="font-size:12px;color:rgba(28,10,0,0.5)">Выручка сегодня</div>
+    <div id="day-sc"></div>
+    <div style="margin-top:10px;padding:9px;background:var(--cream);border-radius:9px">
+      <div style="font-size:11px;color:rgba(28,10,0,.5)">Выручка</div>
       <div id="day-earned" style="font-size:22px;font-weight:700;color:var(--caramel)">0 ₽</div>
     </div>
-    <div style="margin-top:8px">
-      <button class="btn btn-outline" style="width:100%;font-size:12px" onclick="endDay()">Закрыть кофейню 🌙</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-o" style="width:100%;font-size:12px" onclick="endDay()">Закрыть кофейню 🌙</button></div>
   </div>
-
-  <!-- Canvas zone -->
   <div>
-    <div class="panel" style="padding:12px">
+    <div class="panel" style="padding:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <h3 style="margin:0">Зал кофейни</h3>
+        <h3 style="margin:0;font-size:14px">Зал кофейни</h3>
         <div id="day-timer">00:00</div>
       </div>
       <div id="canvas-wrap">
-        <canvas id="game-canvas" width="720" height="360"></canvas>
+        <canvas id="gc" width="760" height="420"></canvas>
       </div>
-      <div id="active-customer-info">
-        <div id="cust-want"></div>
+      <div id="cust-info">Ждём первых гостей...</div>
+      <div id="sell-area">
+        <button class="btn" id="btn-sell" onclick="sellToCust()">Обслужить ✓</button>
+        <button class="btn" id="btn-no" onclick="rejectCust()">Нет в наличии ✗</button>
+        <button class="btn btn-o" id="btn-auto" onclick="toggleAuto()">Авто: ВЫКЛ</button>
       </div>
-      <div id="sell-controls">
-        <button class="btn" id="btn-sell" onclick="sellToCustomer()">Продать ✓</button>
-        <button class="btn" id="btn-no" onclick="rejectCustomer()">Нет в наличии ✗</button>
-        <button class="btn btn-outline" id="btn-auto" onclick="toggleAuto()">Авто: ВЫКЛ</button>
-      </div>
-      <div id="queue-status">
-        <span style="font-size:11px;color:rgba(28,10,0,0.5)">Очередь:</span>
-        <div class="queue-dot" id="qd0"></div>
-        <div class="queue-dot" id="qd1"></div>
-        <div class="queue-dot" id="qd2"></div>
-        <div class="queue-dot" id="qd3"></div>
-        <div class="queue-dot" id="qd4"></div>
+      <div id="queue-row">
+        <span style="font-size:11px;color:rgba(28,10,0,.5)">Очередь:</span>
+        <div class="qd" id="qd0"></div><div class="qd" id="qd1"></div><div class="qd" id="qd2"></div><div class="qd" id="qd3"></div><div class="qd" id="qd4"></div>
       </div>
       <div id="day-log"></div>
     </div>
   </div>
 </div>
 
-<!-- ========== EVENING PHASE ========== -->
+<!-- EVENING -->
 <div id="phase-evening">
-  <div id="evening-title">День завершён!</div>
-  <div id="evening-subtitle">Подведём итоги работы пекарни</div>
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="val" id="ev-earned">0 ₽</div>
-      <div class="lbl">Выручка</div>
-    </div>
-    <div class="stat-card">
-      <div class="val" id="ev-sold">0</div>
-      <div class="lbl">Продано позиций</div>
-    </div>
-    <div class="stat-card">
-      <div class="val" id="ev-rep">0%</div>
-      <div class="lbl">Репутация</div>
-    </div>
+  <div id="ev-title">День завершён!</div>
+  <div id="ev-sub">Итоги работы пекарни-кофейни</div>
+  <div class="sg">
+    <div class="sc"><div class="v" id="ev-earned">0 ₽</div><div class="l">Выручка</div></div>
+    <div class="sc"><div class="v" id="ev-sold">0</div><div class="l">Продано</div></div>
+    <div class="sc"><div class="v" id="ev-rep">0%</div><div class="l">Репутация</div></div>
   </div>
-
-  <div id="top-sales" class="panel">
-    <h3>Топ продаж</h3>
-    <div id="sales-bars"></div>
-  </div>
-
-  <div id="leftover-section" class="panel">
+  <div id="ts" class="panel" style="margin-bottom:14px"><h3>Топ продаж</h3><div id="sales-bars"></div></div>
+  <div class="lft-sec panel" style="margin-bottom:14px">
     <h3>Остатки</h3>
-    <div id="leftover-list"></div>
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button class="btn btn-secondary" onclick="sellLeftovers()">Продать со скидкой 50%</button>
-      <button class="btn btn-outline" onclick="throwLeftovers()">Выбросить</button>
+    <div id="lft-list"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-s" onclick="sellLeftovers()">Продать −50%</button>
+      <button class="btn btn-o" onclick="throwLeftovers()">Выбросить</button>
     </div>
   </div>
-
-  <div id="unlock-section">
-    <div style="font-size:32px;margin-bottom:8px">🎉</div>
+  <div id="unlock-sec">
+    <div style="font-size:28px">🎉</div>
     <h3>Новый рецепт разблокирован!</h3>
     <div id="unlock-name"></div>
-    <p id="unlock-desc"></p>
+    <p id="unlock-desc" style="opacity:.85;font-size:13px;margin-top:4px"></p>
   </div>
-
-  <div style="text-align:center;margin-top:20px">
-    <button class="btn btn-primary" style="font-size:16px;padding:14px 40px" onclick="nextDay()">Следующий день →</button>
+  <div style="text-align:center;margin-top:18px">
+    <button class="btn btn-p" style="font-size:15px;padding:13px 36px" onclick="nextDay()">Следующий день →</button>
   </div>
 </div>
 
-<!-- ========== DECOR PHASE ========== -->
+<!-- DECOR -->
 <div id="phase-decor">
-  <div>
-    <div class="panel" id="decor-preview">
-      <h3>Интерьер кофейни</h3>
-      <div id="decor-canvas-wrap">
-        <canvas id="decor-canvas" width="600" height="320"></canvas>
-      </div>
-      <div style="margin-top:10px;font-size:12px;color:rgba(28,10,0,0.5)">
-        Уютный интерьер привлекает больше хипстеров и туристов
-      </div>
-    </div>
+  <div class="panel">
+    <h3>Интерьер кофейни</h3>
+    <canvas id="dc" width="600" height="340"></canvas>
+    <div style="margin-top:8px;font-size:12px;color:rgba(28,10,0,.5)">Уютный интерьер привлекает больше гостей</div>
   </div>
-  <div>
-    <div class="panel">
-      <h3>Магазин декора</h3>
-      <div id="decor-shop-list"></div>
-    </div>
+  <div class="panel">
+    <h3>Магазин декора</h3>
+    <div id="decor-list"></div>
   </div>
 </div>
 
 <script>
-// =============================================
-// GAME DATA
-// =============================================
-const DAYS_OF_WEEK = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+// ─── DATA ────────────────────────────────────────────────
+const DAYS = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
 const WEATHERS = [
-  {name:'Солнечно',icon:'🌤',modifier:{coffee:1.2,cold:1.1}},
-  {name:'Облачно',icon:'☁️',modifier:{coffee:1.1,cold:1.0}},
-  {name:'Дождь',icon:'🌧',modifier:{coffee:1.3,hot:1.2,cold:0.8}},
-  {name:'Жара',icon:'☀️',modifier:{cold:1.4,coffee:0.9}},
-  {name:'Ветер',icon:'💨',modifier:{coffee:1.15,hot:1.1}}
+  {name:'Солнечно',icon:'🌤'},{name:'Облачно',icon:'☁️'},{name:'Дождь',icon:'🌧'},
+  {name:'Жара',icon:'☀️'},{name:'Ветер',icon:'💨'}
 ];
 
-const INGREDIENTS = [
-  {id:'flour',name:'Мука',color:'#f5deb3'},
-  {id:'butter',name:'Масло',color:'#ffd700'},
-  {id:'milk',name:'Молоко',color:'#f0f8ff'},
-  {id:'sugar',name:'Сахар',color:'#fff8dc'},
-  {id:'cinnamon',name:'Корица',color:'#8b4513'},
-  {id:'eggs',name:'Яйца',color:'#ffa500'},
-  {id:'blueberry',name:'Черника',color:'#4b0082'},
-  {id:'water',name:'Вода',color:'#87ceeb'},
-  {id:'yeast',name:'Дрожжи',color:'#d4b483'},
-  {id:'chocolate',name:'Шоколад',color:'#3d1c00'},
-  {id:'coffee',name:'Кофе',color:'#3d1c00'},
-  {id:'foam',name:'Молочная пена',color:'#fffaf0'},
-  {id:'lemon',name:'Лимон',color:'#ffd700'},
+const INGS = [
+  {id:'flour',name:'Мука',clr:'#f5deb3'},{id:'butter',name:'Масло',clr:'#ffd700'},
+  {id:'milk',name:'Молоко',clr:'#e8f4f8'},{id:'sugar',name:'Сахар',clr:'#fff8dc'},
+  {id:'cinnamon',name:'Корица',clr:'#8b4513'},{id:'eggs',name:'Яйца',clr:'#ffa040'},
+  {id:'blueberry',name:'Черника',clr:'#6a0dad'},{id:'water',name:'Вода',clr:'#87ceeb'},
+  {id:'yeast',name:'Дрожжи',clr:'#d4b483'},{id:'chocolate',name:'Шоколад',clr:'#3d1c00'},
+  {id:'coffee',name:'Кофе',clr:'#4a2000'},{id:'foam',name:'Пена',clr:'#fffaf0'},
+  {id:'lemon',name:'Лимон',clr:'#ffe066'},
 ];
 
 const RECIPES = [
-  {id:'croissant',name:'Круассан',price:80,ingredients:['flour','butter','milk'],category:'bakery',color:'#f4c777'},
-  {id:'cinnamon_bun',name:'Булочка с корицей',price:65,ingredients:['flour','sugar','cinnamon'],category:'bakery',color:'#c8873a'},
-  {id:'blueberry_muffin',name:'Маффин черничный',price:90,ingredients:['flour','eggs','blueberry'],category:'bakery',color:'#7b6fa0'},
-  {id:'baguette',name:'Багет',price:70,ingredients:['flour','water','yeast'],category:'bakery',color:'#e8c87a'},
-  {id:'eclair',name:'Эклер',price:120,ingredients:['flour','eggs','chocolate'],category:'bakery',color:'#5c3317'},
-  {id:'espresso',name:'Эспрессо',price:90,ingredients:['coffee','water'],category:'drink',color:'#3d1c00'},
-  {id:'cappuccino',name:'Капучино',price:140,ingredients:['coffee','milk','foam'],category:'drink',color:'#c4956a'},
-  {id:'latte',name:'Латте',price:150,ingredients:['coffee','milk','milk'],category:'drink',color:'#d4a87a'},
-  {id:'lemonade',name:'Лимонад',price:80,ingredients:['lemon','water','sugar'],category:'drink',color:'#fffaaa'},
-  // Unlockable
-  {id:'almond_croissant',name:'Круассан с миндалём',price:110,ingredients:['flour','butter','milk'],category:'bakery',color:'#e8c87a',locked:true},
-  {id:'honey_cake',name:'Торт медовик',price:200,ingredients:['flour','eggs','sugar'],category:'bakery',color:'#c8873a',locked:true},
-  {id:'matcha_latte',name:'Матча латте',price:170,ingredients:['coffee','milk','foam'],category:'drink',color:'#4a7c59',locked:true},
-  {id:'recipe_of_day',name:'Авторский рецепт дня',price:130,ingredients:[],category:'special',color:'#9b59b6',locked:true},
-  {id:'breakfast_menu',name:'Меню завтрака',price:250,ingredients:['flour','eggs','butter'],category:'special',color:'#e74c3c',locked:true},
+  {id:'croissant',name:'Круассан',price:80,ings:['flour','butter','milk'],cat:'bakery'},
+  {id:'cinnamon_bun',name:'Булочка с корицей',price:65,ings:['flour','sugar','cinnamon'],cat:'bakery'},
+  {id:'muffin',name:'Маффин черничный',price:90,ings:['flour','eggs','blueberry'],cat:'bakery'},
+  {id:'baguette',name:'Багет',price:70,ings:['flour','water','yeast'],cat:'bakery'},
+  {id:'eclair',name:'Эклер',price:120,ings:['flour','eggs','chocolate'],cat:'bakery'},
+  {id:'espresso',name:'Эспрессо',price:90,ings:['coffee','water'],cat:'drink'},
+  {id:'cappuccino',name:'Капучино',price:140,ings:['coffee','milk','foam'],cat:'drink'},
+  {id:'latte',name:'Латте',price:150,ings:['coffee','milk','milk'],cat:'drink'},
+  {id:'lemonade',name:'Лимонад',price:80,ings:['lemon','water','sugar'],cat:'drink'},
+  {id:'almond_croissant',name:'Круассан с миндалём',price:110,ings:['flour','butter','milk'],cat:'bakery',locked:true},
+  {id:'honey_cake',name:'Торт медовик',price:200,ings:['flour','eggs','sugar'],cat:'bakery',locked:true},
+  {id:'matcha_latte',name:'Матча латте',price:170,ings:['coffee','milk','foam'],cat:'drink',locked:true},
+  {id:'recipe_of_day',name:'Авторский рецепт',price:130,ings:[],cat:'special',locked:true},
+  {id:'breakfast',name:'Меню завтрака',price:250,ings:['flour','eggs','butter'],cat:'special',locked:true},
 ];
 
-const CUSTOMER_TYPES = [
-  {id:'student',name:'Студент',speed:1.2,patience:15,budget:150,preferences:['espresso','baguette','cinnamon_bun'],tip:0.05,svgColor:'#4a90d9'},
-  {id:'businesswoman',name:'Бизнес-леди',speed:1.8,patience:12,budget:400,preferences:['latte','cappuccino','croissant'],tip:0.2,svgColor:'#2c3e50'},
-  {id:'tourist',name:'Турист',speed:1.0,patience:25,budget:500,preferences:null,tip:0.15,svgColor:'#e67e22'},
-  {id:'hipster',name:'Хипстер',speed:1.1,patience:20,budget:350,preferences:['matcha_latte','eclair','recipe_of_day'],tip:0.1,svgColor:'#8e44ad'},
-  {id:'granny',name:'Пенсионерка',speed:0.6,patience:30,budget:200,preferences:['lemonade','baguette','cinnamon_bun'],tip:0.0,svgColor:'#7f8c8d'},
-  {id:'mom',name:'Мама с коляской',speed:0.8,patience:22,budget:600,preferences:['latte','croissant','blueberry_muffin'],tip:0.05,rarity:0.1,svgColor:'#e91e8c'}
+const CTYPES = [
+  {id:'student',name:'Студент',speed:1.2,patience:15,prefs:['espresso','baguette','cinnamon_bun'],tip:.05,clr:'#4a90d9',hair:'#3a2a1a',shirt:'#4a90d9'},
+  {id:'bizlady',name:'Бизнес-леди',speed:1.8,patience:12,prefs:['latte','cappuccino','croissant'],tip:.2,clr:'#2c3e50',hair:'#1a0a00',shirt:'#2c3e50'},
+  {id:'tourist',name:'Турист',speed:1.0,patience:25,prefs:null,tip:.15,clr:'#e67e22',hair:'#c0a060',shirt:'#e67e22'},
+  {id:'hipster',name:'Хипстер',speed:1.1,patience:20,prefs:['matcha_latte','eclair','recipe_of_day'],tip:.1,clr:'#8e44ad',hair:'#2c1a0a',shirt:'#8e44ad'},
+  {id:'granny',name:'Пенсионерка',speed:0.6,patience:30,prefs:['lemonade','baguette','cinnamon_bun'],tip:0,clr:'#7f8c8d',hair:'#ddd',shirt:'#9b59b6'},
+  {id:'mom',name:'Мама с коляской',speed:0.8,patience:22,prefs:['latte','croissant','muffin'],tip:.05,clr:'#e91e8c',hair:'#8b4513',shirt:'#e91e8c'},
 ];
 
-const DECOR_ITEMS = [
-  {id:'table',name:'Уютный столик',desc:'Добавляет атмосферу, +5% туристы',price:300,icon:'🪑',effect:{tourist:1.05}},
-  {id:'painting',name:'Картина на стене',desc:'Привлекает хипстеров +10%',price:500,icon:'🖼',effect:{hipster:1.1}},
-  {id:'plant',name:'Живое растение',desc:'Создаёт уют, +репутация 2%',price:200,icon:'🌿',effect:{rep:2}},
-  {id:'lighting',name:'Тёплое освещение',desc:'Все клиенты довольнее +5%',price:800,icon:'💡',effect:{all:1.05}},
-  {id:'menu_board',name:'Меловая доска',desc:'Специальные предложения видны',price:400,icon:'📋',effect:{sales:1.08}},
-  {id:'jazz',name:'Живая музыка',desc:'Клиенты остаются дольше +30% терпение',price:1200,icon:'🎵',effect:{patience:1.3}},
+const DECORS = [
+  {id:'table',name:'Уютный столик',desc:'+5% туристов',price:300,icon:'🪑'},
+  {id:'painting',name:'Картина',desc:'+10% хипстеров',price:500,icon:'🖼'},
+  {id:'plant',name:'Растение',desc:'+2% репутация',price:200,icon:'🌿'},
+  {id:'lighting',name:'Тёплый свет',desc:'+5% все клиенты',price:800,icon:'💡'},
+  {id:'menu_board',name:'Меловая доска',desc:'+8% продажи',price:400,icon:'📋'},
+  {id:'jazz',name:'Живая музыка',desc:'+30% терпение',price:1200,icon:'🎵'},
 ];
 
-// =============================================
-// GAME STATE
-// =============================================
-let state = {
-  day: 1,
-  money: 500,
-  reputation: 50,
-  phase: 'morning',
-  weather: WEATHERS[0],
-  showcase: {},       // recipeId: qty
-  tableIngredients: [],
-  dayStats: {earned:0, sold:{}, unhappy:0, experiments:0},
-  unlockedRecipes: ['croissant','cinnamon_bun','blueberry_muffin','baguette','eclair','espresso','cappuccino','latte','lemonade'],
-  shopDecor: {},      // decorId: true
-  totalStats: { croissantsSold:0, maxDayEarned:0, goodRepDays:0, day5passed:false, experiments:0 },
-  autoSell: false,
-  dayEarned: 0,
+// ─── STATE ────────────────────────────────────────────────
+let S = {
+  day:1, money:500, rep:50, weather:WEATHERS[0],
+  showcase:{}, table:[], dayStats:{earned:0,sold:{},unhappy:0,exp:0},
+  unlocked:['croissant','cinnamon_bun','muffin','baguette','eclair','espresso','cappuccino','latte','lemonade'],
+  decor:{}, totalStats:{croissants:0,maxDay:0,repDays:0,day5:false,exps:0},
+  autoSell:false, dayEarned:0,
 };
+let budgetUsed = 0;
 
-// =============================================
-// AUDIO
-// =============================================
-let audioCtx = null;
-function getAudio(){
-  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  return audioCtx;
-}
-function playTone(freq, type='sine', dur=0.15, vol=0.3){
-  try {
-    const ctx = getAudio();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.type = type; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(vol, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+dur);
-    osc.start(); osc.stop(ctx.currentTime+dur);
-  } catch(e){}
-}
-function playSell(){ playTone(880,'sine',0.15,0.25); setTimeout(()=>playTone(1100,'sine',0.1,0.2),80); }
-function playError(){ playTone(220,'sawtooth',0.2,0.2); }
-function playBrew(){
-  [300,320,310,330,290].forEach((f,i)=>setTimeout(()=>playTone(f,'sine',0.1,0.15),i*120));
-}
-function playUnlock(){ [440,550,660,880].forEach((f,i)=>setTimeout(()=>playTone(f,'sine',0.2,0.3),i*150)); }
+// ─── AUDIO ───────────────────────────────────────────────
+let aCtx;
+function ac(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx;}
+function tone(f,t='sine',d=.15,v=.25){try{const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
+function ding(){tone(880);setTimeout(()=>tone(1100,'sine',.1),80);}
+function boop(){tone(220,'sawtooth',.2,.2);}
+function brew(){[300,320,310,330].forEach((f,i)=>setTimeout(()=>tone(f,'sine',.1,.12),i*110));}
+function fanfare(){[440,550,660,880].forEach((f,i)=>setTimeout(()=>tone(f,'sine',.2,.28),i*140));}
 
-// =============================================
-// SAVE / LOAD
-// =============================================
-async function saveGame(){
-  const payload = JSON.stringify(state);
-  localStorage.setItem('lafournee_save', payload);
-  try {
-    await fetch('/api/save', {method:'POST', headers:{'Content-Type':'application/json'}, body: payload});
-  } catch(e){}
+// ─── SAVE/LOAD ────────────────────────────────────────────
+async function save(){
+  const p=JSON.stringify(S);
+  localStorage.setItem('lf',p);
+  try{await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:p});}catch(e){}
 }
-async function loadGame(){
-  try {
-    const r = await fetch('/api/load');
-    if(r.ok){ const d = await r.json(); if(d && d.day) { Object.assign(state,d); return true; } }
-  } catch(e){}
-  const saved = localStorage.getItem('lafournee_save');
-  if(saved){ try{ Object.assign(state, JSON.parse(saved)); return true; }catch(e){} }
-  return false;
+async function load(){
+  try{const r=await fetch('/api/load');if(r.ok){const d=await r.json();if(d&&d.day){Object.assign(S,d);return;}}}catch(e){}
+  const s=localStorage.getItem('lf');if(s){try{Object.assign(S,JSON.parse(s));}catch(e){}}
 }
 
-// =============================================
-// NOTIFICATIONS
-// =============================================
-function notify(msg, type='info'){
-  const wrap = document.getElementById('notif-wrap');
-  const el = document.createElement('div');
-  el.className = `notif notif-${type}`;
-  el.textContent = msg;
-  wrap.appendChild(el);
-  setTimeout(()=>{ el.classList.add('notif-exit'); setTimeout(()=>el.remove(),300); }, 2500);
+// ─── NOTIFY ──────────────────────────────────────────────
+function notify(msg,t='i'){
+  const w=document.getElementById('nw'),el=document.createElement('div');
+  el.className=`notif ${t}`;el.textContent=msg;w.appendChild(el);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),320);},2400);
 }
 
-// =============================================
-// SVG ICONS
-// =============================================
-function svgIngredient(id){
-  const colors = {flour:'#f5e6c8',butter:'#ffd700',milk:'#e8f4f8',sugar:'#fff8dc',cinnamon:'#8b4513',eggs:'#ffa500',blueberry:'#6a0dad',water:'#87ceeb',yeast:'#d4b483',chocolate:'#3d1c00',coffee:'#5c3317',foam:'#fffaf0',lemon:'#ffd700'};
-  const c = colors[id]||'#ccc';
-  return `<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="${c}" stroke="#1C0A0040" stroke-width="1"/></svg>`;
-}
-
-function svgRecipeIcon(id){
-  const icons = {
-    croissant:`<svg width="28" height="28" viewBox="0 0 32 32"><path d="M6 24 C8 12, 16 6, 26 8 C22 14, 14 18, 6 24Z" fill="#f4c777" stroke="#c8873a" stroke-width="1.5"/><path d="M8 22 C10 14, 18 10, 24 10" fill="none" stroke="#e8a850" stroke-width="1"/></svg>`,
-    cinnamon_bun:`<svg width="28" height="28" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#c8873a"/><path d="M10 16 Q16 10 22 16 Q16 22 10 16" fill="#8b4513" opacity="0.6"/></svg>`,
-    blueberry_muffin:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="10" y="14" width="12" height="12" rx="2" fill="#c8873a"/><ellipse cx="16" cy="14" rx="8" ry="5" fill="#d4956a"/><circle cx="13" cy="17" r="2" fill="#4b0082"/><circle cx="18" cy="20" r="2" fill="#4b0082"/></svg>`,
-    baguette:`<svg width="28" height="28" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="12" ry="5" fill="#e8c87a" transform="rotate(-30 16 16)"/><line x1="12" y1="12" x2="20" y2="20" stroke="#c8973a" stroke-width="1.5"/></svg>`,
-    eclair:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="6" y="11" width="20" height="10" rx="5" fill="#d4956a"/><rect x="6" y="11" width="20" height="5" rx="5" fill="#3d1c00"/></svg>`,
-    espresso:`<svg width="28" height="28" viewBox="0 0 32 32"><path d="M10 14 L22 14 L20 24 L12 24Z" fill="#5c3317"/><path d="M10 14 L22 14" stroke="#3d1c00" stroke-width="2" stroke-linecap="round"/><path d="M14 8 Q14 4 16 6 Q18 4 18 8" fill="none" stroke="#aaa" stroke-width="1.5" class="steam-path"/></svg>`,
-    cappuccino:`<svg width="28" height="28" viewBox="0 0 32 32"><path d="M8 14 L24 14 L22 26 L10 26Z" fill="#c4956a"/><ellipse cx="16" cy="14" rx="8" ry="3" fill="#fff8f0"/><path d="M13 8 Q13 4 15 6" fill="none" stroke="#bbb" stroke-width="1.5" class="steam-path"/><path d="M19 8 Q19 4 17 6" fill="none" stroke="#bbb" stroke-width="1.5" class="steam-path"/></svg>`,
-    latte:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="7" y="12" width="18" height="14" rx="3" fill="#d4a87a"/><rect x="7" y="12" width="18" height="6" rx="3" fill="#fff8f0"/><path d="M12 8 Q12 4 14 6" fill="none" stroke="#bbb" stroke-width="1.5" class="steam-path"/></svg>`,
-    lemonade:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="9" y="10" width="14" height="18" rx="3" fill="#fff8aa"/><path d="M9 10 L23 10" stroke="#ffe066" stroke-width="2"/><circle cx="14" cy="18" r="2" fill="#ffd700" opacity="0.7"/><circle cx="18" cy="15" r="1.5" fill="#ffd700" opacity="0.7"/><line x1="18" y1="8" x2="18" y2="12" stroke="#4a7c59" stroke-width="2"/></svg>`,
-    almond_croissant:`<svg width="28" height="28" viewBox="0 0 32 32"><path d="M6 24 C8 12, 16 6, 26 8 C22 14, 14 18, 6 24Z" fill="#e8c87a" stroke="#c8873a" stroke-width="1.5"/><line x1="14" y1="12" x2="18" y2="18" stroke="#fff" stroke-width="1"/></svg>`,
-    honey_cake:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="6" y="14" width="20" height="12" rx="2" fill="#c8873a"/><rect x="6" y="10" width="20" height="6" rx="2" fill="#e8c87a"/><path d="M12 10 Q12 6 16 8 Q20 6 20 10" fill="#ffd700"/></svg>`,
-    matcha_latte:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="7" y="12" width="18" height="14" rx="3" fill="#4a7c59"/><rect x="7" y="12" width="18" height="6" rx="3" fill="#fff8f0"/></svg>`,
-    recipe_of_day:`<svg width="28" height="28" viewBox="0 0 32 32"><polygon points="16,4 19,12 28,12 21,18 24,26 16,21 8,26 11,18 4,12 13,12" fill="#9b59b6"/></svg>`,
-    breakfast_menu:`<svg width="28" height="28" viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" rx="3" fill="#e8c87a" stroke="#c8873a" stroke-width="1.5"/><line x1="8" y1="14" x2="24" y2="14" stroke="#c8873a" stroke-width="1.5"/><line x1="8" y1="18" x2="18" y2="18" stroke="#c8873a" stroke-width="1.5"/></svg>`,
+// ─── SVG ICONS ───────────────────────────────────────────
+function ingIcon(id,size=28){
+  const icons={
+    flour:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="8" y="10" width="16" height="14" rx="2" fill="#f5deb3" stroke="#d4b080" stroke-width="1.5"/><ellipse cx="16" cy="10" rx="8" ry="4" fill="#e8c87a"/><line x1="12" y1="14" x2="20" y2="14" stroke="#d4b080" stroke-width="1"/><line x1="12" y1="18" x2="20" y2="18" stroke="#d4b080" stroke-width="1"/></svg>`,
+    butter:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="6" y="12" width="20" height="10" rx="3" fill="#ffd700" stroke="#e6b800" stroke-width="1.5"/><rect x="6" y="12" width="20" height="4" rx="3" fill="#ffe566"/></svg>`,
+    milk:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M11 8 L9 24 Q9 26 16 26 Q23 26 23 24 L21 8Z" fill="#e8f4f8" stroke="#b0d0e0" stroke-width="1.5"/><path d="M10 8 L12 5 H20 L22 8Z" fill="#c8e8f0"/><ellipse cx="16" cy="16" rx="4" ry="2" fill="rgba(255,255,255,0.5)"/></svg>`,
+    sugar:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="9" y="11" width="14" height="13" rx="2" fill="#fff8dc" stroke="#e8d890" stroke-width="1.5"/><circle cx="13" cy="16" r="1.5" fill="#fff"/><circle cx="16" cy="14" r="1" fill="#fff"/><circle cx="19" cy="17" r="1.5" fill="#fff"/><circle cx="14" cy="19" r="1" fill="#fff"/></svg>`,
+    cinnamon:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="12" y="6" width="8" height="20" rx="4" fill="#8b4513" stroke="#6b3010" stroke-width="1"/><path d="M14 10 Q18 12 14 16 Q18 18 14 22" fill="none" stroke="#a0522d" stroke-width="1"/></svg>`,
+    eggs:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="17" rx="7" ry="9" fill="#ffa040" stroke="#e08030" stroke-width="1.5"/><ellipse cx="16" cy="17" rx="4" ry="5" fill="#ffe0a0"/></svg>`,
+    blueberry:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><circle cx="16" cy="16" r="9" fill="#6a0dad" stroke="#500a9a" stroke-width="1.5"/><circle cx="13" cy="13" r="3" fill="#8b2fd4"/><circle cx="19" cy="14" r="2.5" fill="#7a1ac0"/><circle cx="15" cy="19" r="3" fill="#7a1ac0"/><circle cx="16" cy="12" r="1.5" fill="rgba(255,255,255,0.3)"/></svg>`,
+    water:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M16 6 Q22 14 22 19 A6 6 0 0 1 10 19 Q10 14 16 6Z" fill="#87ceeb" stroke="#5aabce" stroke-width="1.5"/><path d="M13 20 Q16 22 19 20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    yeast:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="8" y="10" width="16" height="12" rx="3" fill="#d4b483" stroke="#b09060" stroke-width="1.5"/><circle cx="12" cy="14" r="2" fill="#e8c87a"/><circle cx="16" cy="17" r="2.5" fill="#e8c87a"/><circle cx="20" cy="14" r="1.5" fill="#e8c87a"/></svg>`,
+    chocolate:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="6" y="9" width="20" height="14" rx="3" fill="#3d1c00" stroke="#2a1200" stroke-width="1.5"/><line x1="6" y1="14" x2="26" y2="14" stroke="#5c3317" stroke-width="1.5"/><line x1="16" y1="9" x2="16" y2="23" stroke="#5c3317" stroke-width="1.5"/><rect x="8" y="11" width="7" height="2" rx="1" fill="#5c3317"/><rect x="17" y="16" width="7" height="2" rx="1" fill="#5c3317"/></svg>`,
+    coffee:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="20" rx="8" ry="6" fill="#4a2000"/><ellipse cx="16" cy="18" rx="8" ry="4" fill="#6b3010"/><path d="M13 10 Q13 6 15 8 Q17 6 17 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M17 9 Q17 5 19 7 Q21 5 21 9" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    foam:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="10" ry="5" fill="#fffaf0" stroke="#e8e0d0" stroke-width="1"/><circle cx="11" cy="17" r="3" fill="#fff"/><circle cx="16" cy="15" r="4" fill="#fff"/><circle cx="21" cy="17" r="3" fill="#fff"/><circle cx="14" cy="20" r="2.5" fill="#fff"/><circle cx="19" cy="20" r="2" fill="#fff"/></svg>`,
+    lemon:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="10" ry="8" fill="#ffe066" stroke="#e6c800" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="10" ry="8" fill="none" stroke="#ffd700" stroke-width="2" stroke-dasharray="3,3"/><circle cx="16" cy="16" r="4" fill="#fff8a0"/></svg>`,
   };
-  return icons[id] || `<svg width="28" height="28" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#ccc"/></svg>`;
+  return icons[id]||`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#ccc"/></svg>`;
 }
 
-// =============================================
-// DRAW CUSTOMERS ON CANVAS
-// =============================================
-function drawCustomerOnCanvas(ctx, cust, x, y, bobOffset){
-  const t = cust.type;
-  const bob = Math.sin(bobOffset)*2;
-  ctx.save();
-  ctx.translate(x, y + bob);
-
-  // Body colors
-  const bodyColor = t.svgColor;
-
-  // Head
-  ctx.fillStyle = '#f5d5b0';
-  ctx.beginPath(); ctx.arc(0, -38, 10, 0, Math.PI*2); ctx.fill();
-
-  // Body
-  ctx.fillStyle = bodyColor;
-  ctx.fillRect(-10, -28, 20, 24);
-
-  // Legs (walking)
-  ctx.fillStyle = '#555';
-  const legAngle = Math.sin(bobOffset*2)*10;
-  // left leg
-  ctx.save(); ctx.rotate((-10+legAngle)*Math.PI/180);
-  ctx.fillRect(-6, -4, 5, 20); ctx.restore();
-  // right leg
-  ctx.save(); ctx.rotate((10-legAngle)*Math.PI/180);
-  ctx.fillRect(1, -4, 5, 20); ctx.restore();
-
-  // Archetype details
-  if(t.id === 'student'){
-    // Backpack
-    ctx.fillStyle = '#e74c3c';
-    ctx.fillRect(10, -26, 8, 16);
-  } else if(t.id === 'businesswoman'){
-    // Briefcase
-    ctx.fillStyle = '#2c3e50';
-    ctx.fillRect(11, -10, 10, 8); ctx.strokeStyle='#fff'; ctx.lineWidth=1;
-    ctx.strokeRect(13,-12,6,3);
-    // Hair bun
-    ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(0,-46,6,0,Math.PI*2); ctx.fill();
-  } else if(t.id === 'tourist'){
-    // Camera
-    ctx.fillStyle = '#333'; ctx.fillRect(-18,-20,10,8);
-    // Hat
-    ctx.fillStyle = '#e67e22'; ctx.fillRect(-12,-52,24,6); ctx.fillRect(-8,-58,16,8);
-  } else if(t.id === 'hipster'){
-    // Glasses
-    ctx.strokeStyle='#333'; ctx.lineWidth=1.5;
-    ctx.strokeRect(-10,-40,8,6); ctx.strokeRect(2,-40,8,6); ctx.moveTo(-2,-37); ctx.lineTo(2,-37); ctx.stroke();
-    // Beard
-    ctx.fillStyle = '#555';
-    ctx.beginPath(); ctx.arc(0,-30,6,0,Math.PI); ctx.fill();
-    // Man-bun
-    ctx.fillStyle = '#555'; ctx.beginPath(); ctx.arc(0,-50,5,0,Math.PI*2); ctx.fill();
-  } else if(t.id === 'granny'){
-    // Shawl
-    ctx.fillStyle = '#9b59b6'; ctx.beginPath(); ctx.moveTo(-14,-26); ctx.lineTo(14,-26); ctx.lineTo(8,0); ctx.lineTo(-8,0); ctx.closePath(); ctx.fill();
-    // White hair
-    ctx.fillStyle = '#ddd'; ctx.beginPath(); ctx.arc(0,-46,8,0,Math.PI); ctx.fill();
-  } else if(t.id === 'mom'){
-    // Stroller
-    ctx.fillStyle = '#e91e8c'; ctx.fillRect(12,-10,18,12); ctx.beginPath(); ctx.arc(14,2,4,0,Math.PI*2); ctx.fillStyle='#333'; ctx.fill();
-    ctx.beginPath(); ctx.arc(28,2,4,0,Math.PI*2); ctx.fill();
-    ctx.strokeStyle='#e91e8c'; ctx.lineWidth=2; ctx.moveTo(12,-10); ctx.lineTo(10,-20); ctx.stroke();
-  }
-
-  ctx.restore();
+function recipeIcon(id,size=36){
+  const icons={
+    croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#f4c777" stroke="#c8873a" stroke-width="2"/><path d="M10 30 C13 18 22 12 30 12" fill="none" stroke="#e8a850" stroke-width="1.5" stroke-linecap="round"/><path d="M12 26 C15 20 22 16 28 15" fill="none" stroke="#e8a850" stroke-width="1" stroke-linecap="round"/></svg>`,
+    cinnamon_bun:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" fill="#c8873a"/><path d="M12 20 Q16 12 20 20 Q24 28 28 20" fill="none" stroke="#8b4513" stroke-width="2.5" stroke-linecap="round"/><path d="M13 22 Q17 14 20 22" fill="none" stroke="#8b4513" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    muffin:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="12" y="20" width="16" height="14" rx="3" fill="#c8873a"/><ellipse cx="20" cy="20" rx="10" ry="6" fill="#d4956a"/><circle cx="16" cy="23" r="2.5" fill="#4b0082"/><circle cx="22" cy="27" r="2.5" fill="#4b0082"/><circle cx="25" cy="22" r="2" fill="#4b0082"/></svg>`,
+    baguette:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="15" ry="6" fill="#e8c87a" transform="rotate(-25 20 20)" stroke="#c89840" stroke-width="1.5"/><line x1="14" y1="14" x2="22" y2="26" stroke="#c89840" stroke-width="1.5"/><line x1="18" y1="12" x2="26" y2="24" stroke="#c89840" stroke-width="1"/></svg>`,
+    eclair:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="14" rx="7" fill="#d4956a"/><rect x="6" y="14" width="28" height="7" rx="7" fill="#2c1000"/><path d="M10 18 Q20 14 30 18" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>`,
+    espresso:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M13 17 L27 17 L25 32 L15 32Z" fill="#5c3317"/><ellipse cx="20" cy="17" rx="7" ry="3" fill="#3d1c00"/><path d="M15 10 Q15 5 17 8 Q19 5 19 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M21 9 Q21 4 23 7" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    cappuccino:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M10 18 L30 18 L28 33 L12 33Z" fill="#c4956a"/><ellipse cx="20" cy="18" rx="10" ry="4" fill="#fff8f0"/><circle cx="16" cy="17" r="3" fill="#fff"/><circle cx="22" cy="16" r="3.5" fill="#fff"/><circle cx="24" cy="19" r="2.5" fill="#fff"/><path d="M15 10 Q15 5 17 8" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M21 10 Q21 5 23 8" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#d4a87a"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><path d="M14 15 Q20 12 26 15" fill="none" stroke="rgba(200,135,58,0.5)" stroke-width="1.5"/><path d="M14 12 Q14 7 16 10" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    lemonade:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="11" y="12" width="18" height="22" rx="4" fill="#fff8aa" stroke="#e8d800" stroke-width="1.5"/><ellipse cx="20" cy="12" rx="9" ry="3" fill="#ffe066"/><circle cx="16" cy="20" r="3" fill="#ffe066" opacity=".8"/><circle cx="22" cy="17" r="2.5" fill="#ffe066" opacity=".8"/><circle cx="18" cy="26" r="2" fill="#ffe066" opacity=".8"/><line x1="24" y1="8" x2="24" y2="14" stroke="#4a7c59" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    almond_croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#e8c87a" stroke="#c8873a" stroke-width="2"/><line x1="18" y1="15" x2="22" y2="22" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="22" x2="24" y2="20" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    honey_cake:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="7" y="20" width="26" height="14" rx="3" fill="#c8873a"/><rect x="7" y="14" width="26" height="8" rx="3" fill="#e8c87a"/><path d="M14 14 Q14 8 20 11 Q26 8 26 14" fill="#ffd700"/><circle cx="20" cy="11" r="3" fill="#ffc000"/></svg>`,
+    matcha_latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#4a7c59"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><circle cx="16" cy="15" r="3" fill="#fff"/><circle cx="23" cy="14" r="3.5" fill="#fff"/><path d="M14 12 Q14 7 16 10" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    recipe_of_day:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><polygon points="20,4 23,15 35,15 25,22 29,33 20,26 11,33 15,22 5,15 17,15" fill="#9b59b6" stroke="#7d3c98" stroke-width="1"/></svg>`,
+    breakfast:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="5" y="10" width="30" height="22" rx="4" fill="#e8c87a" stroke="#c8873a" stroke-width="2"/><line x1="5" y1="18" x2="35" y2="18" stroke="#c8873a" stroke-width="2"/><line x1="18" y1="10" x2="18" y2="32" stroke="#c8873a" stroke-width="2"/><circle cx="11" cy="24" r="4" fill="#ffa040"/></svg>`,
+  };
+  return icons[id]||`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#ccc"/></svg>`;
 }
 
-function drawSpeechBubble(ctx, x, y, text, icon){
-  ctx.save();
-  ctx.translate(x, y-70);
-  // Bubble
-  const w = 100, h = 38;
-  ctx.fillStyle = '#fff';
-  ctx.strokeStyle = '#C8873A';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.roundRect(-w/2, -h, w, h, 8);
-  ctx.fill(); ctx.stroke();
-  // Tail
-  ctx.fillStyle='#fff';
-  ctx.beginPath(); ctx.moveTo(-6,0); ctx.lineTo(6,0); ctx.lineTo(0,10); ctx.closePath(); ctx.fill();
-  ctx.strokeStyle='#C8873A'; ctx.lineWidth=1;
-  ctx.moveTo(-6,0); ctx.lineTo(0,10); ctx.lineTo(6,0); ctx.stroke();
-  // Text
-  ctx.fillStyle='#1C0A00'; ctx.font='11px Inter,sans-serif'; ctx.textAlign='center';
-  ctx.fillText(text, 0, -20);
-  ctx.restore();
+// ─── HEADER ──────────────────────────────────────────────
+function updateHdr(){
+  document.getElementById('hdr-day').textContent=`День ${S.day} · ${DAYS[(S.day-1)%7]}`;
+  document.getElementById('hdr-wx').textContent=`${S.weather.icon} ${S.weather.name}`;
+  document.getElementById('hdr-money').textContent=`${S.money} ₽`;
+  document.getElementById('rep-pct').textContent=`${Math.round(S.rep)}%`;
+  document.getElementById('rep-fill').style.width=`${Math.min(100,S.rep)}%`;
 }
 
-// =============================================
-// RENDER HEADERS
-// =============================================
-function updateHeader(){
-  document.getElementById('hdr-day').textContent = `День ${state.day} · ${DAYS_OF_WEEK[(state.day-1)%7]}`;
-  document.getElementById('hdr-weather').textContent = `${state.weather.icon} ${state.weather.name}`;
-  document.getElementById('hdr-money').textContent = `${state.money} ₽`;
-  document.getElementById('rep-pct').textContent = `${Math.round(state.reputation)}%`;
-  document.getElementById('rep-fill').style.width = `${Math.min(100,state.reputation)}%`;
-}
-
-// =============================================
-// PHASE SWITCHING
-// =============================================
-function switchPhase(phase){
-  ['morning','day','evening','decor'].forEach(p=>{
-    document.getElementById(`phase-${p}`).classList.remove('active');
-    document.getElementById(`phase-${p}`).style.display='none';
+// ─── PHASE SWITCH ─────────────────────────────────────────
+function switchPhase(p){
+  ['morning','day','evening','decor'].forEach(x=>{
+    const el=document.getElementById(`phase-${x}`);
+    el.classList.remove('active');el.style.display='none';
   });
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`nav-${phase}`).classList.add('active');
-  document.getElementById(`phase-${phase}`).style.display = phase==='morning'?'grid': phase==='day'?'grid': phase==='decor'?'grid':'block';
-  document.getElementById(`phase-${phase}`).classList.add('active');
-  state.phase = phase;
-  if(phase==='morning') renderMorning();
-  if(phase==='day') initDay();
-  if(phase==='evening') renderEvening();
-  if(phase==='decor') renderDecor();
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`nav-${p}`).classList.add('active');
+  const ph=document.getElementById(`phase-${p}`);
+  ph.style.display=p==='evening'?'block':'grid';
+  ph.classList.add('active');
+  if(p==='morning')renderMorning();
+  if(p==='day')initDay();
+  if(p==='evening')renderEvening();
+  if(p==='decor')renderDecor();
 }
 
-// =============================================
-// MORNING PHASE
-// =============================================
-let budget_used = 0;
+// ─── MORNING ─────────────────────────────────────────────
+function renderMorning(){renderIngs();renderSidebar();updateBudget();}
 
-function renderMorning(){
-  renderIngredients();
-  renderShowcaseSidebar();
-  updateBudget();
-}
-
-function renderIngredients(){
-  const list = document.getElementById('ingredients-list');
-  list.innerHTML = '';
-  INGREDIENTS.forEach(ing=>{
-    const div = document.createElement('div');
-    div.className = 'ingredient-item';
-    div.draggable = true;
-    div.dataset.id = ing.id;
-    div.innerHTML = svgIngredient(ing.id) + `<span>${ing.name}</span>`;
-    div.addEventListener('dragstart', e=>{
-      e.dataTransfer.setData('text/plain', ing.id);
-      div.style.opacity='0.5';
-    });
-    div.addEventListener('dragend', ()=>{ div.style.opacity='1'; });
-    list.appendChild(div);
+function renderIngs(){
+  const l=document.getElementById('ing-list');l.innerHTML='';
+  INGS.forEach(ing=>{
+    const d=document.createElement('div');d.className='ing-item';d.draggable=true;d.dataset.id=ing.id;
+    d.innerHTML=ingIcon(ing.id,24)+`<span>${ing.name}</span>`;
+    d.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',ing.id);d.style.opacity='.4';});
+    d.addEventListener('dragend',()=>d.style.opacity='1');
+    l.appendChild(d);
   });
 }
 
-const dropTable = document.getElementById('drop-table');
-dropTable.addEventListener('dragover', e=>{ e.preventDefault(); dropTable.classList.add('drag-over'); });
-dropTable.addEventListener('dragleave', ()=>dropTable.classList.remove('drag-over'));
-dropTable.addEventListener('drop', e=>{
-  e.preventDefault();
-  dropTable.classList.remove('drag-over');
-  const id = e.dataTransfer.getData('text/plain');
-  if(id && state.tableIngredients.length < 5){
-    state.tableIngredients.push(id);
-    playBrew();
-    renderTable();
-    checkRecipeMatch();
-  }
+const dz=document.getElementById('drop-zone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{
+  e.preventDefault();dz.classList.remove('over');
+  const id=e.dataTransfer.getData('text/plain');
+  if(id&&S.table.length<5){S.table.push(id);brew();renderTable();checkMatch();}
 });
 
 function renderTable(){
-  const hint = document.getElementById('table-hint');
-  dropTable.querySelectorAll('.dropped-ingredient').forEach(e=>e.remove());
-  if(state.tableIngredients.length===0){
-    hint.style.display='block';
-  } else {
-    hint.style.display='none';
-    state.tableIngredients.forEach((id,i)=>{
-      const ing = INGREDIENTS.find(x=>x.id===id);
-      if(!ing) return;
-      const el = document.createElement('div');
-      el.className = 'dropped-ingredient';
-      el.innerHTML = svgIngredient(id)+`<span>${ing.name}</span>`;
-      el.title = 'Кликните чтобы убрать';
-      el.onclick = ()=>{ state.tableIngredients.splice(i,1); renderTable(); checkRecipeMatch(); };
-      dropTable.appendChild(el);
-    });
-  }
+  const hint=document.getElementById('drop-hint');
+  dz.querySelectorAll('.di').forEach(x=>x.remove());
+  hint.style.display=S.table.length?'none':'flex';
+  S.table.forEach((id,i)=>{
+    const ing=INGS.find(x=>x.id===id);if(!ing)return;
+    const el=document.createElement('div');el.className='di';
+    el.innerHTML=ingIcon(id,28)+`<span>${ing.name}</span>`;
+    el.title='Кликните чтобы убрать';
+    el.onclick=()=>{S.table.splice(i,1);renderTable();checkMatch();};
+    dz.appendChild(el);
+  });
 }
 
-function checkRecipeMatch(){
-  const result = document.getElementById('match-result');
-  const expBanner = document.getElementById('experiment-banner');
-  const sorted = [...state.tableIngredients].sort();
-
-  if(sorted.length === 0){ result.innerHTML='<span style="color:rgba(28,10,0,0.4)">Пока ничего...</span>'; expBanner.style.display='none'; return; }
-
-  let matched = null;
+function checkMatch(){
+  const res=document.getElementById('rm-res'),exp=document.getElementById('exp-hint');
+  const sorted=[...S.table].sort();
+  if(!sorted.length){res.innerHTML='<span style="opacity:.4">Пока ничего...</span>';exp.style.display='none';return;}
+  let m=null;
   for(const r of RECIPES){
-    if(!state.unlockedRecipes.includes(r.id)) continue;
-    const rSorted = [...r.ingredients].sort();
-    if(JSON.stringify(sorted)===JSON.stringify(rSorted)){ matched=r; break; }
+    if(!S.unlocked.includes(r.id))continue;
+    if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){m=r;break;}
   }
-
-  if(matched){
-    result.innerHTML = `<div class="matched-recipe">${svgRecipeIcon(matched.id)} <strong>${matched.name}</strong> <span>${matched.price} ₽</span></div>`;
-    expBanner.style.display='none';
-  } else if(sorted.length>=2){
-    result.innerHTML='<span style="color:rgba(28,10,0,0.5);font-size:13px">Неизвестная комбинация</span>';
-    expBanner.style.display='block';
-  } else {
-    result.innerHTML='<span style="color:rgba(28,10,0,0.4)">Нужно ещё ингредиентов...</span>';
-    expBanner.style.display='none';
-  }
+  if(m){res.innerHTML=`<div class="rm-card">${recipeIcon(m.id,28)}<strong>${m.name}</strong><span>${m.price} ₽</span></div>`;exp.style.display='none';}
+  else if(sorted.length>=2){res.innerHTML='<span style="color:rgba(28,10,0,.45);font-size:13px">Неизвестная комбинация</span>';exp.style.display='block';}
+  else{res.innerHTML='<span style="opacity:.4">Добавьте ещё...</span>';exp.style.display='none';}
 }
 
-function clearTable(){
-  state.tableIngredients = [];
-  renderTable();
-  checkRecipeMatch();
-}
+function clearTable(){S.table=[];renderTable();checkMatch();}
 
-function tryExperiment(){
-  if(state.tableIngredients.length < 2){ notify('Нужно минимум 2 ингредиента!', 'bad'); return; }
-  state.dayStats.experiments++;
-  state.totalStats.experiments++;
-  const success = Math.random() > 0.4;
-  if(success){
-    const bonusRecipe = RECIPES.filter(r=>!state.unlockedRecipes.includes(r.id))[0];
-    playUnlock();
-    if(bonusRecipe && Math.random()>0.6){
-      state.unlockedRecipes.push(bonusRecipe.id);
-      notify(`Открыт новый рецепт: ${bonusRecipe.name}!`, 'good');
-    } else {
-      notify('Эксперимент удался! +50₽', 'good');
-      state.money += 50;
-      updateHeader();
-    }
-  } else {
-    playError();
-    notify('Эксперимент провалился... Ингредиенты потрачены.', 'bad');
-  }
-  clearTable();
-  saveGame();
+function tryExp(){
+  if(S.table.length<2){notify('Нужно минимум 2 ингредиента!','b');return;}
+  S.dayStats.exp++;S.totalStats.exps++;
+  if(Math.random()>.4){
+    const lu=RECIPES.filter(r=>!S.unlocked.includes(r.id))[0];
+    fanfare();
+    if(lu&&Math.random()>.5){S.unlocked.push(lu.id);notify(`Открыт рецепт: ${lu.name}!`,'g');}
+    else{notify('Эксперимент удался! +50₽','g');S.money+=50;updateHdr();}
+  }else{boop();notify('Эксперимент не удался...','b');}
+  clearTable();save();
 }
 
 function addToShowcase(){
-  const sorted = [...state.tableIngredients].sort();
-  if(sorted.length === 0){ notify('Стол пуст!', 'bad'); return; }
-
-  let matched = null;
+  const sorted=[...S.table].sort();
+  if(!sorted.length){notify('Стол пуст!','b');return;}
+  let m=null;
   for(const r of RECIPES){
-    if(!state.unlockedRecipes.includes(r.id)) continue;
-    const rSorted = [...r.ingredients].sort();
-    if(JSON.stringify(sorted)===JSON.stringify(rSorted)){ matched=r; break; }
+    if(!S.unlocked.includes(r.id))continue;
+    if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){m=r;break;}
   }
-
-  if(!matched){ notify('Рецепт не распознан. Используйте кнопку "Эксперимент"!', 'info'); return; }
-
-  const totalItems = Object.values(state.showcase).reduce((a,b)=>a+b,0);
-  if(totalItems >= 20){ notify('Витрина полна! (максимум 20 позиций)', 'bad'); return; }
-
-  const costPerItem = Math.round(matched.price * 0.3);
-  if(state.money < costPerItem){ notify('Недостаточно денег на ингредиенты!', 'bad'); return; }
-
-  state.showcase[matched.id] = (state.showcase[matched.id]||0) + 1;
-  state.money -= costPerItem;
-  budget_used += costPerItem;
-  clearTable();
-  renderShowcaseSidebar();
-  updateBudget();
-  updateHeader();
-  playSell();
-  notify(`${matched.name} добавлен в витрину`, 'good');
+  if(!m){notify('Рецепт не распознан. Попробуйте эксперимент!','i');return;}
+  const total=Object.values(S.showcase).reduce((a,b)=>a+b,0);
+  if(total>=20){notify('Витрина полна!','b');return;}
+  const cost=Math.round(m.price*.3);
+  if(S.money<cost){notify('Недостаточно денег!','b');return;}
+  S.showcase[m.id]=(S.showcase[m.id]||0)+1;
+  S.money-=cost;budgetUsed+=cost;
+  clearTable();renderSidebar();updateBudget();updateHdr();ding();
+  notify(`${m.name} добавлен в витрину`,'g');
 }
 
-function renderShowcaseSidebar(){
-  const list = document.getElementById('showcase-list');
-  const empty = document.getElementById('showcase-empty');
-  list.innerHTML = '';
-  const items = Object.keys(state.showcase).filter(k=>state.showcase[k]>0);
-  empty.style.display = items.length?'none':'block';
+function renderSidebar(){
+  const l=document.getElementById('sc-list'),e=document.getElementById('sc-empty');
+  l.innerHTML='';
+  const items=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
+  e.style.display=items.length?'none':'block';
   items.forEach(id=>{
-    const r = RECIPES.find(x=>x.id===id);
-    if(!r) return;
-    const div = document.createElement('div');
-    div.className = 'showcase-item';
-    div.innerHTML = `
-      ${svgRecipeIcon(id)}
-      <span class="item-name">${r.name}</span>
-      <span class="item-price">${r.price}₽</span>
-      <div class="qty-control">
-        <button class="qty-btn" onclick="changeQty('${id}',-1)">−</button>
-        <span class="qty-val">${state.showcase[id]}</span>
-        <button class="qty-btn" onclick="changeQty('${id}',1)">+</button>
-      </div>
-    `;
-    list.appendChild(div);
+    const r=RECIPES.find(x=>x.id===id);if(!r)return;
+    const d=document.createElement('div');d.className='sc-item';
+    d.innerHTML=`${recipeIcon(id,26)}<span class="iname">${r.name}</span><span class="iprice">${r.price}₽</span>
+    <div class="qty"><button class="qb" onclick="chQty('${id}',-1)">−</button><span class="qv">${S.showcase[id]}</span><button class="qb" onclick="chQty('${id}',1)">+</button></div>`;
+    l.appendChild(d);
   });
-  const total = Object.values(state.showcase).reduce((a,b)=>a+b,0);
-  document.getElementById('cap-used').textContent = total;
+  document.getElementById('cap-used').textContent=Object.values(S.showcase).reduce((a,b)=>a+b,0);
 }
 
-function changeQty(id, delta){
-  const current = state.showcase[id]||0;
-  const newVal = current + delta;
-  if(newVal <= 0){ delete state.showcase[id]; }
-  else if(newVal > 20){ notify('Максимум 20 единиц одного товара', 'bad'); return; }
-  else {
-    const r = RECIPES.find(x=>x.id===id);
-    if(delta>0){
-      const cost = Math.round(r.price*0.3);
-      if(state.money < cost){ notify('Недостаточно денег!', 'bad'); return; }
-      state.money -= cost; budget_used += cost;
-    } else {
-      const cost = Math.round(r.price*0.3);
-      state.money += cost; budget_used -= cost;
-    }
-    state.showcase[id] = newVal;
+function chQty(id,d){
+  const r=RECIPES.find(x=>x.id===id),c=Math.round(r.price*.3),n=(S.showcase[id]||0)+d;
+  if(n<=0){delete S.showcase[id];}
+  else if(n>20){notify('Максимум 20','b');return;}
+  else{
+    if(d>0){if(S.money<c){notify('Недостаточно денег!','b');return;}S.money-=c;budgetUsed+=c;}
+    else{S.money+=c;budgetUsed-=c;}
+    S.showcase[id]=n;
   }
-  renderShowcaseSidebar();
-  updateBudget();
-  updateHeader();
+  renderSidebar();updateBudget();updateHdr();
 }
 
 function updateBudget(){
-  const initial = 500 + (state.day-1)*100;
-  const used = budget_used;
-  const left = state.money;
-  document.getElementById('budget-left').textContent = `${left} ₽`;
-  const pct = Math.min(100, used/initial*100);
-  document.getElementById('budget-fill').style.width = pct+'%';
+  document.getElementById('bleft').textContent=`${S.money} ₽`;
+  document.getElementById('bfill').style.width=`${Math.min(100,budgetUsed/(500+(S.day-1)*100)*100)}%`;
 }
 
 function openBakery(){
-  if(Object.keys(state.showcase).length === 0){ notify('Витрина пуста! Добавьте товары.', 'bad'); return; }
-  state.dayStats = {earned:0, sold:{}, unhappy:0, experiments:0};
-  state.dayEarned = 0;
+  if(!Object.keys(S.showcase).length){notify('Витрина пуста!','b');return;}
+  S.dayStats={earned:0,sold:{},unhappy:0,exp:0};S.dayEarned=0;
   switchPhase('day');
 }
 
-// =============================================
-// DAY PHASE — CANVAS
-// =============================================
-const canvas = document.getElementById('game-canvas');
-const ctx2d = canvas.getContext('2d');
+// ─── RECIPE BOOK ─────────────────────────────────────────
+function openRB(){
+  ['bakery','drinks','special'].forEach(t=>document.getElementById(`rb-${t}`).innerHTML='');
+  const spec=RECIPES.filter(r=>r.cat==='special');
+  document.getElementById('rb-special-hdr').style.display=spec.length?'block':'none';
+  RECIPES.forEach(r=>{
+    const unlk=S.unlocked.includes(r.id);
+    const el=document.createElement('div');el.className=`rb-card ${unlk?'unlocked':'locked'}`;
+    const ings=r.ings.map(i=>{const x=INGS.find(g=>g.id===i);return x?x.name:'?';}).join(' + ')||'???';
+    el.innerHTML=`${recipeIcon(r.id,40)}<div class="rc-name">${unlk?r.name:'???'}</div><div class="rc-price">${unlk?r.price+'₽':'🔒'}</div><div class="rc-ings">${unlk?ings:'Неизвестно'}</div>`;
+    const target=r.cat==='bakery'?'rb-bakery':r.cat==='drink'?'rb-drinks':'rb-special';
+    document.getElementById(target).appendChild(el);
+  });
+  document.getElementById('rb-overlay').classList.add('active');
+}
+function closeRB(){document.getElementById('rb-overlay').classList.remove('active');}
 
-let customers = [];
-let queue = [];
-let dayRunning = false;
-let dayTimer = 0;
-let lastSpawn = 0;
-let nextSpawnIn = 10;
-let animFrame = null;
-let bobTimer = 0;
-let activeCustomer = null;
+// ─── DAY PHASE ───────────────────────────────────────────
+const cv=document.getElementById('gc');
+const ctx=cv.getContext('2d');
+let custs=[],queue=[],dayRunning=false,dayTime=0,lastSpawn=0,nextSpawnIn=10;
+let activeCust=null,animId=null,bobT=0;
 
-class Customer {
+// TABLE SEATS: 3 tables × 2 seats each
+const TABLE_SEATS=[
+  {x:120,y:280},{x:155,y:280},
+  {x:240,y:290},{x:275,y:290},
+  {x:355,y:275},{x:390,y:275},
+];
+const seatOccupied={};
+
+class Cust{
   constructor(){
-    const weights = [3,2,3,2,3,1]; // student, biz, tourist, hipster, granny, mom
-    const roll = Math.random()*14;
-    let acc=0, idx=0;
-    for(let i=0;i<weights.length;i++){ acc+=weights[i]; if(roll<acc){idx=i;break;} }
-    this.type = CUSTOMER_TYPES[idx];
-
-    // Pick what they want from available showcase
-    const avail = Object.keys(state.showcase).filter(k=>state.showcase[k]>0);
-    if(avail.length===0){ this.want=null; }
-    else if(this.type.preferences){
-      const pref = this.type.preferences.filter(p=>avail.includes(p));
-      this.want = pref.length>0 ? pref[Math.floor(Math.random()*pref.length)] : avail[Math.floor(Math.random()*avail.length)];
-    } else {
-      this.want = avail[Math.floor(Math.random()*avail.length)];
-    }
-
-    this.x = -60;
-    this.targetX = 200 + Math.random()*80;
-    this.y = 180 + (queue.length*30);
-    this.state = 'walking'; // walking, waiting, leaving, served
-    this.patience = this.type.patience * (state.shopDecor['jazz']?1.3:1);
-    this.waitTime = 0;
-    this.id = Math.random();
+    const w=[3,2,3,2,3,1];let roll=Math.random()*14,acc=0,idx=0;
+    for(let i=0;i<w.length;i++){acc+=w[i];if(roll<acc){idx=i;break;}}
+    this.type=CTYPES[idx];
+    const avail=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
+    if(!avail.length){this.want=null;}
+    else if(this.type.prefs){
+      const pf=this.type.prefs.filter(p=>avail.includes(p));
+      this.want=pf.length?pf[Math.floor(Math.random()*pf.length)]:avail[Math.floor(Math.random()*avail.length)];
+    }else{this.want=avail[Math.floor(Math.random()*avail.length)];}
+    this.x=-60;this.y=218;
+    this.targetX=470+Math.random()*20;
+    this.state='walking';// walking|waiting|served|eating|leaving
+    this.patience=this.type.patience*(S.decor['jazz']?1.3:1);
+    this.waitTime=0;this.id=Math.random();
+    this.seatIdx=-1;this.eatTime=0;this.eatDur=8+Math.random()*8;
+    this.flip=false;
   }
-
-  getWantName(){
-    if(!this.want) return '???';
-    const r = RECIPES.find(x=>x.id===this.want);
-    return r ? r.name : this.want;
-  }
+  wantName(){const r=RECIPES.find(x=>x.id===this.want);return r?r.name:'что-нибудь';}
 }
 
 function initDay(){
-  customers = []; queue = [];
-  dayRunning = true; dayTimer = 0; lastSpawn = 0;
-  nextSpawnIn = 8 + Math.random()*7;
-  activeCustomer = null;
-  state.dayEarned = 0;
-  document.getElementById('day-earned').textContent = '0 ₽';
-
-  renderDayShowcase();
-  document.getElementById('day-log').innerHTML = '';
-
-  if(animFrame) cancelAnimationFrame(animFrame);
-  let lastTime = null;
+  custs=[];queue=[];dayRunning=true;dayTime=0;lastSpawn=0;
+  nextSpawnIn=8+Math.random()*7;activeCust=null;S.dayEarned=0;
+  Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
+  document.getElementById('day-earned').textContent='0 ₽';
+  document.getElementById('day-log').innerHTML='';
+  renderDaySC();
+  // First customer arrives early
+  setTimeout(spawnCust, 2000);
+  if(animId)cancelAnimationFrame(animId);
+  let last=null;
   function loop(ts){
-    if(!dayRunning){ return; }
-    if(!lastTime) lastTime=ts;
-    const dt = (ts-lastTime)/1000;
-    lastTime=ts;
-    bobTimer += dt*3;
-    dayTimer += dt;
-    lastSpawn += dt;
-
-    // Update timer display
-    const m = Math.floor(dayTimer/60).toString().padStart(2,'0');
-    const s = Math.floor(dayTimer%60).toString().padStart(2,'0');
-    document.getElementById('day-timer').textContent = `${m}:${s}`;
-
-    // Spawn new customers
-    if(lastSpawn >= nextSpawnIn && queue.length < 5 && customers.filter(c=>c.state==='waiting').length < 5){
-      // Ажиотаж: 15% шанс спауна 3х подряд
-      const burst = Math.random() < 0.15;
-      spawnCustomer();
-      if(burst){ setTimeout(()=>spawnCustomer(), 2000); setTimeout(()=>spawnCustomer(), 4000); }
-      lastSpawn = 0;
-      nextSpawnIn = 8 + Math.random()*7;
+    if(!dayRunning)return;
+    if(!last)last=ts;
+    const dt=Math.min((ts-last)/1000,.05);last=ts;
+    bobT+=dt*3;dayTime+=dt;lastSpawn+=dt;
+    // timer
+    const mm=String(Math.floor(dayTime/60)).padStart(2,'0'),ss=String(Math.floor(dayTime%60)).padStart(2,'0');
+    document.getElementById('day-timer').textContent=`${mm}:${ss}`;
+    // spawn
+    if(lastSpawn>=nextSpawnIn&&custs.filter(c=>c.state==='waiting').length<5){
+      spawnCust();
+      if(Math.random()<.15){setTimeout(spawnCust,2000);setTimeout(spawnCust,4000);}
+      lastSpawn=0;nextSpawnIn=8+Math.random()*7;
     }
-
-    // Update customers
-    customers.forEach(c=>{
+    // update
+    custs.forEach(c=>{
       if(c.state==='walking'){
-        const speed = c.type.speed * 60 * dt;
-        if(c.x < c.targetX){ c.x += speed; }
-        else { c.state='waiting'; if(!queue.includes(c)) queue.push(c); updateQueueDots(); }
+        c.x+=c.type.speed*90*dt*(c.flip?-1:1);
+        if(!c.flip&&c.x>=c.targetX){c.state='waiting';queue.push(c);updateQD();}
+        if(c.flip&&c.x>cv.width+80){c.state='gone';}
       }
       if(c.state==='waiting'){
-        c.waitTime += dt;
-        if(c.waitTime > c.patience){
-          c.state='leaving';
-          leaveAngry(c);
-        }
+        c.waitTime+=dt;
+        if(c.waitTime>c.patience){c.state='leaving';leaveAngry(c);}
       }
-      if(c.state==='leaving'){ c.x += 120*dt; }
+      if(c.state==='served'){
+        // walk to seat
+        const seat=TABLE_SEATS[c.seatIdx];
+        if(seat){
+          c.flip=true;
+          const tx=seat.x;
+          const speed=c.type.speed*80*dt;
+          if(Math.abs(c.x-tx)<speed+2){c.x=tx;c.y=seat.y-40;c.state='eating';c.eatTime=0;}
+          else if(c.x>tx){c.x-=speed;}else{c.x+=speed;}
+        }else{c.state='eating';c.eatTime=0;}
+      }
+      if(c.state==='eating'){
+        c.eatTime+=dt;
+        if(c.eatTime>=c.eatDur){c.state='leaving_seat';}
+      }
+      if(c.state==='leaving_seat'){
+        seatOccupied[c.seatIdx]=false;
+        c.flip=true;c.state='walking';c.targetX=cv.width+100;
+      }
+      if(c.state==='leaving'){c.x+=c.type.speed*70*dt;if(c.x>cv.width+80)c.state='gone';}
     });
-
-    // Remove off-screen
-    customers = customers.filter(c=>c.x < 900 && c.state!=='served');
-    // Update queue
-    queue = queue.filter(c=>c.state==='waiting');
-    updateQueueDots();
-
-    // Auto sell
-    if(state.autoSell && queue.length>0){
-      const first = queue[0];
-      if(first && first.want && state.showcase[first.want]>0){
-        setTimeout(()=>{ activeCustomer=first; sellToCustomer(); },300);
-      }
+    custs=custs.filter(c=>c.state!=='gone');
+    queue=queue.filter(c=>c.state==='waiting');
+    updateQD();
+    if(S.autoSell&&queue.length){
+      const f=queue[0];
+      if(f&&f.want&&S.showcase[f.want]>0){activeCust=f;setTimeout(()=>{if(activeCust===f)doSell();},200);}
     }
-
-    // Update active customer display
-    if(queue.length>0 && !activeCustomer){
-      activeCustomer = queue[0];
-      updateActiveCustomerUI();
-    } else if(queue.length===0){ activeCustomer=null; document.getElementById('cust-want').textContent='Гостей нет...'; }
-
-    drawScene();
-    animFrame = requestAnimationFrame(loop);
+    if(!activeCust&&queue.length){activeCust=queue[0];updateCustUI();}
+    else if(!queue.length){activeCust=null;document.getElementById('cust-info').textContent='Ждём гостей...';}
+    draw();
+    animId=requestAnimationFrame(loop);
   }
-  animFrame = requestAnimationFrame(loop);
+  animId=requestAnimationFrame(loop);
 }
 
-function spawnCustomer(){
-  const c = new Customer();
-  customers.push(c);
-  addLog(`Пришёл ${c.type.name} — хочет ${c.getWantName()}`, 'neutral');
-}
+function spawnCust(){const c=new Cust();custs.push(c);addLog(`Пришёл ${c.type.name} → хочет ${c.wantName()}`,'n');}
 
 function leaveAngry(c){
-  state.reputation = Math.max(0, state.reputation - 2);
-  state.dayStats.unhappy++;
-  addLog(`${c.type.name} ушёл недовольным!`, 'bad');
-  updateHeader();
-  playError();
-  queue = queue.filter(x=>x!==c);
-  if(activeCustomer===c){ activeCustomer=null; }
-  updateQueueDots();
+  S.rep=Math.max(0,S.rep-2);S.dayStats.unhappy++;
+  addLog(`${c.type.name} ушёл недовольным!`,'b');
+  queue=queue.filter(x=>x!==c);if(activeCust===c)activeCust=null;
+  updateQD();updateHdr();boop();
 }
 
-function updateActiveCustomerUI(){
-  if(!activeCustomer) return;
-  const r = RECIPES.find(x=>x.id===activeCustomer.want);
-  document.getElementById('cust-want').textContent = activeCustomer.want
-    ? `${activeCustomer.type.name} хочет: ${r?r.name:'что-нибудь'}`
-    : `${activeCustomer.type.name} смотрит на витрину...`;
+function updateCustUI(){
+  if(!activeCust)return;
+  document.getElementById('cust-info').textContent=`${activeCust.type.name} хочет: ${activeCust.wantName()}`;
 }
 
-function sellToCustomer(){
-  if(!activeCustomer || activeCustomer.state!=='waiting'){ notify('Нет активного клиента', 'bad'); return; }
-  const c = activeCustomer;
-  const r = RECIPES.find(x=>x.id===c.want);
-  if(!r){ notify('Нет в наличии', 'bad'); rejectCustomer(); return; }
-  if(!state.showcase[c.want] || state.showcase[c.want]<=0){ notify('Закончилось в витрине!', 'bad'); rejectCustomer(); return; }
-
-  // Sale!
-  state.showcase[c.want]--;
-  const tip = Math.round(r.price * c.type.tip);
-  const earned = r.price + tip;
-  state.money += earned;
-  state.dayEarned += earned;
-  state.dayStats.earned += earned;
-  state.dayStats.sold[c.want] = (state.dayStats.sold[c.want]||0)+1;
-  state.totalStats.croissantsSold += (c.want==='croissant'?1:0);
-
-  c.state = 'served';
-  c.x += 200;
-  queue = queue.filter(x=>x!==c);
-  activeCustomer = null;
-
-  document.getElementById('day-earned').textContent = `${state.dayEarned} ₽`;
-  updateHeader();
-  renderDayShowcase();
-  playSell();
-  addLog(`+${earned}₽ — ${r.name} ${tip>0?'(чаевые +'+tip+'₽)':''}`, 'good');
-  updateQueueDots();
-
-  // Next in queue
-  if(queue.length>0){ activeCustomer=queue[0]; updateActiveCustomerUI(); }
-  else { document.getElementById('cust-want').textContent='Гостей нет...'; }
-
-  saveGame();
+function sellToCust(){
+  if(!activeCust||activeCust.state!=='waiting'){notify('Нет клиента у стойки','b');return;}
+  doSell();
+}
+function doSell(){
+  const c=activeCust;
+  const r=RECIPES.find(x=>x.id===c.want);
+  if(!r||!S.showcase[c.want]||S.showcase[c.want]<=0){notify('Закончилось!','b');rejectCust();return;}
+  S.showcase[c.want]--;
+  const tip=Math.round(r.price*c.type.tip),earned=r.price+tip;
+  S.money+=earned;S.dayEarned+=earned;S.dayStats.earned+=earned;
+  S.dayStats.sold[c.want]=(S.dayStats.sold[c.want]||0)+1;
+  S.totalStats.croissants+=(c.want==='croissant'?1:0);
+  // find free seat
+  const si=TABLE_SEATS.findIndex((_,i)=>!seatOccupied[i]);
+  if(si>=0){seatOccupied[si]=true;c.seatIdx=si;c.state='served';}
+  else{c.state='leaving';c.flip=true;}
+  queue=queue.filter(x=>x!==c);activeCust=null;
+  document.getElementById('day-earned').textContent=`${S.dayEarned} ₽`;
+  updateHdr();renderDaySC();ding();
+  addLog(`+${earned}₽ — ${r.name}${tip>0?` (+${tip}₽ чаевые)`:''}`, 'g');
+  updateQD();
+  if(queue.length){activeCust=queue[0];updateCustUI();}
+  else document.getElementById('cust-info').textContent='Ждём гостей...';
+  save();
 }
 
-function rejectCustomer(){
-  if(!activeCustomer) return;
-  const c = activeCustomer;
-  c.state='leaving';
-  state.reputation = Math.max(0, state.reputation-1);
-  queue = queue.filter(x=>x!==c);
-  activeCustomer = null;
-  addLog(`${c.type.name} ушёл без покупки`, 'neutral');
-  updateHeader();
-  if(queue.length>0){ activeCustomer=queue[0]; updateActiveCustomerUI(); }
-  else { document.getElementById('cust-want').textContent='Гостей нет...'; }
-  updateQueueDots();
+function rejectCust(){
+  if(!activeCust)return;
+  const c=activeCust;c.state='leaving';c.flip=true;
+  S.rep=Math.max(0,S.rep-1);
+  queue=queue.filter(x=>x!==c);activeCust=null;
+  addLog(`${c.type.name} ушёл без покупки`,'n');updateHdr();updateQD();
+  if(queue.length){activeCust=queue[0];updateCustUI();}
+  else document.getElementById('cust-info').textContent='Ждём гостей...';
 }
 
 function toggleAuto(){
-  state.autoSell = !state.autoSell;
-  const btn = document.getElementById('btn-auto');
-  btn.textContent = `Авто: ${state.autoSell?'ВКЛ':'ВЫКЛ'}`;
-  btn.style.background = state.autoSell ? 'var(--caramel)' : '';
-  btn.style.color = state.autoSell ? '#fff' : '';
+  S.autoSell=!S.autoSell;
+  const b=document.getElementById('btn-auto');
+  b.textContent=`Авто: ${S.autoSell?'ВКЛ':'ВЫКЛ'}`;
+  b.style.background=S.autoSell?'var(--caramel)':'';
+  b.style.color=S.autoSell?'#fff':'';
 }
 
-function updateQueueDots(){
+function updateQD(){
   for(let i=0;i<5;i++){
-    const d = document.getElementById(`qd${i}`);
-    const c = queue[i];
-    d.className = 'queue-dot' + (c ? (c.waitTime > c.patience*0.7 ? ' angry' : ' filled') : '');
+    const d=document.getElementById(`qd${i}`),c=queue[i];
+    d.className='qd'+(c?(c.waitTime>c.patience*.7?' angry':' on'):'');
   }
 }
 
-function addLog(msg, cls='neutral'){
-  const log = document.getElementById('day-log');
-  const el = document.createElement('div');
-  el.className = `log-entry ${cls}`;
-  const t = new Date();
-  el.textContent = `[${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}] ${msg}`;
-  log.appendChild(el);
-  log.scrollTop = log.scrollHeight;
+function addLog(msg,cls){
+  const l=document.getElementById('day-log'),e=document.createElement('div');
+  e.className=`le ${cls}`;e.textContent=msg;l.appendChild(e);l.scrollTop=l.scrollHeight;
 }
 
-function renderDayShowcase(){
-  const wrap = document.getElementById('day-showcase');
-  wrap.innerHTML = '';
-  Object.keys(state.showcase).forEach(id=>{
-    const r = RECIPES.find(x=>x.id===id);
-    if(!r) return;
-    const qty = state.showcase[id]||0;
-    const div = document.createElement('div');
-    div.className = 'showcase-day-item' + (qty===0?' sold-out':'');
-    div.innerHTML = `${svgRecipeIcon(id)}<span class="d-name">${r.name}</span><span class="d-qty">${qty} шт.</span>`;
-    wrap.appendChild(div);
+function renderDaySC(){
+  const w=document.getElementById('day-sc');w.innerHTML='';
+  Object.keys(S.showcase).forEach(id=>{
+    const r=RECIPES.find(x=>x.id===id);if(!r)return;
+    const q=S.showcase[id]||0;
+    const d=document.createElement('div');d.className='sd-item'+(q===0?' out':'');
+    d.innerHTML=`${recipeIcon(id,24)}<span class="dn">${r.name}</span><span class="dq">${q}</span>`;
+    w.appendChild(d);
   });
 }
 
-// DRAW CANVAS SCENE
-function drawScene(){
-  const W = canvas.width, H = canvas.height;
-  ctx2d.clearRect(0,0,W,H);
+// ─── CANVAS DRAW ─────────────────────────────────────────
+function draw(){
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
 
-  // Background — bakery interior
+  // Sky / upper wall
+  const wallGrad=ctx.createLinearGradient(0,0,0,H*.55);
+  wallGrad.addColorStop(0,'#fdf0d8');wallGrad.addColorStop(1,'#f0dfc0');
+  ctx.fillStyle=wallGrad;ctx.fillRect(0,0,W,H*.55);
+
   // Floor
-  ctx2d.fillStyle = '#d4b896';
-  ctx2d.fillRect(0, 220, W, H-220);
+  const floorGrad=ctx.createLinearGradient(0,H*.55,0,H);
+  floorGrad.addColorStop(0,'#d8c4a0');floorGrad.addColorStop(1,'#c8b48a');
+  ctx.fillStyle=floorGrad;ctx.fillRect(0,H*.55,W,H*.45);
+
   // Floor tiles
-  ctx2d.strokeStyle = '#c4a886';
-  ctx2d.lineWidth = 1;
-  for(let x=0;x<W;x+=60){ ctx2d.beginPath(); ctx2d.moveTo(x,220); ctx2d.lineTo(x,H); ctx2d.stroke(); }
-  for(let y=220;y<H;y+=40){ ctx2d.beginPath(); ctx2d.moveTo(0,y); ctx2d.lineTo(W,y); ctx2d.stroke(); }
+  ctx.strokeStyle='rgba(180,150,100,.35)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=70){ctx.beginPath();ctx.moveTo(x,H*.55);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=H*.55;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
 
-  // Wall
-  ctx2d.fillStyle = '#f0dfc0';
-  ctx2d.fillRect(0, 0, W, 220);
+  // Baseboard
+  ctx.fillStyle='#a07040';ctx.fillRect(0,H*.55,W,8);
 
-  // Counter
-  ctx2d.fillStyle = '#8b5e3c';
-  ctx2d.fillRect(400, 140, 280, 80);
-  ctx2d.fillStyle = '#a07040';
-  ctx2d.fillRect(400, 140, 280, 15);
+  // Windows
+  drawWindows(ctx,W,H);
 
-  // Showcase glass case
-  ctx2d.fillStyle = 'rgba(200,240,255,0.3)';
-  ctx2d.strokeStyle = '#c8873a';
-  ctx2d.lineWidth = 2;
-  ctx2d.fillRect(410, 150, 180, 50);
-  ctx2d.strokeRect(410, 150, 180, 50);
-
-  // Items in showcase
-  const items = Object.keys(state.showcase).filter(k=>state.showcase[k]>0);
-  items.forEach((id,i)=>{ if(i>4) return; drawShowcaseItem(ctx2d, 420+i*32, 155, id); });
-
-  // Wall decor based on state.shopDecor
-  if(state.shopDecor['painting']){
-    ctx2d.fillStyle = '#c8873a'; ctx2d.fillRect(50, 40, 80, 60);
-    ctx2d.fillStyle = '#87ceeb'; ctx2d.fillRect(55, 45, 70, 50);
-    ctx2d.strokeStyle = '#8b5e3c'; ctx2d.lineWidth=3; ctx2d.strokeRect(50,40,80,60);
+  // Wall deco
+  if(S.decor['painting'])drawPainting(ctx,80,50);
+  if(S.decor['plant'])drawPlant(ctx,W-70,H*.5);
+  if(S.decor['menu_board'])drawMenuBoard(ctx,240,45);
+  if(S.decor['lighting']){
+    const lg=ctx.createRadialGradient(W/2,0,5,W/2,0,W*.75);
+    lg.addColorStop(0,'rgba(255,220,100,.22)');lg.addColorStop(1,'rgba(255,220,100,0)');
+    ctx.fillStyle=lg;ctx.fillRect(0,0,W,H);
   }
-  if(state.shopDecor['plant']){
-    ctx2d.fillStyle = '#4a7c59';
-    ctx2d.beginPath(); ctx2d.arc(680, 170, 18, Math.PI, 0); ctx2d.fill();
-    ctx2d.fillStyle = '#3d6b4a';
-    ctx2d.beginPath(); ctx2d.arc(668, 182, 14, Math.PI, 0); ctx2d.fill();
-    ctx2d.beginPath(); ctx2d.arc(692, 178, 12, Math.PI, 0); ctx2d.fill();
-    ctx2d.fillStyle = '#8b5e3c'; ctx2d.fillRect(672, 188, 16, 25);
+  if(S.decor['jazz']){
+    ctx.font='20px serif';ctx.fillStyle='rgba(142,68,173,.6)';
+    ctx.fillText('♪',W-40,70);ctx.fillText('♫',W-65,55);ctx.fillText('♩',W-30,90);
   }
 
   // Tables
-  if(state.shopDecor['table']){
-    [80, 200, 310].forEach(tx=>{
-      ctx2d.fillStyle = '#8b5e3c'; ctx2d.fillRect(tx, 200, 60, 8);
-      ctx2d.fillStyle = '#a07040'; ctx2d.beginPath(); ctx2d.ellipse(tx+30, 200, 32, 10, 0, 0, Math.PI*2); ctx2d.fill();
-      ctx2d.fillStyle = '#8b5e3c'; ctx2d.fillRect(tx+20, 208, 8, 20); ctx2d.fillRect(tx+32, 208, 8, 20);
+  drawTables(ctx,H);
+
+  // Counter
+  drawCounter(ctx,W,H);
+
+  // Customers
+  custs.forEach(c=>{
+    if(c.state==='gone')return;
+    const bob=(c.state==='walking')?Math.sin(bobT+c.id*3)*2.5:0;
+    drawCust(ctx,c,c.x,c.y+bob,c.flip);
+    if(c.state==='waiting'){
+      const r=RECIPES.find(x=>x.id===c.want);
+      drawBubble(ctx,c.x,c.y-10,r?r.name:'...');
+      // patience bar
+      const pct=Math.max(0,1-c.waitTime/c.patience);
+      ctx.fillStyle=pct>.5?'#4a7c59':pct>.25?'#e67e22':'#c0392b';
+      ctx.fillRect(c.x-22,c.y-55,44*pct,5);
+      ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=1;ctx.strokeRect(c.x-22,c.y-55,44,5);
+    }
+    if(c.state==='eating'){
+      // cup/plate on table
+      const seat=TABLE_SEATS[c.seatIdx];
+      if(seat)drawEatingItem(ctx,seat.x,seat.y-20,c.want);
+    }
+  });
+}
+
+function drawWindows(ctx,W,H){
+  [[160,30],[400,30],[580,30]].forEach(([x,y])=>{
+    // Frame
+    ctx.fillStyle='#8b5e3c';ctx.fillRect(x,y,80,80);
+    // Glass
+    const sg=ctx.createLinearGradient(x+4,y+4,x+76,y+76);
+    sg.addColorStop(0,'rgba(135,200,235,.7)');sg.addColorStop(1,'rgba(200,235,255,.5)');
+    ctx.fillStyle=sg;ctx.fillRect(x+4,y+4,72,72);
+    // Cross
+    ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(x+40,y+4);ctx.lineTo(x+40,y+76);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+4,y+40);ctx.lineTo(x+76,y+40);ctx.stroke();
+    // Sill
+    ctx.fillStyle='#a07040';ctx.fillRect(x-4,y+80,88,8);
+    // Curtains
+    ctx.fillStyle='rgba(200,135,58,.3)';
+    ctx.fillRect(x+4,y+4,18,72);ctx.fillRect(x+58,y+4,14,72);
+  });
+}
+
+function drawPainting(ctx,x,y){
+  ctx.fillStyle='#8b5e3c';ctx.fillRect(x,y,100,75);
+  const pg=ctx.createLinearGradient(x+5,y+5,x+95,y+70);
+  pg.addColorStop(0,'#87ceeb');pg.addColorStop(1,'#6aade4');
+  ctx.fillStyle=pg;ctx.fillRect(x+5,y+5,90,65);
+  ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+30,y+45,16,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#c8873a';ctx.beginPath();ctx.arc(x+60,y+35,12,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#8b5e3c';ctx.lineWidth=4;ctx.strokeRect(x,y,100,75);
+}
+
+function drawMenuBoard(ctx,x,y){
+  ctx.fillStyle='#2c3e50';ctx.fillRect(x,y,130,90);
+  ctx.strokeStyle='#c8873a';ctx.lineWidth=3;ctx.strokeRect(x,y,130,90);
+  ctx.fillStyle='#f5e6c8';ctx.font='bold 13px Nunito,sans-serif';ctx.textAlign='center';
+  ctx.fillText('МЕНЮ ДНЯ',x+65,y+22);
+  ctx.font='11px Nunito,sans-serif';ctx.fillStyle='rgba(245,230,200,.75)';
+  ['Круассан 80₽','Латте 150₽','Эклер 120₽','Лимонад 80₽'].forEach((t,i)=>ctx.fillText(t,x+65,y+38+i*14));
+}
+
+function drawPlant(ctx,x,y){
+  [[0,-20,18],[- 12,-8,14],[12,-12,12]].forEach(([dx,dy,r])=>{
+    ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+dx,y+dy,r,Math.PI,0);ctx.fill();
+    ctx.fillStyle='#3d6b4a';ctx.beginPath();ctx.arc(x+dx,y+dy+2,r*.7,Math.PI,0);ctx.fill();
+  });
+  ctx.fillStyle='#8b5e3c';ctx.fillRect(x-10,y,20,28);
+  ctx.fillStyle='#a07040';ctx.fillRect(x-12,y-2,24,6);
+}
+
+function drawTables(ctx,H){
+  const ty=H*.58;
+  [[100,ty],[230,ty],[350,ty]].forEach(([tx,ty2])=>{
+    // Table top
+    const tg=ctx.createLinearGradient(tx-38,ty2-5,tx+38,ty2+5);
+    tg.addColorStop(0,'#c8a060');tg.addColorStop(1,'#a07040');
+    ctx.fillStyle=tg;
+    ctx.beginPath();ctx.ellipse(tx,ty2,42,14,0,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#8b5e3c';ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(tx,ty2,42,14,0,0,Math.PI*2);ctx.stroke();
+    // Legs
+    ctx.fillStyle='#8b5e3c';
+    ctx.fillRect(tx-6,ty2+8,10,H-ty2-8);
+    ctx.fillRect(tx-4,H-30,8,30);
+    // Chairs
+    [-52,52].forEach(dx=>{
+      ctx.fillStyle='#a07040';
+      ctx.beginPath();ctx.ellipse(tx+dx,ty2+5,18,8,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#8b5e3c';ctx.fillRect(tx+dx-4,ty2+12,6,20);ctx.fillRect(tx+dx-2,ty2+12,6,20);
     });
+  });
+}
+
+function drawCounter(ctx,W,H){
+  const cy=H*.58;
+  // Counter back
+  ctx.fillStyle='#6b3a1a';ctx.fillRect(W-190,cy-40,190,H-cy+40);
+  // Counter top
+  const cg=ctx.createLinearGradient(W-190,cy-40,W,cy-40);
+  cg.addColorStop(0,'#a07040');cg.addColorStop(1,'#8b5e3c');
+  ctx.fillStyle=cg;ctx.fillRect(W-195,cy-48,200,18);
+  ctx.strokeStyle='#c8a060';ctx.lineWidth=2;ctx.strokeRect(W-195,cy-48,200,18);
+  // Showcase glass
+  ctx.fillStyle='rgba(180,220,240,.25)';ctx.fillRect(W-185,cy-45,130,38);
+  ctx.strokeStyle='#c8a060';ctx.lineWidth=1.5;ctx.strokeRect(W-185,cy-45,130,38);
+  // Items in showcase
+  const sItems=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
+  sItems.slice(0,4).forEach((id,i)=>{drawSmallItem(ctx,W-178+i*32,cy-36,id);});
+  // Coffee machine
+  drawCoffeeMachine(ctx,W-55,cy-80);
+  // Cashier area
+  ctx.fillStyle='#5c3317';ctx.fillRect(W-200,cy-48,14,H-cy+48);
+}
+
+function drawCoffeeMachine(ctx,x,y){
+  ctx.fillStyle='#333';ctx.fillRect(x-18,y,36,44);
+  ctx.fillStyle='#555';ctx.fillRect(x-15,y+3,30,16);
+  ctx.fillStyle='#c8873a';ctx.beginPath();ctx.arc(x,y+12,5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#c8873a';ctx.fillRect(x-3,y+20,6,10);
+  // steam
+  ctx.strokeStyle='rgba(180,180,180,.6)';ctx.lineWidth=1.5;
+  [x-5,x+5].forEach(sx=>{
+    ctx.beginPath();ctx.moveTo(sx,y-2);
+    ctx.quadraticCurveTo(sx-3,y-8,sx,y-14);ctx.stroke();
+  });
+}
+
+function drawSmallItem(ctx,x,y,id){
+  const clrs={croissant:'#f4c777',cinnamon_bun:'#c8873a',muffin:'#7b6fa0',baguette:'#e8c87a',
+    eclair:'#5c3317',espresso:'#3d1c00',cappuccino:'#c4956a',latte:'#d4a87a',lemonade:'#fffaaa'};
+  ctx.fillStyle=clrs[id]||'#aaa';
+  ctx.beginPath();ctx.arc(x+8,y+8,8,0,Math.PI*2);ctx.fill();
+}
+
+function drawEatingItem(ctx,x,y,id){
+  const drink=['espresso','cappuccino','latte','lemonade','matcha_latte'].includes(id);
+  if(drink){
+    ctx.fillStyle='#e8c4a0';ctx.beginPath();ctx.ellipse(x,y,12,5,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=id==='lemonade'?'#fffaaa':id==='matcha_latte'?'#4a7c59':'#8b5e3c';
+    ctx.fillRect(x-6,y-14,12,14);
+  }else{
+    ctx.fillStyle='#e8c4a0';ctx.beginPath();ctx.ellipse(x,y,14,5,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#f4c777';ctx.beginPath();ctx.arc(x,y-6,7,0,Math.PI*2);ctx.fill();
+  }
+}
+
+function drawBubble(ctx,x,y,text){
+  ctx.save();ctx.translate(x,y-55);
+  const w=Math.max(80,text.length*6+20),h=34;
+  ctx.fillStyle='#fff';ctx.strokeStyle='#c8873a';ctx.lineWidth=2;
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(-w/2,-h,w,h,8);
+  else ctx.rect(-w/2,-h,w,h);
+  ctx.fill();ctx.stroke();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(-7,0);ctx.lineTo(7,0);ctx.lineTo(0,10);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#c8873a';ctx.lineWidth=1;ctx.moveTo(-7,0);ctx.lineTo(0,10);ctx.lineTo(7,0);ctx.stroke();
+  ctx.fillStyle='#1C0A00';ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='center';
+  ctx.fillText(text,-0,-h/2+4);
+  ctx.restore();
+}
+
+// ─── DRAW CUSTOMER ───────────────────────────────────────
+function drawCust(ctx,c,x,y,flip){
+  ctx.save();
+  ctx.translate(x,y);
+  if(flip)ctx.scale(-1,1);
+
+  const t=c.type;
+  const sitting=c.state==='eating';
+
+  // Shoes
+  ctx.fillStyle='#2c1a0a';
+  if(sitting){
+    ctx.fillRect(-12,10,10,6);ctx.fillRect(2,10,10,6);
+  }else{
+    ctx.fillRect(-12,20,10,8);ctx.fillRect(2,20,10,8);
   }
 
-  // Draw customers
-  customers.forEach(c=>{
-    if(c.state==='served') return;
-    const bobOff = bobTimer + c.id*3;
-    drawCustomerOnCanvas(ctx2d, c, c.x, 200, c.state==='walking'?bobOff:0);
-    if(c.state==='waiting' && c.want){
-      const r = RECIPES.find(x=>x.id===c.want);
-      drawSpeechBubble(ctx2d, c.x, 200, r?r.name:'???', c.want);
-      // patience bar
-      const pct = Math.max(0, 1 - c.waitTime/c.patience);
-      ctx2d.fillStyle = pct>0.5 ? '#4a7c59' : pct>0.2 ? '#c8873a' : '#c0392b';
-      ctx2d.fillRect(c.x-20, 155, 40*pct, 4);
-      ctx2d.strokeStyle = 'rgba(0,0,0,0.2)'; ctx2d.lineWidth=1;
-      ctx2d.strokeRect(c.x-20, 155, 40, 4);
+  // Legs
+  ctx.fillStyle=t.id==='bizlady'?'#1a0a00':t.id==='granny'?'#555':'#2c3040';
+  if(sitting){
+    ctx.fillRect(-12,-5,10,18);ctx.fillRect(2,-5,10,18);
+  }else{
+    const legSwing=Math.sin(bobT+c.id*3)*8;
+    ctx.save();ctx.rotate((legSwing)*Math.PI/180);ctx.fillRect(-8,-2,8,24);ctx.restore();
+    ctx.save();ctx.rotate((-legSwing)*Math.PI/180);ctx.fillRect(0,-2,8,24);ctx.restore();
+  }
+
+  // Skirt/dress for granny & bizlady
+  if(t.id==='granny'){ctx.fillStyle='#9b59b6';ctx.beginPath();ctx.moveTo(-14,-5);ctx.lineTo(14,-5);ctx.lineTo(10,14);ctx.lineTo(-10,14);ctx.closePath();ctx.fill();}
+  if(t.id==='bizlady'){ctx.fillStyle='#1a2a3a';ctx.fillRect(-10,-22,20,18);}
+
+  // Body
+  ctx.fillStyle=t.shirt;
+  if(!['granny','bizlady'].includes(t.id))ctx.fillRect(-11,-22,22,20);
+
+  // Arms
+  ctx.fillStyle=t.shirt;
+  if(sitting){
+    ctx.fillRect(-18,-15,8,12);ctx.fillRect(10,-15,8,12);
+  }else{
+    const arm=Math.sin(bobT+c.id*3+Math.PI)*6;
+    ctx.save();ctx.rotate((arm+12)*Math.PI/180);ctx.fillRect(-16,-18,6,16);ctx.restore();
+    ctx.save();ctx.rotate((-arm-12)*Math.PI/180);ctx.fillRect(10,-18,6,16);ctx.restore();
+  }
+
+  // Neck
+  ctx.fillStyle='#f0c090';ctx.fillRect(-4,-26,8,6);
+
+  // Head
+  ctx.fillStyle='#f0c090';ctx.beginPath();ctx.arc(0,-34,11,0,Math.PI*2);ctx.fill();
+
+  // Hair
+  ctx.fillStyle=t.hair;
+  if(t.id==='hipster'){
+    ctx.beginPath();ctx.arc(0,-46,6,0,Math.PI*2);ctx.fill();
+    ctx.fillRect(-11,-38,22,10);
+    // beard
+    ctx.fillStyle='#2c1a0a';ctx.beginPath();ctx.arc(0,-26,5,0,Math.PI);ctx.fill();
+    // glasses
+    ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+    ctx.strokeRect(-11,-37,9,7);ctx.strokeRect(2,-37,9,7);
+    ctx.beginPath();ctx.moveTo(-2,-33);ctx.lineTo(2,-33);ctx.stroke();
+  }else if(t.id==='student'){
+    ctx.beginPath();ctx.arc(0,-43,8,Math.PI,0);ctx.fill();
+    // backpack
+    ctx.fillStyle='#e74c3c';ctx.fillRect(11,-22,9,18);ctx.fillRect(12,-20,7,4);
+  }else if(t.id==='bizlady'){
+    ctx.beginPath();ctx.arc(0,-43,9,Math.PI*.1,Math.PI*.9);ctx.fill();
+    ctx.fillRect(-9,-44,18,8);
+    // briefcase
+    ctx.fillStyle='#2c3e50';ctx.fillRect(12,-12,12,9);
+    ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.strokeRect(14,-14,8,4);
+  }else if(t.id==='tourist'){
+    ctx.beginPath();ctx.arc(0,-43,9,Math.PI*.1,Math.PI*.9);ctx.fill();
+    // hat
+    ctx.fillStyle='#e67e22';ctx.fillRect(-13,-52,26,7);ctx.fillRect(-9,-60,18,10);
+    // camera
+    ctx.fillStyle='#333';ctx.fillRect(-18,-16,11,8);ctx.fillStyle='#666';ctx.beginPath();ctx.arc(-13,-12,3,0,Math.PI*2);ctx.fill();
+  }else if(t.id==='granny'){
+    ctx.fillStyle='#ddd';ctx.beginPath();ctx.arc(0,-43,9,Math.PI,0);ctx.fill();
+    ctx.fillRect(-9,-44,18,8);
+    // shawl
+    ctx.fillStyle='rgba(155,89,182,.4)';ctx.beginPath();ctx.moveTo(-16,-22);ctx.lineTo(16,-22);ctx.lineTo(10,0);ctx.lineTo(-10,0);ctx.closePath();ctx.fill();
+  }else if(t.id==='mom'){
+    ctx.beginPath();ctx.arc(0,-43,9,Math.PI*.1,Math.PI*.9);ctx.fill();
+    ctx.fillRect(-9,-44,18,8);
+    // stroller
+    if(!sitting){
+      ctx.fillStyle='#e91e8c';ctx.fillRect(13,-18,20,14);
+      ctx.strokeStyle='#e91e8c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(13,-18);ctx.lineTo(11,-8);ctx.stroke();
+      ctx.fillStyle='#333';[14,30].forEach(dx=>{ctx.beginPath();ctx.arc(dx,-3,4,0,Math.PI*2);ctx.fill();});
     }
-  });
+  }else{
+    ctx.beginPath();ctx.arc(0,-43,9,Math.PI*.1,Math.PI*.9);ctx.fill();ctx.fillRect(-9,-44,18,8);
+  }
+
+  // Eyes
+  ctx.fillStyle='#1C0A00';
+  ctx.beginPath();ctx.arc(-4,-34,1.5,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(4,-34,1.5,0,Math.PI*2);ctx.fill();
+
+  // Smile
+  ctx.strokeStyle='#1C0A00';ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.arc(0,-30,3.5,0.2,Math.PI-.2);ctx.stroke();
+
+  ctx.restore();
 }
 
-function drawShowcaseItem(ctx, x, y, id){
-  const colors = {croissant:'#f4c777',cinnamon_bun:'#c8873a',blueberry_muffin:'#7b6fa0',baguette:'#e8c87a',eclair:'#5c3317',espresso:'#3d1c00',cappuccino:'#c4956a',latte:'#d4a87a',lemonade:'#fffaaa'};
-  ctx.fillStyle = colors[id]||'#ccc';
-  ctx.beginPath(); ctx.arc(x+8, y+12, 8, 0, Math.PI*2); ctx.fill();
-}
-
+// ─── END DAY ─────────────────────────────────────────────
 function endDay(){
-  if(!dayRunning) return;
-  dayRunning = false;
-  if(animFrame) cancelAnimationFrame(animFrame);
-  customers = []; queue = [];
-
-  // Day end stats
-  if(state.dayEarned > state.totalStats.maxDayEarned) state.totalStats.maxDayEarned = state.dayEarned;
-  if(state.reputation >= 80) state.totalStats.goodRepDays++;
-  if(state.day >= 5) state.totalStats.day5passed = true;
-
-  // Reputation adjustments
-  const sold = Object.values(state.dayStats.sold).reduce((a,b)=>a+b,0);
-  if(sold > 10) state.reputation = Math.min(100, state.reputation + 3);
-  if(state.dayStats.unhappy > 3) state.reputation = Math.max(0, state.reputation - 3);
-
-  saveGame();
-  switchPhase('evening');
+  if(!dayRunning)return;
+  dayRunning=false;if(animId)cancelAnimationFrame(animId);
+  custs=[];queue=[];Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
+  if(S.dayEarned>S.totalStats.maxDay)S.totalStats.maxDay=S.dayEarned;
+  if(S.rep>=80)S.totalStats.repDays++;
+  if(S.day>=5)S.totalStats.day5=true;
+  const sold=Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0);
+  if(sold>10)S.rep=Math.min(100,S.rep+3);
+  if(S.dayStats.unhappy>3)S.rep=Math.max(0,S.rep-3);
+  save();switchPhase('evening');
 }
 
-// =============================================
-// EVENING PHASE
-// =============================================
+// ─── EVENING ─────────────────────────────────────────────
 function renderEvening(){
-  document.getElementById('ev-earned').textContent = `${state.dayStats.earned} ₽`;
-  const totalSold = Object.values(state.dayStats.sold).reduce((a,b)=>a+b,0);
-  document.getElementById('ev-sold').textContent = totalSold;
-  document.getElementById('ev-rep').textContent = `${Math.round(state.reputation)}%`;
-
-  // Sales bars
-  const bars = document.getElementById('sales-bars');
-  bars.innerHTML = '';
-  const sorted = Object.entries(state.dayStats.sold).sort((a,b)=>b[1]-a[1]);
-  const max = sorted[0]?sorted[0][1]:1;
+  document.getElementById('ev-earned').textContent=`${S.dayStats.earned} ₽`;
+  const ts=Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0);
+  document.getElementById('ev-sold').textContent=ts;
+  document.getElementById('ev-rep').textContent=`${Math.round(S.rep)}%`;
+  const sb=document.getElementById('sales-bars');sb.innerHTML='';
+  const sorted=Object.entries(S.dayStats.sold).sort((a,b)=>b[1]-a[1]);
+  const mx=sorted[0]?sorted[0][1]:1;
   sorted.forEach(([id,cnt])=>{
-    const r = RECIPES.find(x=>x.id===id);
-    if(!r) return;
-    const row = document.createElement('div');
-    row.className = 'sale-bar-row';
-    row.innerHTML = `<span class="name">${r.name}</span><div class="sale-bar-bg"><div class="sale-bar-fill" style="width:0%" data-pct="${cnt/max*100}"></div></div><span class="count">${cnt}</span>`;
-    bars.appendChild(row);
+    const r=RECIPES.find(x=>x.id===id);if(!r)return;
+    const row=document.createElement('div');row.className='sbr';
+    row.innerHTML=`<span class="nm">${r.name}</span><div class="bar-bg"><div class="bar-f" style="width:0%" data-p="${cnt/mx*100}"></div></div><span class="cnt">${cnt}</span>`;
+    sb.appendChild(row);
   });
-  setTimeout(()=>{ document.querySelectorAll('.sale-bar-fill').forEach(el=>el.style.width=el.dataset.pct+'%'); },100);
-
-  // Leftovers
-  const lftList = document.getElementById('leftover-list');
-  lftList.innerHTML = '';
-  let hasLeft = false;
-  Object.keys(state.showcase).forEach(id=>{
-    const qty = state.showcase[id]||0;
-    if(qty>0){
-      hasLeft = true;
-      const r = RECIPES.find(x=>x.id===id);
-      const div = document.createElement('div');
-      div.className = 'leftover-item';
-      div.innerHTML = `${svgRecipeIcon(id)}<span class="lft-name">${r?r.name:id}</span><span class="lft-qty">${qty} шт. × ${Math.round((r?r.price:50)*0.5)}₽</span>`;
-      lftList.appendChild(div);
-    }
+  setTimeout(()=>document.querySelectorAll('.bar-f').forEach(el=>el.style.width=el.dataset.p+'%'),80);
+  const ll=document.getElementById('lft-list');ll.innerHTML='';
+  let hasL=false;
+  Object.keys(S.showcase).forEach(id=>{
+    const q=S.showcase[id]||0;if(!q)return;hasL=true;
+    const r=RECIPES.find(x=>x.id===id);
+    const d=document.createElement('div');d.className='lft-item';
+    d.innerHTML=`${recipeIcon(id,28)}<span class="ln">${r?r.name:id}</span><span class="lq">${q} шт × ${Math.round((r?r.price:50)*.5)}₽</span>`;
+    ll.appendChild(d);
   });
-  if(!hasLeft) lftList.innerHTML = '<div style="color:rgba(28,10,0,0.4);font-size:13px">Всё продано! Отличная работа!</div>';
-
-  // Check unlocks
+  if(!hasL)ll.innerHTML='<div style="color:rgba(28,10,0,.4);font-size:13px">Всё продано! 🎉</div>';
   checkUnlocks();
 }
 
 function checkUnlocks(){
-  const unlockSec = document.getElementById('unlock-section');
-  unlockSec.style.display = 'none';
-  let toUnlock = null;
-
-  if(state.totalStats.croissantsSold>=20 && !state.unlockedRecipes.includes('almond_croissant'))
-    toUnlock = {id:'almond_croissant', desc:'Продал 20 круассанов — время для премиум-версии!'};
-  else if(state.totalStats.maxDayEarned>=5000 && !state.unlockedRecipes.includes('honey_cake'))
-    toUnlock = {id:'honey_cake', desc:'Выручка 5000₽ за день — повод для торжества!'};
-  else if(state.totalStats.experiments>=1 && !state.unlockedRecipes.includes('recipe_of_day'))
-    toUnlock = {id:'recipe_of_day', desc:'Успешный эксперимент открыл авторский рецепт!'};
-  else if(state.totalStats.day5passed && !state.unlockedRecipes.includes('matcha_latte'))
-    toUnlock = {id:'matcha_latte', desc:'5 дней работы — добавляем матча латте в меню!'};
-  else if(state.totalStats.goodRepDays>=3 && !state.unlockedRecipes.includes('breakfast_menu'))
-    toUnlock = {id:'breakfast_menu', desc:'Три дня с репутацией 80%+ — гости оценили качество!'};
-
-  if(toUnlock){
-    state.unlockedRecipes.push(toUnlock.id);
-    const r = RECIPES.find(x=>x.id===toUnlock.id);
-    document.getElementById('unlock-name').textContent = r?r.name:toUnlock.id;
-    document.getElementById('unlock-desc').textContent = toUnlock.desc;
-    unlockSec.style.display = 'block';
-    playUnlock();
-    saveGame();
+  const u=document.getElementById('unlock-sec');u.style.display='none';
+  let unlock=null;
+  if(S.totalStats.croissants>=20&&!S.unlocked.includes('almond_croissant'))unlock={id:'almond_croissant',desc:'Продал 20 круассанов!'};
+  else if(S.totalStats.maxDay>=5000&&!S.unlocked.includes('honey_cake'))unlock={id:'honey_cake',desc:'Выручка 5000₽ за день!'};
+  else if(S.totalStats.exps>=1&&!S.unlocked.includes('recipe_of_day'))unlock={id:'recipe_of_day',desc:'Удачный эксперимент!'};
+  else if(S.totalStats.day5&&!S.unlocked.includes('matcha_latte'))unlock={id:'matcha_latte',desc:'5 дней позади!'};
+  else if(S.totalStats.repDays>=3&&!S.unlocked.includes('breakfast'))unlock={id:'breakfast',desc:'Репутация 80%+ три дня!'};
+  if(unlock){
+    S.unlocked.push(unlock.id);
+    const r=RECIPES.find(x=>x.id===unlock.id);
+    document.getElementById('unlock-name').textContent=r?r.name:unlock.id;
+    document.getElementById('unlock-desc').textContent=unlock.desc;
+    u.style.display='block';fanfare();save();
   }
 }
 
 function sellLeftovers(){
-  let earned = 0;
-  Object.keys(state.showcase).forEach(id=>{
-    const r = RECIPES.find(x=>x.id===id);
-    const qty = state.showcase[id]||0;
-    if(qty>0 && r){ earned += Math.round(r.price*0.5)*qty; }
-  });
-  state.money += earned;
-  state.showcase = {};
-  notify(`Продано остатков на ${earned}₽`, 'good');
-  updateHeader();
-  renderEvening();
+  let e=0;
+  Object.keys(S.showcase).forEach(id=>{const r=RECIPES.find(x=>x.id===id),q=S.showcase[id]||0;if(q&&r)e+=Math.round(r.price*.5)*q;});
+  S.money+=e;S.showcase={};notify(`Продано остатков на ${e}₽`,'g');updateHdr();renderEvening();
 }
-
-function throwLeftovers(){ state.showcase = {}; notify('Остатки выброшены', 'info'); renderEvening(); }
+function throwLeftovers(){S.showcase={};notify('Остатки выброшены','i');renderEvening();}
 
 function nextDay(){
-  state.day++;
-  state.weather = WEATHERS[Math.floor(Math.random()*WEATHERS.length)];
-  state.showcase = {};
-  budget_used = 0;
-  state.dayStats = {earned:0, sold:{}, unhappy:0, experiments:0};
-  state.dayEarned = 0;
-  // Daily income boost
-  state.money += 50; // base income
-  updateHeader();
-  saveGame();
-  switchPhase('morning');
+  S.day++;S.weather=WEATHERS[Math.floor(Math.random()*WEATHERS.length)];
+  S.showcase={};budgetUsed=0;S.dayStats={earned:0,sold:{},unhappy:0,exp:0};S.dayEarned=0;
+  S.money+=50;updateHdr();save();switchPhase('morning');
 }
 
-// =============================================
-// DECOR PHASE
-// =============================================
+// ─── DECOR ────────────────────────────────────────────────
 function renderDecor(){
-  // Draw interior
-  const dc = document.getElementById('decor-canvas');
-  const dctx = dc.getContext('2d');
-  drawDecorPreview(dctx, dc.width, dc.height);
-
-  // Shop list
-  const list = document.getElementById('decor-shop-list');
-  list.innerHTML = '';
-  DECOR_ITEMS.forEach(item=>{
-    const owned = !!state.shopDecor[item.id];
-    const div = document.createElement('div');
-    div.className = 'decor-shop-item';
-    div.innerHTML = `
-      <div class="d-icon" style="font-size:24px">${item.icon}</div>
-      <div class="d-info">
-        <div class="d-title">${item.name}</div>
-        <div class="d-desc">${item.desc}</div>
-      </div>
-      ${owned
-        ? '<span class="d-owned">Куплено</span>'
-        : `<div><div class="d-price">${item.price}₽</div><button class="btn btn-primary" style="font-size:11px;padding:6px 10px;margin-top:4px" onclick="buyDecor('${item.id}')">Купить</button></div>`
-      }
-    `;
-    list.appendChild(div);
+  drawDecorPreview();
+  const l=document.getElementById('decor-list');l.innerHTML='';
+  DECORS.forEach(item=>{
+    const owned=!!S.decor[item.id];
+    const d=document.createElement('div');d.className='di-item';
+    d.innerHTML=`<div class="dico">${item.icon}</div>
+    <div class="dinfo"><div class="dtitle">${item.name}</div><div class="ddesc">${item.desc}</div></div>
+    ${owned?'<span class="owned-badge">Куплено</span>':`<div><div class="dprice">${item.price}₽</div><button class="btn btn-p" style="font-size:11px;padding:5px 10px;margin-top:3px" onclick="buyDecor('${item.id}')">Купить</button></div>`}`;
+    l.appendChild(d);
   });
 }
 
-function drawDecorPreview(ctx, W, H){
-  ctx.clearRect(0,0,W,H);
+function drawDecorPreview(){
+  const dc=document.getElementById('dc'),dctx=dc.getContext('2d'),W=dc.width,H=dc.height;
+  dctx.clearRect(0,0,W,H);
   // Wall
-  ctx.fillStyle = '#f0dfc0'; ctx.fillRect(0,0,W,H*0.6);
+  const wg=dctx.createLinearGradient(0,0,0,H*.6);
+  wg.addColorStop(0,'#fdf0d8');wg.addColorStop(1,'#f0dfc0');
+  dctx.fillStyle=wg;dctx.fillRect(0,0,W,H*.6);
   // Floor
-  ctx.fillStyle = '#d4b896'; ctx.fillRect(0,H*0.6,W,H*0.4);
-  // Floor tiles
-  ctx.strokeStyle='#c4a886'; ctx.lineWidth=1;
-  for(let x=0;x<W;x+=50){ ctx.beginPath(); ctx.moveTo(x,H*0.6); ctx.lineTo(x,H); ctx.stroke(); }
-  for(let y=H*0.6;y<H;y+=35){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
-  // Counter
-  ctx.fillStyle='#8b5e3c'; ctx.fillRect(W*0.55, H*0.45, W*0.4, H*0.18);
-  ctx.fillStyle='#a07040'; ctx.fillRect(W*0.55, H*0.45, W*0.4, H*0.04);
-
-  // Decor items
-  if(state.shopDecor['painting']){
-    ctx.fillStyle='#c8873a'; ctx.fillRect(40,30,90,65); ctx.fillStyle='#87ceeb'; ctx.fillRect(47,37,76,51);
-    ctx.strokeStyle='#8b5e3c'; ctx.lineWidth=3; ctx.strokeRect(40,30,90,65);
-    // Art
-    ctx.fillStyle='#4a7c59'; ctx.beginPath(); ctx.arc(80,62,18,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#c8873a'; ctx.beginPath(); ctx.arc(95,55,10,0,Math.PI*2); ctx.fill();
+  const fg=dctx.createLinearGradient(0,H*.6,0,H);
+  fg.addColorStop(0,'#d8c4a0');fg.addColorStop(1,'#c8b48a');
+  dctx.fillStyle=fg;dctx.fillRect(0,H*.6,W,H*.4);
+  dctx.strokeStyle='rgba(180,150,100,.3)';dctx.lineWidth=1;
+  for(let x=0;x<W;x+=60){dctx.beginPath();dctx.moveTo(x,H*.6);dctx.lineTo(x,H);dctx.stroke();}
+  for(let y=H*.6;y<H;y+=40){dctx.beginPath();dctx.moveTo(0,y);dctx.lineTo(W,y);dctx.stroke();}
+  dctx.fillStyle='#a07040';dctx.fillRect(0,H*.6,W,7);
+  // Windows
+  [[60,25],[280,25]].forEach(([x,y])=>{
+    dctx.fillStyle='#8b5e3c';dctx.fillRect(x,y,80,75);
+    dctx.fillStyle='rgba(135,200,235,.65)';dctx.fillRect(x+4,y+4,72,67);
+    dctx.strokeStyle='rgba(255,255,255,.4)';dctx.lineWidth=1.5;
+    dctx.beginPath();dctx.moveTo(x+40,y+4);dctx.lineTo(x+40,y+71);dctx.stroke();
+    dctx.beginPath();dctx.moveTo(x+4,y+38);dctx.lineTo(x+76,y+38);dctx.stroke();
+    dctx.fillStyle='#a07040';dctx.fillRect(x-4,y+75,88,7);
+  });
+  // Decor
+  if(S.decor['painting'])drawPainting(dctx,160,25);
+  if(S.decor['plant'])drawPlant(dctx,W-60,H*.55);
+  if(S.decor['menu_board']){dctx.fillStyle='#2c3e50';dctx.fillRect(420,25,110,80);dctx.strokeStyle='#c8873a';dctx.lineWidth=2;dctx.strokeRect(420,25,110,80);}
+  if(S.decor['lighting']){
+    const lg=dctx.createRadialGradient(W/2,0,5,W/2,0,W*.7);
+    lg.addColorStop(0,'rgba(255,220,100,.2)');lg.addColorStop(1,'rgba(255,220,100,0)');
+    dctx.fillStyle=lg;dctx.fillRect(0,0,W,H);
   }
-  if(state.shopDecor['plant']){
-    const px=W-70, py=H*0.55;
-    ctx.fillStyle='#4a7c59'; ctx.beginPath(); ctx.arc(px,py-20,18,Math.PI,0); ctx.fill();
-    ctx.fillStyle='#3d6b4a'; ctx.beginPath(); ctx.arc(px-12,py-8,14,Math.PI,0); ctx.fill();
-    ctx.beginPath(); ctx.arc(px+12,py-12,12,Math.PI,0); ctx.fill();
-    ctx.fillStyle='#8b5e3c'; ctx.fillRect(px-10,py,20,28);
-  }
-  if(state.shopDecor['table']){
-    [80,200,340].forEach(tx=>{
-      ctx.fillStyle='#a07040'; ctx.beginPath(); ctx.ellipse(tx,H*0.6+5,40,14,0,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle='#8b5e3c'; ctx.fillRect(tx-6,H*0.6+5,12,30);
+  if(S.decor['jazz']){dctx.font='20px serif';dctx.fillStyle='rgba(142,68,173,.5)';dctx.fillText('♪',W-35,60);dctx.fillText('♫',W-60,45);}
+  if(S.decor['table']){
+    [[100,H*.62],[230,H*.62],[360,H*.62]].forEach(([tx,ty])=>{
+      dctx.fillStyle='#a07040';dctx.beginPath();dctx.ellipse(tx,ty,40,13,0,0,Math.PI*2);dctx.fill();
+      dctx.strokeStyle='#8b5e3c';dctx.lineWidth=1.5;dctx.beginPath();dctx.ellipse(tx,ty,40,13,0,0,Math.PI*2);dctx.stroke();
+      dctx.fillStyle='#8b5e3c';dctx.fillRect(tx-5,ty+10,8,H-ty-10);
     });
   }
-  if(state.shopDecor['lighting']){
-    // Warm light overlay
-    const grad = ctx.createRadialGradient(W/2,0,10,W/2,0,W*0.7);
-    grad.addColorStop(0,'rgba(255,220,100,0.25)');
-    grad.addColorStop(1,'rgba(255,220,100,0)');
-    ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
-    // Lamp
-    ctx.fillStyle='#c8873a'; ctx.beginPath(); ctx.arc(W/2,10,10,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='rgba(255,250,200,0.8)'; ctx.beginPath(); ctx.arc(W/2,10,6,0,Math.PI*2); ctx.fill();
-  }
-  if(state.shopDecor['menu_board']){
-    ctx.fillStyle='#2c3e50'; ctx.fillRect(160,30,120,80); ctx.strokeStyle='#c8873a'; ctx.lineWidth=3; ctx.strokeRect(160,30,120,80);
-    ctx.fillStyle='#f5e6c8'; ctx.font='bold 12px Inter'; ctx.textAlign='center'; ctx.fillText('МЕНЮ',220,52);
-    ctx.font='10px Inter'; ctx.fillStyle='rgba(245,230,200,0.7)';
-    ['Круассан 80₽','Латте 150₽','Эклер 120₽'].forEach((t,i)=>ctx.fillText(t,220,68+i*14));
-  }
-  if(state.shopDecor['jazz']){
-    ctx.fillStyle='#8e44ad'; ctx.font='22px serif'; ctx.textAlign='right'; ctx.fillText('♪',W-20,80);
-    ctx.font='16px serif'; ctx.fillStyle='rgba(142,68,173,0.5)'; ctx.fillText('♩',W-45,65);
-    ctx.fillText('♫',W-15,100);
-  }
+  // Counter
+  dctx.fillStyle='#6b3a1a';dctx.fillRect(W-160,H*.58,160,H*.42);
+  dctx.fillStyle='#a07040';dctx.fillRect(W-165,H*.55,168,15);
 }
 
 function buyDecor(id){
-  const item = DECOR_ITEMS.find(x=>x.id===id);
-  if(!item) return;
-  if(state.shopDecor[id]){ notify('Уже куплено!', 'info'); return; }
-  if(state.money < item.price){ notify(`Недостаточно денег! Нужно ${item.price}₽`, 'bad'); return; }
-  state.money -= item.price;
-  state.shopDecor[id] = true;
-  notify(`${item.name} добавлен в интерьер!`, 'good');
-  playUnlock();
-  updateHeader();
-  saveGame();
-  renderDecor();
+  const item=DECORS.find(x=>x.id===id);if(!item)return;
+  if(S.decor[id]){notify('Уже куплено','i');return;}
+  if(S.money<item.price){notify(`Нужно ${item.price}₽`,'b');return;}
+  S.money-=item.price;S.decor[id]=true;
+  notify(`${item.name} добавлен!`,'g');fanfare();updateHdr();save();renderDecor();
 }
 
-function closeModal(){ document.getElementById('modal-overlay').classList.remove('active'); }
-
-// =============================================
-// INIT
-// =============================================
+// ─── INIT ─────────────────────────────────────────────────
 async function init(){
-  const loaded = await loadGame();
-  if(!loaded){
-    state.weather = WEATHERS[Math.floor(Math.random()*WEATHERS.length)];
-  }
-  updateHeader();
+  await load();
+  updateHdr();
   switchPhase('morning');
 }
-
 init();
 </script>
 </body>
