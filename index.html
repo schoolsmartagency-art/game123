@@ -12,166 +12,152 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px;overflow:hidden}
-.serif{font-family:'Playfair Display',serif}
+body{display:flex;flex-direction:column;font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espresso);min-width:1024px}
 
 /* HEADER */
-#hdr{background:var(--espresso);color:var(--cream);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.35)}
-.brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:1px}
+#hdr{flex-shrink:0;background:var(--espresso);color:var(--cream);padding:9px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.brand{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;letter-spacing:1px}
 .brand em{color:var(--caramel);font-style:normal}
 #hdr-mid{display:flex;flex-direction:column;align-items:center;gap:1px}
-#hdr-day{font-size:13px;opacity:.75;font-weight:600}
-#hdr-wx{font-size:13px;color:var(--caramel);font-weight:600}
-#hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
-#hdr-money{font-size:20px;font-weight:700;color:var(--caramel)}
-.rep-row{display:flex;align-items:center;gap:6px;font-size:12px;opacity:.8}
-#rep-bar{width:90px;height:6px;background:rgba(255,255,255,.18);border-radius:3px}
+#hdr-day{font-size:12px;opacity:.75;font-weight:600}
+#hdr-wx{font-size:12px;color:var(--caramel);font-weight:600}
+#hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+#hdr-money{font-size:19px;font-weight:700;color:var(--caramel)}
+.rep-row{display:flex;align-items:center;gap:6px;font-size:11px;opacity:.8}
+#rep-bar{width:80px;height:5px;background:rgba(255,255,255,.18);border-radius:3px}
 #rep-fill{height:100%;background:var(--sage);border-radius:3px;transition:width .5s}
 
-/* NAV */
-#nav{background:var(--latte);border-bottom:2px solid var(--caramel);display:flex}
-.nb{flex:1;padding:9px 6px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--espresso);transition:background .18s,color .18s;border-right:1px solid var(--latte2)}
-.nb:last-child{border-right:none}
-.nb:hover{background:rgba(200,135,58,.18)}
-.nb.active{background:var(--caramel);color:#fff}
+/* TOOLBAR */
+#toolbar{flex-shrink:0;background:var(--latte);border-bottom:2px solid var(--caramel);display:flex;align-items:center;justify-content:space-between;padding:6px 16px;gap:8px}
+.tb-l{display:flex;gap:7px;align-items:center}
+.tb-btn{padding:6px 13px;border:1.5px solid rgba(200,135,58,.35);border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;font-size:12px;background:var(--cream);color:var(--espresso);transition:all .18s}
+.tb-btn:hover{background:var(--caramel);color:#fff;border-color:var(--caramel)}
+#tb-r{display:flex;gap:7px;align-items:center}
 
-/* PANELS */
-.panel{background:var(--latte);border-radius:14px;padding:16px;box-shadow:0 2px 10px var(--shadow)}
-.panel h3{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:12px;border-bottom:2px solid var(--caramel);padding-bottom:6px}
-.btn{padding:9px 16px;border:none;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;transition:all .18s}
+/* BUTTONS */
+.btn{padding:8px 15px;border:none;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;transition:all .18s}
 .btn-p{background:var(--caramel);color:#fff}
-.btn-p:hover{background:#a66d28;transform:translateY(-1px);box-shadow:0 3px 8px var(--shadow)}
+.btn-p:hover{background:#a66d28;transform:translateY(-1px)}
 .btn-s{background:var(--sage);color:#fff}
 .btn-s:hover{background:#3a6447;transform:translateY(-1px)}
 .btn-o{background:transparent;color:var(--caramel);border:2px solid var(--caramel)}
 .btn-o:hover{background:var(--caramel);color:#fff}
 .btn:active{transform:translateY(0)!important}
+.panel{background:var(--latte);border-radius:13px;padding:13px;box-shadow:0 2px 8px var(--shadow);overflow-y:auto}
+.panel h3{font-family:'Playfair Display',serif;font-size:14px;margin-bottom:10px;border-bottom:2px solid var(--caramel);padding-bottom:5px}
 
-/* ===== MORNING ===== */
-#phase-morning{display:none;padding:16px 20px;gap:16px;grid-template-columns:200px 1fr 260px}
-#phase-morning.active{display:grid}
+/* CENTER PANEL */
+#center-panel{flex-shrink:0}
 
-/* Ingredients */
-.ing-item{display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:5px;background:var(--cream);border-radius:10px;cursor:grab;border:2px solid transparent;transition:all .18s;user-select:none}
-.ing-item:hover{border-color:var(--caramel);transform:translateX(3px)}
-.ing-item:active{cursor:grabbing;opacity:.6}
+/* DAY CARD */
+#day-card{background:var(--espresso);color:var(--cream);padding:10px 20px;border-bottom:3px solid var(--caramel)}
+#time-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+#time-lbl{font-size:15px;font-weight:700;color:var(--caramel);min-width:44px}
+#timebar-wrap{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+#day-timebar{height:100%;background:var(--caramel);border-radius:4px;transition:width .5s linear}
+.time-cap{font-size:11px;opacity:.55}
+#cust-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
+#cust-info{flex:1;font-size:13px;font-weight:600;min-height:20px}
+#eating-info{font-size:11px;color:rgba(245,230,200,.55)}
+#queue-display{display:flex;gap:5px;align-items:flex-end}
+.q-av{text-align:center;cursor:default}
+.q-av .qf{font-size:16px;line-height:1}
+.q-av .qb{width:20px;height:3px;background:rgba(255,255,255,.18);border-radius:2px;margin-top:2px;position:relative;overflow:hidden}
+.q-av .qb::after{content:'';position:absolute;left:0;top:0;height:100%;width:var(--p,100%);background:var(--sage);border-radius:2px}
+.q-av.angry .qb::after{background:var(--red)}
+#sell-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+#day-log-line{font-size:11px;color:rgba(245,230,200,.65);margin-top:5px;min-height:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#day-earned-hdr{font-size:13px;font-weight:700;color:var(--caramel);margin-left:auto}
+
+/* EVENING CARD */
+#evening-card{background:var(--latte);padding:14px 20px;border-bottom:3px solid var(--caramel);max-height:260px;overflow-y:auto}
+.ev-stats{display:flex;gap:16px;margin-bottom:10px}
+.ev-stat{background:var(--cream);border-radius:10px;padding:8px 16px;text-align:center;flex:1}
+.ev-stat .ev-v{font-family:'Playfair Display',serif;font-size:24px;color:var(--caramel);font-weight:700}
+.ev-stat .ev-l{font-size:10px;color:rgba(28,10,0,.5);text-transform:uppercase;letter-spacing:.4px}
+.ev-goals{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.ev-goal{display:flex;align-items:center;gap:7px;font-size:12px}
+.ev-goal.done{color:var(--sage)}
+.ev-goal:not(.done){opacity:.55}
+.ev-bonus{font-size:14px;font-weight:700;color:var(--sage);margin-bottom:8px}
+.ev-leftovers{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:12px}
+.ev-lft-tag{background:rgba(200,135,58,.14);border:1px solid rgba(200,135,58,.4);color:var(--caramel);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700}
+.ev-unlock{background:linear-gradient(135deg,var(--sage),#2d5c3f);border-radius:10px;padding:10px 14px;color:#fff;font-size:13px;margin-bottom:8px;animation:upop .5s ease}
+@keyframes upop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* WORKBENCH */
+#workbench{flex:1;min-height:0;display:grid;grid-template-columns:195px 1fr 250px;gap:9px;padding:9px 12px}
+
+/* INGREDIENT LIST */
+.ing-item{display:flex;align-items:center;gap:7px;padding:6px 9px;margin-bottom:4px;background:var(--cream);border-radius:9px;cursor:pointer;border:1.5px solid transparent;transition:all .16s;user-select:none}
+.ing-item:hover{border-color:var(--caramel);transform:translateX(2px)}
 .ing-item span{font-size:12px;font-weight:600}
 
-/* Table / Drop zone */
-#drop-zone{min-height:160px;border:2.5px dashed var(--caramel);border-radius:12px;padding:10px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;transition:background .18s;position:relative}
+/* TABLE / DROP ZONE */
+#drop-zone{min-height:120px;border:2px dashed var(--caramel);border-radius:11px;padding:9px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;transition:background .18s;position:relative}
 #drop-zone.over{background:rgba(200,135,58,.1)}
-.di{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;background:var(--cream);border-radius:10px;border:2px solid var(--caramel);cursor:pointer;transition:all .18s;min-width:64px}
+.di{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 9px;background:var(--cream);border-radius:9px;border:1.5px solid var(--caramel);cursor:pointer;transition:all .16s;min-width:58px}
 .di:hover{background:var(--caramel);color:#fff}
 .di span{font-size:10px;font-weight:600}
-#drop-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(28,10,0,.3);font-size:13px;pointer-events:none}
+#drop-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(28,10,0,.3);font-size:12px;pointer-events:none}
+#rec-match{padding:8px;background:rgba(74,124,89,.1);border-radius:9px;margin-bottom:8px;min-height:46px}
+.rm-label{font-size:10px;font-weight:700;color:var(--sage);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.rm-card{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--sage);color:#fff;border-radius:7px;font-size:12px;font-weight:600}
+#exp-hint{font-size:11px;color:var(--sage);background:rgba(74,124,89,.1);border-radius:7px;padding:5px 9px;margin-bottom:7px;display:none}
 
-/* Recipe match box */
-#rec-match{padding:10px;background:rgba(74,124,89,.1);border-radius:10px;margin-bottom:10px;min-height:54px}
-.rm-label{font-size:10px;font-weight:700;color:var(--sage);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.rm-card{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sage);color:#fff;border-radius:8px;font-size:13px;font-weight:600}
-#exp-hint{font-size:11px;color:var(--sage);background:rgba(74,124,89,.1);border-radius:8px;padding:6px 10px;margin-bottom:8px;display:none}
-
-/* Showcase sidebar (morning) */
-.sc-item{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--cream);border-radius:9px;margin-bottom:5px}
-.sc-item .iname{flex:1;font-size:12px;font-weight:600}
-.sc-item .iprice{font-size:11px;color:var(--caramel);font-weight:700}
-.qty{display:flex;align-items:center;gap:3px}
-.qb{width:20px;height:20px;border:1.5px solid var(--caramel);background:none;border-radius:4px;cursor:pointer;font-size:13px;color:var(--caramel);transition:all .15s;line-height:1}
+/* SHOWCASE */
+.sc-item{display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--cream);border-radius:8px;margin-bottom:4px}
+.sc-item .iname{flex:1;font-size:11px;font-weight:600}
+.sc-item .iprice{font-size:10px;color:var(--caramel);font-weight:700}
+.qty{display:flex;align-items:center;gap:2px}
+.qb{width:19px;height:19px;border:1.5px solid var(--caramel);background:none;border-radius:4px;cursor:pointer;font-size:12px;color:var(--caramel);line-height:1}
 .qb:hover{background:var(--caramel);color:#fff}
-.qv{font-size:12px;font-weight:700;min-width:18px;text-align:center}
-#budget-bar{background:var(--cream);border-radius:8px;padding:9px;margin-bottom:10px;font-size:12px}
-#bprog{height:7px;background:rgba(28,10,0,.1);border-radius:4px;margin-top:4px;overflow:hidden}
-#bfill{height:100%;background:var(--caramel);border-radius:4px;transition:width .3s}
+.qv{font-size:11px;font-weight:700;min-width:16px;text-align:center}
+#budget-bar{background:var(--cream);border-radius:7px;padding:7px;margin-bottom:8px;font-size:11px}
+#bprog{height:6px;background:rgba(28,10,0,.1);border-radius:3px;margin-top:3px}
+#bfill{height:100%;background:var(--caramel);border-radius:3px;transition:width .3s}
+.goal-item{display:flex;align-items:center;gap:6px;padding:5px 7px;background:var(--cream);border-radius:7px;margin-bottom:3px}
+.goal-chk{font-size:13px;flex-shrink:0;width:16px;text-align:center}
+.goal-desc{flex:1;font-size:11px;font-weight:600}
+.goal-rwd{font-size:10px;font-weight:700;color:var(--caramel)}
+.demand-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.demand-tag{background:rgba(200,135,58,.14);border:1px solid rgba(200,135,58,.4);color:var(--caramel);border-radius:5px;padding:2px 6px;font-size:10px;font-weight:700}
+.rm-label{font-size:10px;font-weight:700;color:var(--sage);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.section-sep{border:none;border-top:1px solid rgba(200,135,58,.25);margin:8px 0}
 
-/* Recipe book btn */
-#rec-book-btn{width:100%;margin-bottom:8px}
-
-/* ===== RECIPE BOOK MODAL ===== */
+/* RECIPE BOOK MODAL */
 #rb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
 #rb-overlay.active{display:flex}
-#rb-modal{background:var(--cream);border-radius:18px;padding:24px;width:680px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.35)}
-#rb-modal h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:4px}
-#rb-modal .sub{font-size:13px;color:rgba(28,10,0,.5);margin-bottom:16px}
-.rb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.rb-card{background:var(--latte);border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid transparent;transition:all .18s}
+#rb-modal{background:var(--cream);border-radius:18px;padding:22px;width:700px;max-height:82vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.35)}
+#rb-modal h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:3px}
+#rb-modal .sub{font-size:12px;color:rgba(28,10,0,.5);margin-bottom:14px}
+.rb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rb-card{background:var(--latte);border-radius:11px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:5px;border:2px solid transparent;transition:all .18s}
 .rb-card.unlocked{border-color:rgba(200,135,58,.4)}
-.rb-card.locked{opacity:.45;filter:grayscale(.6)}
-.rb-card .rc-name{font-size:12px;font-weight:700;text-align:center}
-.rb-card .rc-price{font-size:13px;color:var(--caramel);font-weight:700}
-.rb-card .rc-ings{font-size:10px;color:rgba(28,10,0,.5);text-align:center}
-.rb-section{font-family:'Playfair Display',serif;font-size:14px;margin:12px 0 6px;color:var(--caramel)}
+.rb-card.locked{opacity:.4;filter:grayscale(.6)}
+.rb-card .rc-name{font-size:11px;font-weight:700;text-align:center}
+.rb-card .rc-price{font-size:12px;color:var(--caramel);font-weight:700}
+.rb-card .rc-ings{font-size:9px;color:rgba(28,10,0,.5);text-align:center}
+.rb-section{font-family:'Playfair Display',serif;font-size:13px;margin:10px 0 5px;color:var(--caramel)}
 
-/* ===== DAY ===== */
-#phase-day{display:none;padding:12px 16px;gap:12px;grid-template-columns:210px 1fr}
-#phase-day.active{display:grid}
-
-.sd-item{display:flex;align-items:center;gap:7px;padding:6px 8px;background:var(--cream);border-radius:9px;margin-bottom:4px;transition:all .2s}
-.sd-item.out{opacity:.35}
-.sd-item .dn{flex:1;font-size:12px;font-weight:600}
-.sd-item .dq{font-size:11px;color:var(--caramel);font-weight:700}
-.cook-item{display:flex;align-items:center;gap:6px;padding:5px 7px;background:var(--cream);border-radius:8px;margin-bottom:3px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
-.cook-item:hover{border-color:var(--sage);background:rgba(74,124,89,.08)}
-.cook-item .cn{flex:1;font-size:11px;font-weight:600}
-.cook-item .cc{font-size:10px;font-weight:700;color:var(--sage)}
-
-#canvas-wrap{position:relative;line-height:0}
-#gc{display:block;width:100%;max-width:720px;height:auto;border-radius:12px;background:#e8d8b8}
-#day-timer{position:absolute;top:8px;left:10px;background:rgba(28,10,0,.7);color:var(--cream);padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700}
-#day-timebar{position:absolute;bottom:0;left:0;height:4px;background:var(--caramel);border-radius:0 0 0 12px;transition:width .5s linear}
-
-#sell-area{display:flex;gap:10px;justify-content:center;margin-top:10px;align-items:center}
-#cust-info{text-align:center;font-size:14px;font-weight:600;min-height:24px;margin-top:6px}
-#btn-sell{background:var(--sage);color:#fff;font-size:15px;padding:11px 30px}
-#btn-no{background:var(--espresso);color:var(--cream);font-size:15px;padding:11px 30px}
-#btn-auto{font-size:12px;padding:8px 14px}
-
-#queue-row{display:flex;gap:5px;align-items:center;justify-content:center;margin-top:8px}
-.qd{width:10px;height:10px;border-radius:50%;background:rgba(28,10,0,.12);transition:all .3s}
-.qd.on{background:var(--caramel)}
-.qd.angry{background:var(--red)}
-
-#day-log{margin-top:8px;max-height:90px;overflow-y:auto;padding:7px 9px;background:var(--latte);border-radius:9px}
-.le{font-size:11px;padding:2px 0;border-bottom:1px solid rgba(28,10,0,.05);font-weight:500}
-.le.g{color:var(--sage)}.le.b{color:var(--red)}.le.n{color:rgba(28,10,0,.55)}
-
-/* ===== EVENING ===== */
-#phase-evening{display:none;padding:24px;max-width:860px;margin:0 auto}
-#phase-evening.active{display:block}
-#ev-title{font-family:'Playfair Display',serif;font-size:30px;text-align:center;margin-bottom:4px}
-#ev-sub{text-align:center;color:rgba(28,10,0,.45);margin-bottom:22px;font-size:14px}
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.sc{background:var(--latte);border-radius:12px;padding:18px;text-align:center;box-shadow:0 2px 8px var(--shadow)}
-.sc .v{font-family:'Playfair Display',serif;font-size:34px;color:var(--caramel);font-weight:700}
-.sc .l{font-size:11px;color:rgba(28,10,0,.5);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
-#ts h3,.lft-sec h3{font-family:'Playfair Display',serif;margin-bottom:12px}
-.sbr{display:flex;align-items:center;gap:9px;margin-bottom:7px}
-.sbr .nm{font-size:13px;width:140px;flex-shrink:0;font-weight:600}
-.bar-bg{flex:1;height:16px;background:rgba(28,10,0,.07);border-radius:8px;overflow:hidden}
-.bar-f{height:100%;background:var(--caramel);border-radius:8px;transition:width 1s ease}
-.sbr .cnt{font-size:12px;color:var(--caramel);font-weight:700;width:28px;text-align:right}
-.lft-item{display:flex;align-items:center;gap:9px;padding:7px;background:var(--cream);border-radius:8px;margin-bottom:5px}
-.lft-item .ln{flex:1;font-size:13px;font-weight:600}
-.lft-item .lq{font-size:11px;color:rgba(28,10,0,.5)}
-#unlock-sec{display:none;background:linear-gradient(135deg,var(--sage),#2d5c3f);border-radius:16px;padding:22px;margin-bottom:14px;color:#fff;text-align:center;animation:upop .6s ease}
-@keyframes upop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-#unlock-sec h3{font-family:'Playfair Display',serif;font-size:20px}
-#unlock-name{font-size:26px;font-weight:700;color:#ffeb99;margin:6px 0}
-
-/* ===== DECOR ===== */
-#phase-decor{display:none;padding:16px 20px;gap:16px;grid-template-columns:1fr 300px}
-#phase-decor.active{display:grid}
-#dc{display:block;width:100%;border-radius:12px}
-.di-item{background:var(--cream);border-radius:10px;padding:11px;margin-bottom:9px;display:flex;align-items:center;gap:9px}
-.di-item .dico{font-size:22px;flex-shrink:0}
+/* DECOR MODAL */
+#decor-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
+#decor-overlay.active{display:flex}
+#decor-modal{background:var(--cream);border-radius:18px;padding:22px;width:820px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.35)}
+#decor-modal h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:14px}
+#decor-layout{display:grid;grid-template-columns:1fr 270px;gap:16px;align-items:start}
+#dc{display:block;width:100%;border-radius:11px;background:#e8d8b8}
+.di-item{background:var(--latte);border-radius:9px;padding:9px;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.di-item .dico{font-size:20px;flex-shrink:0}
 .di-item .dinfo{flex:1}
-.di-item .dtitle{font-size:13px;font-weight:700}
+.di-item .dtitle{font-size:12px;font-weight:700}
 .di-item .ddesc{font-size:10px;color:rgba(28,10,0,.5)}
-.di-item .dprice{color:var(--caramel);font-weight:700;font-size:13px}
-.owned-badge{display:inline-block;padding:2px 8px;background:var(--sage);color:#fff;border-radius:8px;font-size:10px;font-weight:700}
+.di-item .dprice{color:var(--caramel);font-weight:700;font-size:12px}
+.owned-badge{display:inline-block;padding:2px 7px;background:var(--sage);color:#fff;border-radius:6px;font-size:10px;font-weight:700}
 
-/* NOTIFS */
-#nw{position:fixed;top:76px;right:18px;z-index:900;display:flex;flex-direction:column;gap:7px;pointer-events:none}
-.notif{padding:9px 15px;border-radius:10px;font-size:13px;font-weight:600;animation:nin .3s ease;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+/* NOTIFICATIONS */
+#nw{position:fixed;top:68px;right:16px;z-index:900;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.notif{padding:8px 14px;border-radius:9px;font-size:12px;font-weight:600;animation:nin .3s ease;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 @keyframes nin{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
 .notif.g{background:var(--sage);color:#fff}
 .notif.b{background:var(--red);color:#fff}
@@ -184,26 +170,8 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
 .sp{animation:steam 2s ease-in-out infinite}
 .sp:nth-child(2){animation-delay:.35s}
 .sp:nth-child(3){animation-delay:.7s}
-
-::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--latte2);border-radius:3px}
-
-/* Phase height — no page scroll */
-#phase-morning.active,#phase-day.active,#phase-decor.active{height:calc(100vh - 82px);overflow:hidden}
-#phase-evening.active{height:calc(100vh - 82px);overflow-y:auto}
-#phase-morning .panel{max-height:calc(100vh - 112px);overflow-y:auto}
-#phase-day>div>.panel{max-height:calc(100vh - 112px);overflow-y:auto}
-#phase-decor .panel{max-height:calc(100vh - 112px);overflow-y:auto}
-.nb:disabled{opacity:.35;cursor:not-allowed}
-/* Goals */
-.goal-item{display:flex;align-items:center;gap:7px;padding:6px 8px;background:var(--cream);border-radius:8px;margin-bottom:4px}
-.goal-chk{font-size:14px;flex-shrink:0;width:18px;text-align:center}
-.goal-desc{flex:1;font-size:11px;font-weight:600}
-.goal-rwd{font-size:11px;font-weight:700;color:var(--caramel);white-space:nowrap}
-.goal-item.done{background:rgba(74,124,89,.12)}
-.goal-item.done .goal-desc{color:rgba(28,10,0,.4);text-decoration:line-through}
-.demand-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.demand-tag{background:rgba(200,135,58,.14);border:1px solid rgba(200,135,58,.4);color:var(--caramel);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -220,203 +188,176 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--espress
   </div>
 </div>
 
-<div id="nav">
-  <button class="nb active" id="nav-morning" onclick="switchPhase('morning')">🌅 Утро</button>
-  <button class="nb" id="nav-day" onclick="switchPhase('day')">☀️ День</button>
-  <button class="nb" id="nav-evening" onclick="switchPhase('evening')">🌙 Вечер</button>
-  <button class="nb" id="nav-decor" onclick="switchPhase('decor')">🏠 Интерьер</button>
-</div>
-
-<div id="nw"></div>
-
-<!-- RECIPE BOOK MODAL -->
-<div id="rb-overlay" onclick="if(event.target===this)closeRB()">
-  <div id="rb-modal">
-    <h2>📖 Книга рецептов</h2>
-    <div class="sub">Перетащите ингредиенты на стол, чтобы создать блюдо</div>
-    <div class="rb-section">Выпечка</div>
-    <div class="rb-grid" id="rb-bakery"></div>
-    <div class="rb-section">Напитки</div>
-    <div class="rb-grid" id="rb-drinks"></div>
-    <div class="rb-section" id="rb-special-hdr" style="display:none">Особые</div>
-    <div class="rb-grid" id="rb-special"></div>
-    <div style="margin-top:18px;text-align:right">
-      <button class="btn btn-o" onclick="closeRB()">Закрыть</button>
-    </div>
+<div id="toolbar">
+  <div class="tb-l">
+    <button class="tb-btn" onclick="openRB()">📖 Рецепты</button>
+    <button class="tb-btn" onclick="openDecor()">🏠 Интерьер</button>
   </div>
+  <div id="tb-r"></div>
 </div>
 
-<!-- MORNING -->
-<div id="phase-morning" class="active">
+<div id="center-panel">
+  <!-- Day card -->
+  <div id="day-card" style="display:none">
+    <div id="time-row">
+      <span class="time-cap">08:00</span>
+      <div id="timebar-wrap"><div id="day-timebar" style="width:0%"></div></div>
+      <span id="time-lbl">08:00</span>
+      <span class="time-cap">16:00</span>
+      <span id="day-earned-hdr">0 ₽</span>
+    </div>
+    <div id="cust-row">
+      <div id="cust-info">Ждём первых гостей...</div>
+      <div id="eating-info"></div>
+      <div id="queue-display"></div>
+    </div>
+    <div id="sell-row">
+      <button class="btn btn-s" style="padding:7px 18px" onclick="sellToCust()">✓ Обслужить</button>
+      <button class="btn" style="background:var(--espresso);color:var(--cream);padding:7px 18px" onclick="rejectCust()">✗ Нет в наличии</button>
+      <button class="btn btn-o" id="btn-auto" style="padding:7px 14px;font-size:12px" onclick="toggleAuto()">🤖 Авто: ВЫКЛ</button>
+    </div>
+    <div id="day-log-line"></div>
+  </div>
+  <!-- Evening card -->
+  <div id="evening-card" style="display:none"></div>
+</div>
+
+<div id="workbench">
+  <!-- Ingredients -->
   <div class="panel">
     <h3>Ингредиенты</h3>
     <div id="ing-list"></div>
   </div>
+  <!-- Workbench table -->
   <div class="panel">
     <h3>Рабочий стол</h3>
-    <div id="drop-zone"><div id="drop-hint">Перетащите ингредиенты сюда</div></div>
+    <div id="drop-zone"><div id="drop-hint">Нажмите на ингредиент или перетащите сюда</div></div>
     <div id="exp-hint">✨ Неизвестная комбинация — попробуйте эксперимент!</div>
-    <div id="rec-match"><div class="rm-label">Распознан рецепт</div><div id="rm-res" style="color:rgba(28,10,0,.4);font-size:13px">Пока ничего...</div></div>
-    <div style="display:flex;gap:7px;flex-wrap:wrap">
-      <button class="btn btn-p" onclick="addToShowcase()">Добавить в витрину</button>
-      <button class="btn btn-s" onclick="tryExp()">Эксперимент 🧪</button>
-      <button class="btn btn-o" onclick="clearTable()">Очистить</button>
+    <div id="rec-match"><div class="rm-label">Распознан рецепт</div><div id="rm-res" style="color:rgba(28,10,0,.4);font-size:12px">Пока ничего...</div></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-p" style="font-size:12px;padding:7px 14px" onclick="addToShowcase()">+ В витрину</button>
+      <button class="btn btn-s" style="font-size:12px;padding:7px 14px" onclick="tryExp()">🧪 Эксперимент</button>
+      <button class="btn btn-o" style="font-size:12px;padding:7px 12px" onclick="clearTable()">✕ Очистить</button>
     </div>
   </div>
-  <div class="panel">
+  <!-- Showcase -->
+  <div class="panel" id="sc-col">
     <h3>Витрина</h3>
-    <button class="btn btn-o" id="rec-book-btn" onclick="openRB()">📖 Книга рецептов</button>
     <div id="budget-bar">
       <div>Бюджет: <strong id="bleft">500 ₽</strong></div>
       <div id="bprog"><div id="bfill" style="width:0%"></div></div>
     </div>
     <div id="sc-list"></div>
-    <div id="sc-empty" style="color:rgba(28,10,0,.4);font-size:13px;text-align:center;padding:18px">Витрина пуста</div>
-    <div style="margin-top:10px"><button class="btn btn-p" style="width:100%" onclick="openBakery()">Открыть кофейню ☀️</button></div>
-    <div style="margin-top:8px;font-size:11px;color:rgba(28,10,0,.4)">Позиций: <span id="cap-used">0</span>/20</div>
-    <div id="goals-sec" style="margin-top:10px;display:none">
+    <div id="sc-empty" style="color:rgba(28,10,0,.4);font-size:12px;text-align:center;padding:12px">Витрина пуста</div>
+    <div style="font-size:10px;color:rgba(28,10,0,.4);margin-bottom:6px">Позиций: <span id="cap-used">0</span>/20</div>
+    <div id="open-btn-wrap"><button class="btn btn-p" style="width:100%;font-size:13px" onclick="openBakery()">Открыть кофейню ☀️</button></div>
+    <hr class="section-sep">
+    <div id="goals-sec" style="display:none">
       <div class="rm-label">🎯 Цели дня</div>
       <div id="goals-list"></div>
     </div>
-    <div id="demand-sec" style="margin-top:10px;display:none">
+    <div id="demand-sec" style="display:none">
       <div class="rm-label">📋 Вчера спрашивали</div>
       <div id="demand-list" class="demand-row"></div>
     </div>
   </div>
 </div>
 
-<!-- DAY -->
-<div id="phase-day">
-  <div class="panel" style="overflow-y:auto;max-height:calc(100vh - 140px)">
-    <h3>Витрина</h3>
-    <div id="day-sc"></div>
-    <div style="margin-top:8px;padding:8px;background:var(--cream);border-radius:9px">
-      <div style="font-size:10px;color:rgba(28,10,0,.5);text-transform:uppercase;letter-spacing:.4px">Выручка</div>
-      <div id="day-earned" style="font-size:20px;font-weight:700;color:var(--caramel)">0 ₽</div>
-    </div>
-    <div style="margin-top:8px">
-      <div class="rm-label" style="margin-bottom:4px">🍳 Приготовить ещё</div>
-      <div id="day-cook" style="max-height:160px;overflow-y:auto"></div>
-    </div>
-    <div style="margin-top:8px"><button class="btn btn-o" style="width:100%;font-size:12px" onclick="endDay()">Закрыть кофейню 🌙</button></div>
-  </div>
-  <div>
-    <div class="panel" style="padding:10px">
-      <div id="canvas-wrap">
-        <canvas id="gc" width="720" height="400"></canvas>
-        <div id="day-timer">08:00</div>
-        <div id="day-timebar" style="width:0%"></div>
-      </div>
-      <div id="cust-info">Ждём первых гостей...</div>
-      <div id="sell-area">
-        <button class="btn" id="btn-sell" onclick="sellToCust()">Обслужить ✓</button>
-        <button class="btn" id="btn-no" onclick="rejectCust()">Нет в наличии ✗</button>
-        <button class="btn btn-o" id="btn-auto" onclick="toggleAuto()">Авто: ВЫКЛ</button>
-      </div>
-      <div id="queue-row">
-        <span style="font-size:11px;color:rgba(28,10,0,.5)">Очередь:</span>
-        <div class="qd" id="qd0"></div><div class="qd" id="qd1"></div><div class="qd" id="qd2"></div><div class="qd" id="qd3"></div><div class="qd" id="qd4"></div>
-      </div>
-      <div id="day-log"></div>
+<!-- RECIPE BOOK MODAL -->
+<div id="rb-overlay" onclick="if(event.target===this)closeRB()">
+  <div id="rb-modal">
+    <h2>📖 Книга рецептов</h2>
+    <div class="sub">Нажмите на ингредиент или перетащите на рабочий стол</div>
+    <div class="rb-section">Выпечка</div>
+    <div class="rb-grid" id="rb-bakery"></div>
+    <div class="rb-section">Напитки</div>
+    <div class="rb-grid" id="rb-drinks"></div>
+    <div class="rb-section" id="rb-special-hdr" style="display:none">Особые</div>
+    <div class="rb-grid" id="rb-special"></div>
+    <div style="margin-top:16px;text-align:right">
+      <button class="btn btn-o" onclick="closeRB()">Закрыть</button>
     </div>
   </div>
 </div>
 
-<!-- EVENING -->
-<div id="phase-evening">
-  <div id="ev-title">День завершён!</div>
-  <div id="ev-sub">Итоги работы пекарни-кофейни</div>
-  <div class="sg">
-    <div class="sc"><div class="v" id="ev-earned">0 ₽</div><div class="l">Выручка</div></div>
-    <div class="sc"><div class="v" id="ev-sold">0</div><div class="l">Продано</div></div>
-    <div class="sc"><div class="v" id="ev-rep">0%</div><div class="l">Репутация</div></div>
-  </div>
-  <div id="ts" class="panel" style="margin-bottom:14px"><h3>Топ продаж</h3><div id="sales-bars"></div></div>
-  <div id="goals-ev-sec" class="panel" style="margin-bottom:14px;display:none">
-    <h3>Цели дня</h3>
-    <div id="goals-ev-list"></div>
-    <div id="goals-bonus" style="margin-top:8px;font-size:14px;font-weight:700;color:var(--sage)"></div>
-  </div>
-  <div class="lft-sec panel" style="margin-bottom:14px">
-    <h3>Остатки</h3>
-    <div id="lft-list"></div>
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <button class="btn btn-s" onclick="sellLeftovers()">Продать −50%</button>
-      <button class="btn btn-o" onclick="throwLeftovers()">Выбросить</button>
+<!-- DECOR MODAL -->
+<div id="decor-overlay" onclick="if(event.target===this)closeDecor()">
+  <div id="decor-modal">
+    <h2>🏠 Интерьер кофейни</h2>
+    <div id="decor-layout">
+      <canvas id="dc" width="500" height="280"></canvas>
+      <div>
+        <div style="font-size:12px;color:rgba(28,10,0,.5);margin-bottom:10px">Уютный интерьер привлекает больше гостей и повышает настроение клиентов</div>
+        <div id="decor-list"></div>
+      </div>
     </div>
-  </div>
-  <div id="unlock-sec">
-    <div style="font-size:28px">🎉</div>
-    <h3>Новый рецепт разблокирован!</h3>
-    <div id="unlock-name"></div>
-    <p id="unlock-desc" style="opacity:.85;font-size:13px;margin-top:4px"></p>
-  </div>
-  <div style="text-align:center;margin-top:18px">
-    <button class="btn btn-p" style="font-size:15px;padding:13px 36px" onclick="nextDay()">Следующий день →</button>
+    <div style="margin-top:14px;text-align:right">
+      <button class="btn btn-o" onclick="closeDecor()">Закрыть</button>
+    </div>
   </div>
 </div>
 
-<!-- DECOR -->
-<div id="phase-decor">
-  <div class="panel">
-    <h3>Интерьер кофейни</h3>
-    <canvas id="dc" width="600" height="340"></canvas>
-    <div style="margin-top:8px;font-size:12px;color:rgba(28,10,0,.5)">Уютный интерьер привлекает больше гостей</div>
-  </div>
-  <div class="panel">
-    <h3>Магазин декора</h3>
-    <div id="decor-list"></div>
-  </div>
-</div>
+<div id="nw"></div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────
-const DAYS = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
-const WEATHERS = [
+// ─── DATA ─────────────────────────────────────────────────
+const DAYS=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+const WEATHERS=[
   {name:'Солнечно',icon:'🌤'},{name:'Облачно',icon:'☁️'},{name:'Дождь',icon:'🌧'},
   {name:'Жара',icon:'☀️'},{name:'Ветер',icon:'💨'}
 ];
 
-const INGS = [
-  {id:'flour',name:'Мука',clr:'#f5deb3'},{id:'butter',name:'Масло',clr:'#ffd700'},
-  {id:'milk',name:'Молоко',clr:'#e8f4f8'},{id:'sugar',name:'Сахар',clr:'#fff8dc'},
-  {id:'cinnamon',name:'Корица',clr:'#8b4513'},{id:'eggs',name:'Яйца',clr:'#ffa040'},
-  {id:'blueberry',name:'Черника',clr:'#6a0dad'},{id:'water',name:'Вода',clr:'#87ceeb'},
-  {id:'yeast',name:'Дрожжи',clr:'#d4b483'},{id:'chocolate',name:'Шоколад',clr:'#3d1c00'},
-  {id:'coffee',name:'Кофе',clr:'#4a2000'},{id:'foam',name:'Пена',clr:'#fffaf0'},
-  {id:'lemon',name:'Лимон',clr:'#ffe066'},
+const INGS=[
+  {id:'flour',name:'Мука'},{id:'butter',name:'Масло'},{id:'milk',name:'Молоко'},
+  {id:'sugar',name:'Сахар'},{id:'cinnamon',name:'Корица'},{id:'eggs',name:'Яйца'},
+  {id:'blueberry',name:'Черника'},{id:'water',name:'Вода'},{id:'yeast',name:'Дрожжи'},
+  {id:'chocolate',name:'Шоколад'},{id:'coffee',name:'Кофе'},{id:'foam',name:'Пена'},
+  {id:'lemon',name:'Лимон'},{id:'cream',name:'Сливки'},{id:'vanilla',name:'Ваниль'},
+  {id:'honey',name:'Мёд'},{id:'matcha',name:'Матча'},
 ];
 
-const RECIPES = [
+const RECIPES=[
+  // ─ Выпечка (unlocked) ─
   {id:'croissant',name:'Круассан',price:80,ings:['flour','butter','milk'],cat:'bakery'},
   {id:'cinnamon_bun',name:'Булочка с корицей',price:65,ings:['flour','sugar','cinnamon'],cat:'bakery'},
   {id:'muffin',name:'Маффин черничный',price:90,ings:['flour','eggs','blueberry'],cat:'bakery'},
   {id:'baguette',name:'Багет',price:70,ings:['flour','water','yeast'],cat:'bakery'},
   {id:'eclair',name:'Эклер',price:120,ings:['flour','eggs','chocolate'],cat:'bakery'},
+  // ─ Напитки (unlocked) ─
   {id:'espresso',name:'Эспрессо',price:90,ings:['coffee','water'],cat:'drink'},
   {id:'cappuccino',name:'Капучино',price:140,ings:['coffee','milk','foam'],cat:'drink'},
-  {id:'latte',name:'Латте',price:150,ings:['coffee','milk','milk'],cat:'drink'},
+  {id:'latte',name:'Латте',price:150,ings:['coffee','milk','cream'],cat:'drink'},
   {id:'lemonade',name:'Лимонад',price:80,ings:['lemon','water','sugar'],cat:'drink'},
-  {id:'almond_croissant',name:'Круассан с миндалём',price:110,ings:['flour','butter','milk'],cat:'bakery',locked:true},
-  {id:'honey_cake',name:'Торт медовик',price:200,ings:['flour','eggs','sugar'],cat:'bakery',locked:true},
-  {id:'matcha_latte',name:'Матча латте',price:170,ings:['coffee','milk','foam'],cat:'drink',locked:true},
-  {id:'recipe_of_day',name:'Авторский рецепт',price:130,ings:[],cat:'special',locked:true},
-  {id:'breakfast',name:'Меню завтрака',price:250,ings:['flour','eggs','butter'],cat:'special',locked:true},
+  // ─ Выпечка (locked) ─
+  {id:'almond_croissant',name:'Круассан с миндалём',price:115,ings:['flour','butter','cream'],cat:'bakery',locked:true},
+  {id:'honey_cake',name:'Медовик',price:210,ings:['flour','eggs','honey'],cat:'bakery',locked:true},
+  {id:'chocolate_croissant',name:'Шоколадный круассан',price:105,ings:['flour','butter','chocolate'],cat:'bakery',locked:true},
+  {id:'waffle',name:'Вафля бельгийская',price:95,ings:['flour','eggs','butter'],cat:'bakery',locked:true},
+  {id:'tart',name:'Тарт с ягодами',price:130,ings:['flour','butter','sugar'],cat:'bakery',locked:true},
+  {id:'cheesecake',name:'Чизкейк',price:180,ings:['flour','cream','eggs'],cat:'bakery',locked:true},
+  // ─ Напитки (locked) ─
+  {id:'matcha_latte',name:'Матча латте',price:175,ings:['matcha','milk','foam'],cat:'drink',locked:true},
+  {id:'honey_latte',name:'Медовый латте',price:160,ings:['coffee','milk','honey'],cat:'drink',locked:true},
+  {id:'hot_chocolate',name:'Горячий шоколад',price:130,ings:['chocolate','milk','foam'],cat:'drink',locked:true},
+  {id:'vanilla_latte',name:'Ванильный латте',price:165,ings:['coffee','cream','vanilla'],cat:'drink',locked:true},
+  // ─ Особые (locked) ─
+  {id:'recipe_of_day',name:'Авторский рецепт',price:140,ings:[],cat:'special',locked:true},
+  {id:'breakfast',name:'Меню завтрака',price:260,ings:['flour','eggs','butter'],cat:'special',locked:true},
 ];
 
-const CTYPES = [
-  {id:'student',name:'Студент',speed:1.2,patience:15,prefs:['espresso','baguette','cinnamon_bun'],tip:.05,clr:'#4a90d9',hair:'#3a2a1a',shirt:'#4a90d9'},
-  {id:'bizlady',name:'Бизнес-леди',speed:1.8,patience:12,prefs:['latte','cappuccino','croissant'],tip:.2,clr:'#2c3e50',hair:'#1a0a00',shirt:'#2c3e50'},
-  {id:'tourist',name:'Турист',speed:1.0,patience:25,prefs:null,tip:.15,clr:'#e67e22',hair:'#c0a060',shirt:'#e67e22'},
-  {id:'hipster',name:'Хипстер',speed:1.1,patience:20,prefs:['matcha_latte','eclair','recipe_of_day'],tip:.1,clr:'#8e44ad',hair:'#2c1a0a',shirt:'#8e44ad'},
-  {id:'granny',name:'Пенсионерка',speed:0.6,patience:30,prefs:['lemonade','baguette','cinnamon_bun'],tip:0,clr:'#7f8c8d',hair:'#ddd',shirt:'#9b59b6'},
-  {id:'mom',name:'Мама с коляской',speed:0.8,patience:22,prefs:['latte','croissant','muffin'],tip:.05,clr:'#e91e8c',hair:'#8b4513',shirt:'#e91e8c'},
+const CTYPES=[
+  {id:'student',name:'Студент',emoji:'🧑‍🎓',speed:1.2,patience:15,prefs:['espresso','baguette','cinnamon_bun'],tip:.05},
+  {id:'bizlady',name:'Бизнес-леди',emoji:'👩‍💼',speed:1.8,patience:12,prefs:['latte','cappuccino','croissant','vanilla_latte'],tip:.2},
+  {id:'tourist',name:'Турист',emoji:'🧳',speed:1.0,patience:25,prefs:null,tip:.15},
+  {id:'hipster',name:'Хипстер',emoji:'🧔',speed:1.1,patience:20,prefs:['matcha_latte','eclair','recipe_of_day','honey_latte'],tip:.1},
+  {id:'granny',name:'Пенсионерка',emoji:'👵',speed:0.6,patience:30,prefs:['lemonade','baguette','cinnamon_bun','honey_cake'],tip:0},
+  {id:'mom',name:'Мама с коляской',emoji:'👩',speed:0.8,patience:22,prefs:['latte','croissant','muffin','hot_chocolate'],tip:.05},
 ];
 
-const DECORS = [
+const DECORS=[
   {id:'table',name:'Уютный столик',desc:'+5% туристов',price:300,icon:'🪑'},
   {id:'painting',name:'Картина',desc:'+10% хипстеров',price:500,icon:'🖼'},
-  {id:'plant',name:'Растение',desc:'+2% репутация',price:200,icon:'🌿'},
+  {id:'plant',name:'Растение',desc:'+2% репутация/день',price:200,icon:'🌿'},
   {id:'lighting',name:'Тёплый свет',desc:'+5% все клиенты',price:800,icon:'💡'},
   {id:'menu_board',name:'Меловая доска',desc:'+8% продажи',price:400,icon:'📋'},
   {id:'jazz',name:'Живая музыка',desc:'+30% терпение',price:1200,icon:'🎵'},
@@ -431,26 +372,28 @@ const GOAL_POOL=[
   {id:'nounhappy',desc:'Ни одного недовольного',check:()=>S.dayStats.unhappy===0,reward:100},
   {id:'rep70',desc:'Репутация выше 70%',check:()=>S.rep>=70,reward:80},
   {id:'variety',desc:'Продать 3 вида блюд',check:()=>Object.keys(S.dayStats.sold).filter(k=>S.dayStats.sold[k]>0).length>=3,reward:70},
-  {id:'coffee3',desc:'Продать 3 кофе',check:()=>['espresso','cappuccino','latte','matcha_latte'].reduce((a,id)=>a+(S.dayStats.sold[id]||0),0)>=3,reward:60},
+  {id:'coffee3',desc:'Продать 3 кофейных напитка',check:()=>['espresso','cappuccino','latte','matcha_latte','honey_latte','vanilla_latte'].reduce((a,id)=>a+(S.dayStats.sold[id]||0),0)>=3,reward:60},
   {id:'hipster',desc:'Обслужить хипстера',check:()=>(S.dayStats.byType||{}).hipster>=1,reward:40},
   {id:'tourist',desc:'Обслужить туриста',check:()=>(S.dayStats.byType||{}).tourist>=1,reward:50},
   {id:'exp1',desc:'Провести эксперимент',check:()=>S.dayStats.exp>=1,reward:30},
   {id:'sell15',desc:'Продать 15 блюд',check:()=>Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0)>=15,reward:180},
   {id:'granny',desc:'Обслужить пенсионерку',check:()=>(S.dayStats.byType||{}).granny>=1,reward:35},
+  {id:'bake3',desc:'Испечь 3 вида выпечки',check:()=>Object.keys(S.dayStats.sold).filter(k=>{const r=RECIPES.find(x=>x.id===k);return r&&r.cat==='bakery'&&S.dayStats.sold[k]>0}).length>=3,reward:70},
+  {id:'earn1500',desc:'Заработать 1500₽',check:()=>S.dayStats.earned>=1500,reward:300},
 ];
 
-// ─── STATE ────────────────────────────────────────────────
-let S = {
-  day:1, money:500, rep:50, weather:WEATHERS[0],
-  showcase:{}, table:[], dayStats:{earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}},
+// ─── STATE ─────────────────────────────────────────────────
+let S={
+  day:1,money:500,rep:50,weather:WEATHERS[0],
+  showcase:{},table:[],dayStats:{earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}},
   unlocked:['croissant','cinnamon_bun','muffin','baguette','eclair','espresso','cappuccino','latte','lemonade'],
-  decor:{}, totalStats:{croissants:0,maxDay:0,repDays:0,day5:false,exps:0},
-  autoSell:false, dayEarned:0, goals:[], dayOpen:false, dayDone:false, goalsRewarded:false,
+  decor:{},totalStats:{croissants:0,maxDay:0,repDays:0,day5:false,exps:0,eclairs:0,lattes:0},
+  autoSell:false,dayEarned:0,goals:[],dayOpen:false,dayDone:false,goalsRewarded:false,
   prevWantedMissing:{},
 };
-let budgetUsed = 0;
+let budgetUsed=0,dayPaused=false;
 
-// ─── AUDIO ───────────────────────────────────────────────
+// ─── AUDIO ─────────────────────────────────────────────────
 let aCtx;
 function ac(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx;}
 function tone(f,t='sine',d=.15,v=.25){try{const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
@@ -459,7 +402,7 @@ function boop(){tone(220,'sawtooth',.2,.2);}
 function brew(){[300,320,310,330].forEach((f,i)=>setTimeout(()=>tone(f,'sine',.1,.12),i*110));}
 function fanfare(){[440,550,660,880].forEach((f,i)=>setTimeout(()=>tone(f,'sine',.2,.28),i*140));}
 
-// ─── SAVE/LOAD ────────────────────────────────────────────
+// ─── SAVE/LOAD ─────────────────────────────────────────────
 async function save(){
   const p=JSON.stringify(S);
   localStorage.setItem('lf',p);
@@ -470,54 +413,65 @@ async function load(){
   const s=localStorage.getItem('lf');if(s){try{Object.assign(S,JSON.parse(s));}catch(e){}}
 }
 
-// ─── NOTIFY ──────────────────────────────────────────────
+// ─── NOTIFY ────────────────────────────────────────────────
 function notify(msg,t='i'){
   const w=document.getElementById('nw'),el=document.createElement('div');
   el.className=`notif ${t}`;el.textContent=msg;w.appendChild(el);
-  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),320);},2400);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),320);},2600);
 }
 
-// ─── SVG ICONS ───────────────────────────────────────────
+// ─── SVG ICONS ─────────────────────────────────────────────
 function ingIcon(id,size=28){
   const icons={
     flour:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="8" y="10" width="16" height="14" rx="2" fill="#f5deb3" stroke="#d4b080" stroke-width="1.5"/><ellipse cx="16" cy="10" rx="8" ry="4" fill="#e8c87a"/><line x1="12" y1="14" x2="20" y2="14" stroke="#d4b080" stroke-width="1"/><line x1="12" y1="18" x2="20" y2="18" stroke="#d4b080" stroke-width="1"/></svg>`,
     butter:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="6" y="12" width="20" height="10" rx="3" fill="#ffd700" stroke="#e6b800" stroke-width="1.5"/><rect x="6" y="12" width="20" height="4" rx="3" fill="#ffe566"/></svg>`,
-    milk:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M11 8 L9 24 Q9 26 16 26 Q23 26 23 24 L21 8Z" fill="#e8f4f8" stroke="#b0d0e0" stroke-width="1.5"/><path d="M10 8 L12 5 H20 L22 8Z" fill="#c8e8f0"/><ellipse cx="16" cy="16" rx="4" ry="2" fill="rgba(255,255,255,0.5)"/></svg>`,
-    sugar:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="9" y="11" width="14" height="13" rx="2" fill="#fff8dc" stroke="#e8d890" stroke-width="1.5"/><circle cx="13" cy="16" r="1.5" fill="#fff"/><circle cx="16" cy="14" r="1" fill="#fff"/><circle cx="19" cy="17" r="1.5" fill="#fff"/><circle cx="14" cy="19" r="1" fill="#fff"/></svg>`,
+    milk:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M11 8 L9 24 Q9 26 16 26 Q23 26 23 24 L21 8Z" fill="#e8f4f8" stroke="#b0d0e0" stroke-width="1.5"/><path d="M10 8 L12 5 H20 L22 8Z" fill="#c8e8f0"/></svg>`,
+    sugar:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="9" y="11" width="14" height="13" rx="2" fill="#fff8dc" stroke="#e8d890" stroke-width="1.5"/><circle cx="13" cy="16" r="1.5" fill="#fff"/><circle cx="16" cy="14" r="1" fill="#fff"/><circle cx="19" cy="17" r="1.5" fill="#fff"/></svg>`,
     cinnamon:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="12" y="6" width="8" height="20" rx="4" fill="#8b4513" stroke="#6b3010" stroke-width="1"/><path d="M14 10 Q18 12 14 16 Q18 18 14 22" fill="none" stroke="#a0522d" stroke-width="1"/></svg>`,
     eggs:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="17" rx="7" ry="9" fill="#ffa040" stroke="#e08030" stroke-width="1.5"/><ellipse cx="16" cy="17" rx="4" ry="5" fill="#ffe0a0"/></svg>`,
-    blueberry:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><circle cx="16" cy="16" r="9" fill="#6a0dad" stroke="#500a9a" stroke-width="1.5"/><circle cx="13" cy="13" r="3" fill="#8b2fd4"/><circle cx="19" cy="14" r="2.5" fill="#7a1ac0"/><circle cx="15" cy="19" r="3" fill="#7a1ac0"/><circle cx="16" cy="12" r="1.5" fill="rgba(255,255,255,0.3)"/></svg>`,
-    water:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M16 6 Q22 14 22 19 A6 6 0 0 1 10 19 Q10 14 16 6Z" fill="#87ceeb" stroke="#5aabce" stroke-width="1.5"/><path d="M13 20 Q16 22 19 20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    blueberry:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><circle cx="16" cy="16" r="9" fill="#6a0dad" stroke="#500a9a" stroke-width="1.5"/><circle cx="13" cy="13" r="3" fill="#8b2fd4"/><circle cx="19" cy="14" r="2.5" fill="#7a1ac0"/><circle cx="15" cy="19" r="3" fill="#7a1ac0"/></svg>`,
+    water:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M16 6 Q22 14 22 19 A6 6 0 0 1 10 19 Q10 14 16 6Z" fill="#87ceeb" stroke="#5aabce" stroke-width="1.5"/></svg>`,
     yeast:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="8" y="10" width="16" height="12" rx="3" fill="#d4b483" stroke="#b09060" stroke-width="1.5"/><circle cx="12" cy="14" r="2" fill="#e8c87a"/><circle cx="16" cy="17" r="2.5" fill="#e8c87a"/><circle cx="20" cy="14" r="1.5" fill="#e8c87a"/></svg>`,
-    chocolate:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="6" y="9" width="20" height="14" rx="3" fill="#3d1c00" stroke="#2a1200" stroke-width="1.5"/><line x1="6" y1="14" x2="26" y2="14" stroke="#5c3317" stroke-width="1.5"/><line x1="16" y1="9" x2="16" y2="23" stroke="#5c3317" stroke-width="1.5"/><rect x="8" y="11" width="7" height="2" rx="1" fill="#5c3317"/><rect x="17" y="16" width="7" height="2" rx="1" fill="#5c3317"/></svg>`,
-    coffee:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="20" rx="8" ry="6" fill="#4a2000"/><ellipse cx="16" cy="18" rx="8" ry="4" fill="#6b3010"/><path d="M13 10 Q13 6 15 8 Q17 6 17 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M17 9 Q17 5 19 7 Q21 5 21 9" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
-    foam:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="10" ry="5" fill="#fffaf0" stroke="#e8e0d0" stroke-width="1"/><circle cx="11" cy="17" r="3" fill="#fff"/><circle cx="16" cy="15" r="4" fill="#fff"/><circle cx="21" cy="17" r="3" fill="#fff"/><circle cx="14" cy="20" r="2.5" fill="#fff"/><circle cx="19" cy="20" r="2" fill="#fff"/></svg>`,
-    lemon:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="10" ry="8" fill="#ffe066" stroke="#e6c800" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="10" ry="8" fill="none" stroke="#ffd700" stroke-width="2" stroke-dasharray="3,3"/><circle cx="16" cy="16" r="4" fill="#fff8a0"/></svg>`,
+    chocolate:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="6" y="9" width="20" height="14" rx="3" fill="#3d1c00" stroke="#2a1200" stroke-width="1.5"/><line x1="6" y1="14" x2="26" y2="14" stroke="#5c3317" stroke-width="1.5"/><line x1="16" y1="9" x2="16" y2="23" stroke="#5c3317" stroke-width="1.5"/></svg>`,
+    coffee:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="20" rx="8" ry="6" fill="#4a2000"/><ellipse cx="16" cy="18" rx="8" ry="4" fill="#6b3010"/><path d="M13 10 Q13 6 15 8 Q17 6 17 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    foam:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="10" ry="5" fill="#fffaf0" stroke="#e8e0d0" stroke-width="1"/><circle cx="11" cy="17" r="3" fill="#fff"/><circle cx="16" cy="15" r="4" fill="#fff"/><circle cx="21" cy="17" r="3" fill="#fff"/></svg>`,
+    lemon:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="10" ry="8" fill="#ffe066" stroke="#e6c800" stroke-width="1.5"/><circle cx="16" cy="16" r="4" fill="#fff8a0"/></svg>`,
+    cream:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M10 12 L8 26 Q8 28 16 28 Q24 28 24 26 L22 12Z" fill="#fffcf0" stroke="#dcd4bc" stroke-width="1.5"/><ellipse cx="16" cy="12" rx="7" ry="3" fill="#f0e8d8"/><path d="M13 8 Q16 5 19 8" fill="none" stroke="#dcd4bc" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    vanilla:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M14 4 Q16 3 18 4 L17 28 Q16 29 15 28Z" fill="#f5e6a0" stroke="#d4c060" stroke-width="1.5"/><line x1="13.5" y1="11" x2="18.5" y2="13" stroke="#c8a840" stroke-width="1"/><line x1="13.5" y1="17" x2="18.5" y2="19" stroke="#c8a840" stroke-width="1"/></svg>`,
+    honey:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><path d="M12 10 L10 26 Q10 28 16 28 Q22 28 22 26 L20 10Z" fill="#ff9800" stroke="#e65100" stroke-width="1.5"/><ellipse cx="16" cy="10" rx="7" ry="3" fill="#ffc107"/><ellipse cx="16" cy="19" rx="3" ry="2" fill="#e65100" opacity=".4"/></svg>`,
+    matcha:`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><rect x="8" y="10" width="16" height="14" rx="2" fill="#4a7c59" stroke="#3d6b4a" stroke-width="1.5"/><ellipse cx="16" cy="10" rx="8" ry="4" fill="#5a9c6a"/><line x1="12" y1="14" x2="20" y2="14" stroke="#3d6b4a" stroke-width="1"/><line x1="12" y1="18" x2="20" y2="18" stroke="#3d6b4a" stroke-width="1"/></svg>`,
   };
   return icons[id]||`<svg width="${size}" height="${size}" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#ccc"/></svg>`;
 }
 
 function recipeIcon(id,size=36){
   const icons={
-    croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#f4c777" stroke="#c8873a" stroke-width="2"/><path d="M10 30 C13 18 22 12 30 12" fill="none" stroke="#e8a850" stroke-width="1.5" stroke-linecap="round"/><path d="M12 26 C15 20 22 16 28 15" fill="none" stroke="#e8a850" stroke-width="1" stroke-linecap="round"/></svg>`,
-    cinnamon_bun:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" fill="#c8873a"/><path d="M12 20 Q16 12 20 20 Q24 28 28 20" fill="none" stroke="#8b4513" stroke-width="2.5" stroke-linecap="round"/><path d="M13 22 Q17 14 20 22" fill="none" stroke="#8b4513" stroke-width="1.5" stroke-linecap="round"/></svg>`,
-    muffin:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="12" y="20" width="16" height="14" rx="3" fill="#c8873a"/><ellipse cx="20" cy="20" rx="10" ry="6" fill="#d4956a"/><circle cx="16" cy="23" r="2.5" fill="#4b0082"/><circle cx="22" cy="27" r="2.5" fill="#4b0082"/><circle cx="25" cy="22" r="2" fill="#4b0082"/></svg>`,
+    croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#f4c777" stroke="#c8873a" stroke-width="2"/><path d="M10 30 C13 18 22 12 30 12" fill="none" stroke="#e8a850" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    cinnamon_bun:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" fill="#c8873a"/><path d="M12 20 Q16 12 20 20 Q24 28 28 20" fill="none" stroke="#8b4513" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    muffin:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="12" y="20" width="16" height="14" rx="3" fill="#c8873a"/><ellipse cx="20" cy="20" rx="10" ry="6" fill="#d4956a"/><circle cx="16" cy="23" r="2.5" fill="#4b0082"/><circle cx="22" cy="27" r="2.5" fill="#4b0082"/></svg>`,
     baguette:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="15" ry="6" fill="#e8c87a" transform="rotate(-25 20 20)" stroke="#c89840" stroke-width="1.5"/><line x1="14" y1="14" x2="22" y2="26" stroke="#c89840" stroke-width="1.5"/><line x1="18" y1="12" x2="26" y2="24" stroke="#c89840" stroke-width="1"/></svg>`,
-    eclair:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="14" rx="7" fill="#d4956a"/><rect x="6" y="14" width="28" height="7" rx="7" fill="#2c1000"/><path d="M10 18 Q20 14 30 18" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg>`,
-    espresso:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M13 17 L27 17 L25 32 L15 32Z" fill="#5c3317"/><ellipse cx="20" cy="17" rx="7" ry="3" fill="#3d1c00"/><path d="M15 10 Q15 5 17 8 Q19 5 19 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M21 9 Q21 4 23 7" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
-    cappuccino:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M10 18 L30 18 L28 33 L12 33Z" fill="#c4956a"/><ellipse cx="20" cy="18" rx="10" ry="4" fill="#fff8f0"/><circle cx="16" cy="17" r="3" fill="#fff"/><circle cx="22" cy="16" r="3.5" fill="#fff"/><circle cx="24" cy="19" r="2.5" fill="#fff"/><path d="M15 10 Q15 5 17 8" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/><path d="M21 10 Q21 5 23 8" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
-    latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#d4a87a"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><path d="M14 15 Q20 12 26 15" fill="none" stroke="rgba(200,135,58,0.5)" stroke-width="1.5"/><path d="M14 12 Q14 7 16 10" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
-    lemonade:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="11" y="12" width="18" height="22" rx="4" fill="#fff8aa" stroke="#e8d800" stroke-width="1.5"/><ellipse cx="20" cy="12" rx="9" ry="3" fill="#ffe066"/><circle cx="16" cy="20" r="3" fill="#ffe066" opacity=".8"/><circle cx="22" cy="17" r="2.5" fill="#ffe066" opacity=".8"/><circle cx="18" cy="26" r="2" fill="#ffe066" opacity=".8"/><line x1="24" y1="8" x2="24" y2="14" stroke="#4a7c59" stroke-width="2.5" stroke-linecap="round"/></svg>`,
-    almond_croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#e8c87a" stroke="#c8873a" stroke-width="2"/><line x1="18" y1="15" x2="22" y2="22" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="22" x2="24" y2="20" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`,
-    honey_cake:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="7" y="20" width="26" height="14" rx="3" fill="#c8873a"/><rect x="7" y="14" width="26" height="8" rx="3" fill="#e8c87a"/><path d="M14 14 Q14 8 20 11 Q26 8 26 14" fill="#ffd700"/><circle cx="20" cy="11" r="3" fill="#ffc000"/></svg>`,
-    matcha_latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#4a7c59"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><circle cx="16" cy="15" r="3" fill="#fff"/><circle cx="23" cy="14" r="3.5" fill="#fff"/><path d="M14 12 Q14 7 16 10" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    eclair:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="14" rx="7" fill="#d4956a"/><rect x="6" y="14" width="28" height="7" rx="7" fill="#2c1000"/></svg>`,
+    espresso:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M13 17 L27 17 L25 32 L15 32Z" fill="#5c3317"/><ellipse cx="20" cy="17" rx="7" ry="3" fill="#3d1c00"/><path d="M15 10 Q15 5 17 8 Q19 5 19 10" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" class="sp"/></svg>`,
+    cappuccino:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M10 18 L30 18 L28 33 L12 33Z" fill="#c4956a"/><ellipse cx="20" cy="18" rx="10" ry="4" fill="#fff8f0"/><circle cx="16" cy="17" r="3" fill="#fff"/><circle cx="22" cy="16" r="3.5" fill="#fff"/><circle cx="24" cy="19" r="2.5" fill="#fff"/></svg>`,
+    latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#d4a87a"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><path d="M14 15 Q20 12 26 15" fill="none" stroke="rgba(200,135,58,0.5)" stroke-width="1.5"/></svg>`,
+    lemonade:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="11" y="12" width="18" height="22" rx="4" fill="#fff8aa" stroke="#e8d800" stroke-width="1.5"/><ellipse cx="20" cy="12" rx="9" ry="3" fill="#ffe066"/><circle cx="16" cy="20" r="3" fill="#ffe066" opacity=".8"/><circle cx="22" cy="17" r="2.5" fill="#ffe066" opacity=".8"/><line x1="24" y1="8" x2="24" y2="14" stroke="#4a7c59" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    almond_croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#e8c87a" stroke="#c8873a" stroke-width="2"/><ellipse cx="20" cy="18" rx="5" ry="2" fill="#fff" opacity=".6"/><ellipse cx="16" cy="22" rx="3" ry="1.5" fill="#fff" opacity=".5"/></svg>`,
+    honey_cake:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="7" y="22" width="26" height="12" rx="3" fill="#c8873a"/><rect x="7" y="14" width="26" height="10" rx="3" fill="#e8c87a"/><path d="M14 14 Q14 8 20 11 Q26 8 26 14" fill="#ffd700"/></svg>`,
+    chocolate_croissant:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M8 32 C10 16 20 8 34 10 C30 18 18 24 8 32Z" fill="#f4c777" stroke="#c8873a" stroke-width="2"/><path d="M12 26 C15 20 22 16 28 15" fill="none" stroke="#3d1c00" stroke-width="3" stroke-linecap="round"/></svg>`,
+    waffle:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="22" rx="4" fill="#e8c87a" stroke="#c8a040" stroke-width="1.5"/><line x1="6" y1="17" x2="34" y2="17" stroke="#c8a040" stroke-width="1.5"/><line x1="6" y1="24" x2="34" y2="24" stroke="#c8a040" stroke-width="1.5"/><line x1="13" y1="10" x2="13" y2="32" stroke="#c8a040" stroke-width="1.5"/><line x1="20" y1="10" x2="20" y2="32" stroke="#c8a040" stroke-width="1.5"/><line x1="27" y1="10" x2="27" y2="32" stroke="#c8a040" stroke-width="1.5"/></svg>`,
+    tart:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><ellipse cx="20" cy="24" rx="14" ry="10" fill="#e8c87a" stroke="#c8a040" stroke-width="1.5"/><ellipse cx="20" cy="20" rx="14" ry="10" fill="#f5deb3" stroke="#c8a040" stroke-width="1.5"/><circle cx="17" cy="18" r="3" fill="#c0392b"/><circle cx="23" cy="19" r="3" fill="#c0392b"/><circle cx="20" cy="24" r="3" fill="#c0392b"/></svg>`,
+    cheesecake:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M6 30 L20 10 L34 30Z" fill="#fffcf0" stroke="#dcd4bc" stroke-width="2"/><path d="M6 30 L20 10 L34 30" fill="none" stroke="#e8c87a" stroke-width="1.5"/><path d="M8 30 L20 12 L32 30" fill="rgba(200,135,58,.15)"/></svg>`,
+    matcha_latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#4a7c59"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><circle cx="16" cy="15" r="3" fill="#fff"/><circle cx="23" cy="14" r="3.5" fill="#fff"/></svg>`,
+    honey_latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#d4a87a"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#ffd700"/><path d="M20 10 Q22 14 20 16" fill="none" stroke="#e65100" stroke-width="2" stroke-linecap="round"/></svg>`,
+    hot_chocolate:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><path d="M10 18 L30 18 L28 33 L12 33Z" fill="#3d1c00"/><ellipse cx="20" cy="18" rx="10" ry="4" fill="#6b3010"/><circle cx="16" cy="17" r="3" fill="#fff" opacity=".3"/><circle cx="23" cy="17" r="3.5" fill="#fff" opacity=".3"/></svg>`,
+    vanilla_latte:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="9" y="16" width="22" height="18" rx="4" fill="#d4a87a"/><ellipse cx="20" cy="16" rx="11" ry="4" fill="#fff8f0"/><path d="M16 14 Q20 11 24 14" fill="none" stroke="#f5e6a0" stroke-width="2" stroke-linecap="round"/></svg>`,
     recipe_of_day:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><polygon points="20,4 23,15 35,15 25,22 29,33 20,26 11,33 15,22 5,15 17,15" fill="#9b59b6" stroke="#7d3c98" stroke-width="1"/></svg>`,
     breakfast:`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><rect x="5" y="10" width="30" height="22" rx="4" fill="#e8c87a" stroke="#c8873a" stroke-width="2"/><line x1="5" y1="18" x2="35" y2="18" stroke="#c8873a" stroke-width="2"/><line x1="18" y1="10" x2="18" y2="32" stroke="#c8873a" stroke-width="2"/><circle cx="11" cy="24" r="4" fill="#ffa040"/></svg>`,
   };
   return icons[id]||`<svg width="${size}" height="${size}" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#ccc"/></svg>`;
 }
 
-// ─── HEADER ──────────────────────────────────────────────
+// ─── HEADER ────────────────────────────────────────────────
 function updateHdr(){
   document.getElementById('hdr-day').textContent=`День ${S.day} · ${DAYS[(S.day-1)%7]}`;
   document.getElementById('hdr-wx').textContent=`${S.weather.icon} ${S.weather.name}`;
@@ -526,31 +480,22 @@ function updateHdr(){
   document.getElementById('rep-fill').style.width=`${Math.min(100,S.rep)}%`;
 }
 
-// ─── PHASE SWITCH ─────────────────────────────────────────
-function updateNavState(){
-  document.getElementById('nav-day').disabled=!S.dayOpen;
-  document.getElementById('nav-evening').disabled=!S.dayDone;
+// ─── TOOLBAR ───────────────────────────────────────────────
+function updateToolbar(){
+  const r=document.getElementById('tb-r');
+  if(!S.dayOpen&&!S.dayDone){
+    r.innerHTML=`<button class="btn btn-p" style="font-size:12px;padding:7px 16px" onclick="openBakery()">☀️ Открыть кофейню</button>`;
+  } else if(S.dayOpen&&!S.dayDone){
+    const pauseLbl=dayPaused?'▶ Продолжить':'⏸ Пауза';
+    const pauseStyle=dayPaused?'background:var(--sage);color:#fff':'';
+    r.innerHTML=`<button class="btn btn-o" id="btn-pause" style="font-size:12px;padding:7px 13px;${pauseStyle}" onclick="togglePause()">${pauseLbl}</button>
+    <button class="btn" style="background:var(--espresso);color:var(--cream);font-size:12px;padding:7px 13px" onclick="endDay()">🌙 Закрыть день</button>`;
+  } else {
+    r.innerHTML=`<button class="btn btn-p" style="font-size:12px;padding:7px 16px" onclick="nextDay()">Следующий день →</button>`;
+  }
 }
 
-function switchPhase(p){
-  if(p==='day'&&!S.dayOpen){notify('Сначала откройте кофейню утром!','b');return;}
-  if(p==='evening'&&!S.dayDone){notify('Сначала завершите рабочий день!','b');return;}
-  ['morning','day','evening','decor'].forEach(x=>{
-    const el=document.getElementById(`phase-${x}`);
-    el.classList.remove('active');el.style.display='none';
-  });
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`nav-${p}`).classList.add('active');
-  const ph=document.getElementById(`phase-${p}`);
-  ph.style.display=p==='evening'?'block':'grid';
-  ph.classList.add('active');
-  if(p==='morning')renderMorning();
-  if(p==='day'&&!dayRunning)initDay();
-  if(p==='evening')renderEvening();
-  if(p==='decor')renderDecor();
-}
-
-// ─── MORNING ─────────────────────────────────────────────
+// ─── MORNING / WORKBENCH ───────────────────────────────────
 function pickGoals(){
   const pool=[...GOAL_POOL];
   const easy=pool.filter(g=>g.reward<=80),hard=pool.filter(g=>g.reward>80);
@@ -565,8 +510,9 @@ function renderGoals(){
   if(!S.goals||!S.goals.length){sec.style.display='none';return;}
   sec.style.display='block';list.innerHTML='';
   S.goals.forEach(g=>{
+    const done=S.dayDone&&g.check&&g.check();
     const el=document.createElement('div');el.className='goal-item';
-    el.innerHTML=`<span class="goal-chk">🎯</span><span class="goal-desc">${g.desc}</span><span class="goal-rwd">+${g.reward}₽</span>`;
+    el.innerHTML=`<span class="goal-chk">${done?'✅':'🎯'}</span><span class="goal-desc">${g.desc}</span><span class="goal-rwd">+${g.reward}₽</span>`;
     list.appendChild(el);
   });
 }
@@ -584,16 +530,17 @@ function renderDemand(){
   });
 }
 
-function renderMorning(){
-  if(!S.goals||!S.goals.length)pickGoals();
+function renderWorkbench(){
   renderIngs();renderSidebar();updateBudget();renderGoals();renderDemand();
+  // show/hide open button
+  document.getElementById('open-btn-wrap').style.display=S.dayOpen?'none':'block';
 }
 
 function renderIngs(){
   const l=document.getElementById('ing-list');l.innerHTML='';
   INGS.forEach(ing=>{
     const d=document.createElement('div');d.className='ing-item';d.draggable=true;d.dataset.id=ing.id;
-    d.innerHTML=ingIcon(ing.id,24)+`<span>${ing.name}</span>`;
+    d.innerHTML=ingIcon(ing.id,22)+`<span>${ing.name}</span>`;
     d.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',ing.id);d.style.opacity='.4';});
     d.addEventListener('dragend',()=>d.style.opacity='1');
     d.addEventListener('click',()=>{if(S.table.length<5){S.table.push(ing.id);brew();renderTable();checkMatch();}else notify('Максимум 5 ингредиентов','b');});
@@ -617,7 +564,7 @@ function renderTable(){
   S.table.forEach((id,i)=>{
     const ing=INGS.find(x=>x.id===id);if(!ing)return;
     const el=document.createElement('div');el.className='di';
-    el.innerHTML=ingIcon(id,28)+`<span>${ing.name}</span>`;
+    el.innerHTML=ingIcon(id,24)+`<span>${ing.name}</span>`;
     el.title='Кликните чтобы убрать';
     el.onclick=()=>{S.table.splice(i,1);renderTable();checkMatch();};
     dz.appendChild(el);
@@ -633,16 +580,15 @@ function checkMatch(){
     if(!S.unlocked.includes(r.id))continue;
     if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){m=r;break;}
   }
-  if(m){res.innerHTML=`<div class="rm-card">${recipeIcon(m.id,28)}<strong>${m.name}</strong><span>${m.price} ₽</span></div>`;exp.style.display='none';return;}
-  // Check locked recipes — show them as locked
+  if(m){res.innerHTML=`<div class="rm-card">${recipeIcon(m.id,26)}<strong>${m.name}</strong><span>${m.price} ₽</span></div>`;exp.style.display='none';return;}
   for(const r of RECIPES){
     if(S.unlocked.includes(r.id))continue;
     if(JSON.stringify([...r.ings].sort())===JSON.stringify(sorted)){
-      res.innerHTML=`<div class="rm-card" style="background:#888;opacity:.85">${recipeIcon(r.id,28)}<strong>🔒 ${r.name}</strong><span>Нужно разблокировать</span></div>`;
+      res.innerHTML=`<div class="rm-card" style="background:#888;opacity:.85">${recipeIcon(r.id,26)}<strong>🔒 ${r.name}</strong><span>Нужно разблокировать</span></div>`;
       exp.style.display='none';return;
     }
   }
-  if(sorted.length>=2){res.innerHTML='<span style="color:rgba(28,10,0,.45);font-size:13px">Неизвестная комбинация</span>';exp.style.display='block';}
+  if(sorted.length>=2){res.innerHTML='<span style="color:rgba(28,10,0,.45);font-size:12px">Неизвестная комбинация</span>';exp.style.display='block';}
   else{res.innerHTML='<span style="opacity:.4">Добавьте ещё...</span>';exp.style.display='none';}
 }
 
@@ -676,7 +622,7 @@ function addToShowcase(){
   S.showcase[m.id]=(S.showcase[m.id]||0)+1;
   S.money-=cost;budgetUsed+=cost;
   clearTable();renderSidebar();updateBudget();updateHdr();ding();
-  notify(`${m.name} добавлен в витрину`,'g');
+  notify(`${m.name} → витрина`,'g');
 }
 
 function renderSidebar(){
@@ -687,7 +633,7 @@ function renderSidebar(){
   items.forEach(id=>{
     const r=RECIPES.find(x=>x.id===id);if(!r)return;
     const d=document.createElement('div');d.className='sc-item';
-    d.innerHTML=`${recipeIcon(id,26)}<span class="iname">${r.name}</span><span class="iprice">${r.price}₽</span>
+    d.innerHTML=`${recipeIcon(id,22)}<span class="iname">${r.name}</span><span class="iprice">${r.price}₽</span>
     <div class="qty"><button class="qb" onclick="chQty('${id}',-1)">−</button><span class="qv">${S.showcase[id]}</span><button class="qb" onclick="chQty('${id}',1)">+</button></div>`;
     l.appendChild(d);
   });
@@ -712,14 +658,18 @@ function updateBudget(){
 }
 
 function openBakery(){
-  if(!Object.keys(S.showcase).length){notify('Витрина пуста!','b');return;}
+  if(!Object.keys(S.showcase).length){notify('Витрина пуста — приготовьте что-нибудь!','b');return;}
   S.dayStats={earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}};S.dayEarned=0;
   S.dayOpen=true;S.dayDone=false;S.goalsRewarded=false;
-  updateNavState();
-  switchPhase('day');
+  dayPaused=false;
+  document.getElementById('open-btn-wrap').style.display='none';
+  document.getElementById('day-card').style.display='block';
+  document.getElementById('evening-card').style.display='none';
+  updateToolbar();
+  initDay();
 }
 
-// ─── RECIPE BOOK ─────────────────────────────────────────
+// ─── RECIPE BOOK ───────────────────────────────────────────
 function openRB(){
   ['bakery','drinks','special'].forEach(t=>document.getElementById(`rb-${t}`).innerHTML='');
   const spec=RECIPES.filter(r=>r.cat==='special');
@@ -728,7 +678,7 @@ function openRB(){
     const unlk=S.unlocked.includes(r.id);
     const el=document.createElement('div');el.className=`rb-card ${unlk?'unlocked':'locked'}`;
     const ings=r.ings.map(i=>{const x=INGS.find(g=>g.id===i);return x?x.name:'?';}).join(' + ')||'???';
-    el.innerHTML=`${recipeIcon(r.id,40)}<div class="rc-name">${unlk?r.name:'???'}</div><div class="rc-price">${unlk?r.price+'₽':'🔒'}</div><div class="rc-ings">${unlk?ings:'Неизвестно'}</div>`;
+    el.innerHTML=`${recipeIcon(r.id,34)}<div class="rc-name">${unlk?r.name:'???'}</div><div class="rc-price">${unlk?r.price+'₽':'🔒'}</div><div class="rc-ings">${unlk?ings:'Неизвестно'}</div>`;
     const target=r.cat==='bakery'?'rb-bakery':r.cat==='drink'?'rb-drinks':'rb-special';
     document.getElementById(target).appendChild(el);
   });
@@ -736,164 +686,140 @@ function openRB(){
 }
 function closeRB(){document.getElementById('rb-overlay').classList.remove('active');}
 
-// ─── DAY PHASE ───────────────────────────────────────────
-const cv=document.getElementById('gc');
-const ctx=cv.getContext('2d');
-let custs=[],queue=[],dayRunning=false,dayTime=0,lastSpawn=0,nextSpawnIn=10;
-let activeCust=null,animId=null,bobT=0;
+// ─── DECOR MODAL ───────────────────────────────────────────
+function openDecor(){
+  renderDecor();
+  document.getElementById('decor-overlay').classList.add('active');
+}
+function closeDecor(){document.getElementById('decor-overlay').classList.remove('active');}
 
-const DAY_DURATION = 8 * 60; // 8 real minutes = 8 game hours (08:00–16:00)
-
-// TABLE_SEATS: must match chair draw positions in drawTables
-// Tables at x=130,260,390; chairs at dx=±50; cy = H*0.60 - 10 = 230
-// seat.y chosen so customer.y = seat.y-40 = 230 → seat.y = 270
-const TABLE_SEATS=[
-  {x:80, y:270},{x:180,y:270},
-  {x:220,y:270},{x:320,y:270},
-  {x:360,y:270},{x:460,y:270},
-];
+// ─── DAY PHASE ─────────────────────────────────────────────
+const DAY_DURATION=8*60;
+const MAX_SEATS=6;
 const seatOccupied={};
+let custs=[],queue=[],dayRunning=false,dayTime=0,lastSpawn=0,nextSpawnIn=10;
+let activeCust=null,animId=null;
 
 class Cust{
   constructor(){
     const w=[3,2,3,2,3,1];let roll=Math.random()*14,acc=0,idx=0;
     for(let i=0;i<w.length;i++){acc+=w[i];if(roll<acc){idx=i;break;}}
     this.type=CTYPES[idx];
-    // Customers want items based on their preferences, regardless of today's showcase
     if(this.type.prefs){
       const prefs=this.type.prefs.filter(id=>S.unlocked.includes(id));
       this.want=prefs.length?prefs[Math.floor(Math.random()*prefs.length)]:S.unlocked[Math.floor(Math.random()*S.unlocked.length)];
     }else{
       this.want=S.unlocked[Math.floor(Math.random()*S.unlocked.length)];
     }
-    this.x=-60;this.y=218;
-    this.targetX=470+Math.random()*20;
-    this.state='walking';// walking|waiting|served|eating|leaving
+    this.state='waiting';
     this.patience=this.type.patience*(S.decor['jazz']?1.3:1);
     this.waitTime=0;this.id=Math.random();
-    this.seatIdx=-1;this.eatTime=0;this.eatDur=8+Math.random()*8;
-    this.flip=false;
+    this.seatIdx=-1;this.eatTime=0;this.eatDur=10+Math.random()*10;
   }
   wantName(){const r=RECIPES.find(x=>x.id===this.want);return r?r.name:'что-нибудь';}
 }
 
-function renderDayCook(){
-  const w=document.getElementById('day-cook');if(!w)return;w.innerHTML='';
-  const total=Object.values(S.showcase).reduce((a,b)=>a+b,0);
-  S.unlocked.forEach(id=>{
-    const r=RECIPES.find(x=>x.id===id);if(!r)return;
-    const cost=Math.round(r.price*.3);
-    const d=document.createElement('div');d.className='cook-item';
-    d.innerHTML=`${recipeIcon(id,18)}<span class="cn">${r.name}</span><span class="cc">−${cost}₽</span>`;
-    d.onclick=()=>{
-      if(total>=20){notify('Витрина полна!','b');return;}
-      if(S.money<cost){notify('Не хватает денег!','b');return;}
-      S.money-=cost;S.showcase[id]=(S.showcase[id]||0)+1;
-      updateHdr();renderDaySC();renderDayCook();brew();
-      notify(`+1 ${r.name} в витрину`,'g');
-    };
-    w.appendChild(d);
-  });
-}
-
 function initDay(){
   custs=[];queue=[];dayRunning=true;dayTime=0;lastSpawn=0;
-  nextSpawnIn=6+Math.random()*5;activeCust=null;S.dayEarned=0;
+  nextSpawnIn=5+Math.random()*4;activeCust=null;
   Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
-  document.getElementById('day-earned').textContent='0 ₽';
-  document.getElementById('day-log').innerHTML='';
-  renderDaySC();renderDayCook();
-  // First customer arrives early
-  setTimeout(spawnCust, 1500);
+  document.getElementById('day-earned-hdr').textContent='0 ₽';
+  document.getElementById('day-log-line').textContent='';
+  updateQueueDisplay();
+  setTimeout(spawnCust,1500);
   if(animId)cancelAnimationFrame(animId);
   let last=null;
   function loop(ts){
     if(!dayRunning)return;
     if(!last)last=ts;
     const dt=Math.min((ts-last)/1000,.05);last=ts;
-    bobT+=dt*3;dayTime+=dt;lastSpawn+=dt;
-    // game clock: 08:00–16:00
-    const pct=Math.min(1,dayTime/DAY_DURATION);
-    const gameMin=Math.floor((dayTime%60)/60*60); // minutes within game hour
-    const gameHour=8+Math.floor(dayTime/60);
-    document.getElementById('day-timer').textContent=`${gameHour}:${gameMin.toString().padStart(2,'0')}`;
-    document.getElementById('day-timebar').style.width=(pct*100)+'%';
-    // auto-end
-    if(dayTime>=DAY_DURATION){notify('Рабочий день окончен!','i');endDay();return;}
-    // spawn
-    if(lastSpawn>=nextSpawnIn&&custs.filter(c=>c.state==='waiting').length<5){
-      spawnCust();
-      if(Math.random()<.2){setTimeout(spawnCust,1800);setTimeout(spawnCust,3600);}
-      lastSpawn=0;nextSpawnIn=6+Math.random()*6;
+    if(!dayPaused){
+      dayTime+=dt;lastSpawn+=dt;
+      const pct=Math.min(1,dayTime/DAY_DURATION);
+      const gMin=Math.floor((dayTime%60)/60*60);
+      const gHour=8+Math.floor(dayTime/60);
+      document.getElementById('time-lbl').textContent=`${gHour}:${String(gMin).padStart(2,'0')}`;
+      document.getElementById('day-timebar').style.width=(pct*100)+'%';
+      if(dayTime>=DAY_DURATION){notify('Рабочий день окончен!','i');endDay();return;}
+      // Spawn
+      if(lastSpawn>=nextSpawnIn&&custs.filter(c=>c.state==='waiting').length<5){
+        spawnCust();
+        if(Math.random()<.2)setTimeout(spawnCust,1800);
+        lastSpawn=0;nextSpawnIn=6+Math.random()*6;
+      }
+      // Update customers
+      custs.forEach(c=>{
+        if(c.state==='waiting'){
+          c.waitTime+=dt;
+          if(c.waitTime>c.patience){leaveAngry(c);}
+        }
+        if(c.state==='eating'){
+          c.eatTime+=dt;
+          if(c.eatTime>=c.eatDur){seatOccupied[c.seatIdx]=false;c.state='gone';}
+        }
+      });
+      custs=custs.filter(c=>c.state!=='gone');
+      queue=queue.filter(c=>c.state==='waiting');
+      // Auto-sell
+      if(S.autoSell&&queue.length){
+        const f=queue[0];
+        if(f&&f.want&&S.showcase[f.want]>0){activeCust=f;setTimeout(()=>{if(activeCust===f)doSell();},200);}
+      }
+      if(!activeCust&&queue.length){activeCust=queue[0];updateCustUI();}
+      else if(!queue.length&&!activeCust){document.getElementById('cust-info').textContent='Ждём гостей...';}
+      updateQueueDisplay();
     }
-    // update
-    custs.forEach(c=>{
-      if(c.state==='walking'){
-        c.x+=c.type.speed*90*dt*(c.flip?-1:1);
-        if(!c.flip&&c.x>=c.targetX){c.state='waiting';queue.push(c);updateQD();}
-        if(c.flip&&c.x>cv.width+80){c.state='gone';}
-      }
-      if(c.state==='waiting'){
-        c.waitTime+=dt;
-        if(c.waitTime>c.patience){c.state='leaving';leaveAngry(c);}
-      }
-      if(c.state==='served'){
-        // walk to seat
-        const seat=TABLE_SEATS[c.seatIdx];
-        if(seat){
-          c.flip=true;
-          const tx=seat.x;
-          const speed=c.type.speed*80*dt;
-          if(Math.abs(c.x-tx)<speed+2){c.x=tx;c.y=seat.y-40;c.state='eating';c.eatTime=0;}
-          else if(c.x>tx){c.x-=speed;}else{c.x+=speed;}
-        }else{c.state='eating';c.eatTime=0;}
-      }
-      if(c.state==='eating'){
-        c.eatTime+=dt;
-        if(c.eatTime>=c.eatDur){c.state='leaving_seat';}
-      }
-      if(c.state==='leaving_seat'){
-        seatOccupied[c.seatIdx]=false;
-        c.flip=false;c.state='walking';c.targetX=cv.width+100;
-      }
-      if(c.state==='leaving'){c.x+=c.type.speed*70*dt;if(c.x>cv.width+80)c.state='gone';}
-    });
-    custs=custs.filter(c=>c.state!=='gone');
-    queue=queue.filter(c=>c.state==='waiting');
-    updateQD();
-    if(S.autoSell&&queue.length){
-      const f=queue[0];
-      if(f&&f.want&&S.showcase[f.want]>0){activeCust=f;setTimeout(()=>{if(activeCust===f)doSell();},200);}
-    }
-    if(!activeCust&&queue.length){activeCust=queue[0];updateCustUI();}
-    else if(!queue.length){activeCust=null;document.getElementById('cust-info').textContent='Ждём гостей...';}
-    draw();
     animId=requestAnimationFrame(loop);
   }
   animId=requestAnimationFrame(loop);
 }
 
-function spawnCust(){const c=new Cust();custs.push(c);addLog(`Пришёл ${c.type.name} → хочет ${c.wantName()}`,'n');}
+function spawnCust(){
+  const c=new Cust();custs.push(c);queue.push(c);
+  addLog(`${c.type.emoji} ${c.type.name} → хочет ${c.wantName()}`);
+}
 
 function leaveAngry(c){
   S.rep=Math.max(0,S.rep-2);S.dayStats.unhappy++;
-  addLog(`${c.type.name} ушёл недовольным!`,'b');
-  queue=queue.filter(x=>x!==c);if(activeCust===c)activeCust=null;
-  updateQD();updateHdr();boop();
+  addLog(`😤 ${c.type.name} ушёл недовольным!`,'b');
+  queue=queue.filter(x=>x!==c);c.state='gone';
+  if(activeCust===c){activeCust=null;if(queue.length){activeCust=queue[0];updateCustUI();}else document.getElementById('cust-info').textContent='Ждём гостей...';}
+  updateQueueDisplay();updateHdr();boop();
 }
 
 function updateCustUI(){
   if(!activeCust)return;
   const avail=(S.showcase[activeCust.want]||0)>0;
   const clr=avail?'var(--sage)':'var(--red)';
-  const suffix=avail?'':'&nbsp;❌ нет сегодня';
-  document.getElementById('cust-info').innerHTML=`${activeCust.type.name} хочет: <span style="color:${clr};font-weight:700">${activeCust.wantName()}${suffix}</span>`;
+  const sfx=avail?'':`&nbsp;<span style="color:var(--red)">❌ нет в наличии</span>`;
+  document.getElementById('cust-info').innerHTML=`${activeCust.type.emoji} <b>${activeCust.type.name}</b> хочет: <span style="color:${clr};font-weight:700">${recipeIcon(activeCust.want,16)} ${activeCust.wantName()}</span>${sfx}`;
+}
+
+function updateQueueDisplay(){
+  const el=document.getElementById('queue-display');if(!el)return;
+  el.innerHTML='';
+  queue.slice(0,5).forEach(c=>{
+    const pct=Math.max(0,1-c.waitTime/c.patience);
+    const div=document.createElement('div');div.className='q-av'+(pct<.3?' angry':'');
+    div.title=`${c.type.name}: ${c.wantName()}`;
+    div.innerHTML=`<div class="qf">${c.type.emoji}</div><div class="qb" style="--p:${Math.round(pct*100)}%"></div>`;
+    el.appendChild(div);
+  });
+  const eating=custs.filter(c=>c.state==='eating').length;
+  document.getElementById('eating-info').textContent=eating?`🍽 ${eating} едят`:'';
+}
+
+function addLog(msg,cls=''){
+  const el=document.getElementById('day-log-line');if(!el)return;
+  el.textContent=msg;
+  el.style.color=cls==='b'?'rgba(255,100,80,.8)':cls==='g'?'rgba(100,200,120,.9)':'rgba(245,230,200,.65)';
 }
 
 function sellToCust(){
   if(!activeCust||activeCust.state!=='waiting'){notify('Нет клиента у стойки','b');return;}
   doSell();
 }
+
 function doSell(){
   const c=activeCust;
   const r=RECIPES.find(x=>x.id===c.want);
@@ -909,15 +835,16 @@ function doSell(){
   if(!S.dayStats.byType)S.dayStats.byType={};
   S.dayStats.byType[c.type.id]=(S.dayStats.byType[c.type.id]||0)+1;
   S.totalStats.croissants+=(c.want==='croissant'?1:0);
-  // find free seat
-  const si=TABLE_SEATS.findIndex((_,i)=>!seatOccupied[i]);
-  if(si>=0){seatOccupied[si]=true;c.seatIdx=si;c.state='served';}
-  else{c.state='leaving';c.flip=false;}
+  S.totalStats.eclairs+=(c.want==='eclair'?1:0);
+  S.totalStats.lattes+=(c.want==='latte'?1:0);
+  // seat customer
+  const si=Array.from({length:MAX_SEATS},(_,i)=>i).find(i=>!seatOccupied[i]);
+  if(si!=null){seatOccupied[si]=true;c.seatIdx=si;c.state='eating';c.eatTime=0;}
+  else{c.state='gone';}
   queue=queue.filter(x=>x!==c);activeCust=null;
-  document.getElementById('day-earned').textContent=`${S.dayEarned} ₽`;
-  updateHdr();renderDaySC();ding();
-  addLog(`+${earned}₽ — ${r.name}${tip>0?` (+${tip}₽ чаевые)`:''}`, 'g');
-  updateQD();
+  document.getElementById('day-earned-hdr').textContent=`${S.dayEarned} ₽`;
+  addLog(`+${earned}₽ — ${r.name}${tip>0?` (+${tip}₽ чаев.)`:''}`, 'g');
+  updateHdr();renderSidebar();ding();
   if(queue.length){activeCust=queue[0];updateCustUI();}
   else document.getElementById('cust-info').textContent='Ждём гостей...';
   save();
@@ -925,10 +852,10 @@ function doSell(){
 
 function rejectCust(){
   if(!activeCust)return;
-  const c=activeCust;c.state='leaving';c.flip=false;
+  const c=activeCust;c.state='gone';
   S.rep=Math.max(0,S.rep-1);
   queue=queue.filter(x=>x!==c);activeCust=null;
-  addLog(`${c.type.name} ушёл без покупки`,'n');updateHdr();updateQD();
+  addLog(`${c.type.emoji} ${c.type.name} ушёл без покупки`);updateHdr();
   if(queue.length){activeCust=queue[0];updateCustUI();}
   else document.getElementById('cust-info').textContent='Ждём гостей...';
 }
@@ -936,680 +863,133 @@ function rejectCust(){
 function toggleAuto(){
   S.autoSell=!S.autoSell;
   const b=document.getElementById('btn-auto');
-  b.textContent=`Авто: ${S.autoSell?'ВКЛ':'ВЫКЛ'}`;
+  b.textContent=`🤖 Авто: ${S.autoSell?'ВКЛ':'ВЫКЛ'}`;
   b.style.background=S.autoSell?'var(--caramel)':'';
   b.style.color=S.autoSell?'#fff':'';
 }
 
-function updateQD(){
-  for(let i=0;i<5;i++){
-    const d=document.getElementById(`qd${i}`),c=queue[i];
-    d.className='qd'+(c?(c.waitTime>c.patience*.7?' angry':' on'):'');
-  }
+function togglePause(){
+  dayPaused=!dayPaused;
+  updateToolbar();
+  notify(dayPaused?'⏸ Пауза':'▶ Продолжаем!','i');
 }
 
-function addLog(msg,cls){
-  const l=document.getElementById('day-log'),e=document.createElement('div');
-  e.className=`le ${cls}`;e.textContent=msg;l.appendChild(e);l.scrollTop=l.scrollHeight;
-}
-
-function renderDaySC(){
-  const w=document.getElementById('day-sc');w.innerHTML='';
-  Object.keys(S.showcase).forEach(id=>{
-    const r=RECIPES.find(x=>x.id===id);if(!r)return;
-    const q=S.showcase[id]||0;
-    const d=document.createElement('div');d.className='sd-item'+(q===0?' out':'');
-    d.innerHTML=`${recipeIcon(id,24)}<span class="dn">${r.name}</span><span class="dq">${q}</span>`;
-    w.appendChild(d);
-  });
-}
-
-// ─── CANVAS DRAW ─────────────────────────────────────────
-function draw(){
-  const W=cv.width,H=cv.height;
-  ctx.clearRect(0,0,W,H);
-
-  // Ceiling strip
-  ctx.fillStyle='#efe0c4';ctx.fillRect(0,0,W,16);
-  ctx.fillStyle='#dfd0b0';ctx.fillRect(0,13,W,5);
-
-  // Upper wall
-  const wallGrad=ctx.createLinearGradient(0,16,0,H*.58);
-  wallGrad.addColorStop(0,'#fdf2dc');wallGrad.addColorStop(1,'#eedcbe');
-  ctx.fillStyle=wallGrad;ctx.fillRect(0,16,W,H*.58-16);
-
-  // Wainscoting panel
-  const wainTop=H*.58-58;
-  ctx.fillStyle='rgba(160,112,60,.1)';ctx.fillRect(0,wainTop,W,58);
-  ctx.strokeStyle='rgba(140,96,48,.4)';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(0,wainTop);ctx.lineTo(W,wainTop);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(0,H*.58-4);ctx.lineTo(W,H*.58-4);ctx.stroke();
-
-  // Pendant lamps
-  [[190,0],[410,0],[610,0]].forEach(([lx])=>{
-    ctx.strokeStyle='#7a4a20';ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(lx,0);ctx.lineTo(lx,32);ctx.stroke();
-    ctx.fillStyle='#c8873a';
-    ctx.beginPath();ctx.moveTo(lx-16,26);ctx.lineTo(lx+16,26);ctx.lineTo(lx+9,44);ctx.lineTo(lx-9,44);ctx.closePath();ctx.fill();
-    ctx.fillStyle='rgba(255,240,140,.08)';
-    ctx.beginPath();ctx.moveTo(lx-1,44);ctx.lineTo(lx-55,H*.56);ctx.lineTo(lx+55,H*.56);ctx.closePath();ctx.fill();
-    ctx.fillStyle='rgba(255,230,120,.5)';ctx.beginPath();ctx.arc(lx,38,3,0,Math.PI*2);ctx.fill();
-  });
-
-  // Floor
-  const floorGrad=ctx.createLinearGradient(0,H*.58,0,H);
-  floorGrad.addColorStop(0,'#d8c4a0');floorGrad.addColorStop(1,'#c4b08c');
-  ctx.fillStyle=floorGrad;ctx.fillRect(0,H*.58,W,H*.42);
-
-  // Floor tiles
-  ctx.strokeStyle='rgba(160,130,80,.22)';ctx.lineWidth=1;
-  for(let x=0;x<W;x+=68){ctx.beginPath();ctx.moveTo(x,H*.58);ctx.lineTo(x,H);ctx.stroke();}
-  for(let y=H*.58;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  ctx.strokeStyle='rgba(160,130,80,.08)';
-  for(let x=-H;x<W+H;x+=48){ctx.beginPath();ctx.moveTo(x,H*.58);ctx.lineTo(x+H*.42,H);ctx.stroke();}
-
-  // Baseboard
-  const bb=ctx.createLinearGradient(0,H*.58,0,H*.58+10);
-  bb.addColorStop(0,'#b08050');bb.addColorStop(1,'#8b6030');
-  ctx.fillStyle=bb;ctx.fillRect(0,H*.58,W,10);
-
-  // Windows
-  drawWindows(ctx,W,H);
-
-  // Wall deco
-  if(S.decor['painting'])drawPainting(ctx,80,48);
-  if(S.decor['plant'])drawPlant(ctx,W-70,H*.56);
-  if(S.decor['menu_board'])drawMenuBoard(ctx,240,42);
-  if(S.decor['lighting']){
-    const lg=ctx.createRadialGradient(W/2,0,5,W/2,0,W*.75);
-    lg.addColorStop(0,'rgba(255,220,100,.25)');lg.addColorStop(1,'rgba(255,220,100,0)');
-    ctx.fillStyle=lg;ctx.fillRect(0,0,W,H);
-  }
-  if(S.decor['jazz']){
-    ctx.font='20px serif';ctx.fillStyle='rgba(142,68,173,.65)';
-    ctx.fillText('♪',W-42,72);ctx.fillText('♫',W-68,57);ctx.fillText('♩',W-32,92);
-  }
-
-  // Tables
-  drawTables(ctx,H);
-
-  // Counter
-  drawCounter(ctx,W,H);
-
-  // Customers
-  custs.forEach(c=>{
-    if(c.state==='gone')return;
-    const bob=(c.state==='walking')?Math.sin(bobT+c.id*3)*2.5:0;
-    drawCust(ctx,c,c.x,c.y+bob,c.flip);
-    if(c.state==='waiting'){
-      const r=RECIPES.find(x=>x.id===c.want);
-      const avail=(S.showcase[c.want]||0)>0;
-      drawBubble(ctx,c.x,c.y-10,(r?r.name:'...')+(avail?'':' ❌'),!avail);
-      const pct=Math.max(0,1-c.waitTime/c.patience);
-      ctx.fillStyle=pct>.5?'#4a7c59':pct>.25?'#e67e22':'#c0392b';
-      ctx.fillRect(c.x-22,c.y-58,44*pct,5);
-      ctx.strokeStyle='rgba(0,0,0,.2)';ctx.lineWidth=1;ctx.strokeRect(c.x-22,c.y-58,44,5);
-    }
-    if(c.state==='eating'){
-      const seat=TABLE_SEATS[c.seatIdx];
-      if(seat)drawEatingItem(ctx,seat.x,seat.y-22,c.want);
-    }
-  });
-}
-
-function drawWindows(ctx,W,H){
-  [[160,26],[400,26],[580,26]].forEach(([x,y])=>{
-    const ww=80,wh=88;
-    // Outer frame
-    ctx.fillStyle='#7a4e2c';ctx.fillRect(x-3,y-3,ww+6,wh+6);
-    // Sky gradient in glass
-    const sg=ctx.createLinearGradient(x,y,x,y+wh);
-    sg.addColorStop(0,'#b8ddf8');sg.addColorStop(.55,'#cceeff');sg.addColorStop(1,'#90c8e0');
-    ctx.fillStyle=sg;ctx.fillRect(x,y,ww,wh);
-    // Trees / outside scenery
-    ctx.fillStyle='#78aac0';ctx.fillRect(x,y+48,ww,wh-48);
-    [[x+16,y+50,14],[x+50,y+54,11],[x+68,y+52,10]].forEach(([tx,ty,r])=>{
-      ctx.fillStyle='#3d6b48';ctx.beginPath();ctx.arc(tx,ty,r,Math.PI,0);ctx.fill();
-      ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(tx-2,ty+3,r*.7,Math.PI,0);ctx.fill();
-    });
-    // Window panes
-    ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(x+ww/2,y);ctx.lineTo(x+ww/2,y+wh);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x,y+wh*.5);ctx.lineTo(x+ww,y+wh*.5);ctx.stroke();
-    // Inner frame gloss
-    ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.strokeRect(x+2,y+2,ww-4,wh-4);
-    // Curtains
-    ctx.fillStyle='rgba(200,100,40,.42)';
-    ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+22,y);ctx.lineTo(x+15,y+wh);ctx.lineTo(x,y+wh);ctx.closePath();ctx.fill();
-    ctx.beginPath();ctx.moveTo(x+ww,y);ctx.lineTo(x+ww-22,y);ctx.lineTo(x+ww-15,y+wh);ctx.lineTo(x+ww,y+wh);ctx.closePath();ctx.fill();
-    // Curtain folds
-    ctx.strokeStyle='rgba(160,70,20,.3)';ctx.lineWidth=1;
-    [x+8,x+14].forEach(cx=>{ctx.beginPath();ctx.moveTo(cx,y);ctx.lineTo(cx-2,y+wh);ctx.stroke();});
-    [x+ww-8,x+ww-14].forEach(cx=>{ctx.beginPath();ctx.moveTo(cx,y);ctx.lineTo(cx+2,y+wh);ctx.stroke();});
-    // Curtain rod
-    ctx.strokeStyle='#b09060';ctx.lineWidth=3;
-    ctx.beginPath();ctx.moveTo(x-6,y-4);ctx.lineTo(x+ww+6,y-4);ctx.stroke();
-    ctx.fillStyle='#c8a870';ctx.beginPath();ctx.arc(x-6,y-4,4,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(x+ww+6,y-4,4,0,Math.PI*2);ctx.fill();
-    // Sill
-    ctx.fillStyle='#c8a860';ctx.fillRect(x-6,y+wh,ww+12,9);
-    ctx.fillStyle='#a07840';ctx.fillRect(x-6,y+wh+7,ww+12,3);
-  });
-}
-
-function drawPainting(ctx,x,y){
-  ctx.fillStyle='#8b5e3c';ctx.fillRect(x,y,100,75);
-  const pg=ctx.createLinearGradient(x+5,y+5,x+95,y+70);
-  pg.addColorStop(0,'#87ceeb');pg.addColorStop(1,'#6aade4');
-  ctx.fillStyle=pg;ctx.fillRect(x+5,y+5,90,65);
-  ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+30,y+45,16,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#c8873a';ctx.beginPath();ctx.arc(x+60,y+35,12,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#8b5e3c';ctx.lineWidth=4;ctx.strokeRect(x,y,100,75);
-}
-
-function drawMenuBoard(ctx,x,y){
-  ctx.fillStyle='#2c3e50';ctx.fillRect(x,y,130,90);
-  ctx.strokeStyle='#c8873a';ctx.lineWidth=3;ctx.strokeRect(x,y,130,90);
-  ctx.fillStyle='#f5e6c8';ctx.font='bold 13px Nunito,sans-serif';ctx.textAlign='center';
-  ctx.fillText('МЕНЮ ДНЯ',x+65,y+22);
-  ctx.font='11px Nunito,sans-serif';ctx.fillStyle='rgba(245,230,200,.75)';
-  ['Круассан 80₽','Латте 150₽','Эклер 120₽','Лимонад 80₽'].forEach((t,i)=>ctx.fillText(t,x+65,y+38+i*14));
-}
-
-function drawPlant(ctx,x,y){
-  [[0,-20,18],[- 12,-8,14],[12,-12,12]].forEach(([dx,dy,r])=>{
-    ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+dx,y+dy,r,Math.PI,0);ctx.fill();
-    ctx.fillStyle='#3d6b4a';ctx.beginPath();ctx.arc(x+dx,y+dy+2,r*.7,Math.PI,0);ctx.fill();
-  });
-  ctx.fillStyle='#8b5e3c';ctx.fillRect(x-10,y,20,28);
-  ctx.fillStyle='#a07040';ctx.fillRect(x-12,y-2,24,6);
-}
-
-function drawTables(ctx,H){
-  const tableBaseY=H*.60;
-  [[130,tableBaseY],[270,tableBaseY],[410,tableBaseY]].forEach(([tx,ty])=>{
-    // Chair backs (drawn first, behind table)
-    [-50,50].forEach(dx=>{
-      const cx=tx+dx,cy=ty-10;
-      // Chair back
-      ctx.fillStyle='#7a4f28';
-      ctx.beginPath();ctx.roundRect?ctx.roundRect(cx-13,cy-28,26,20,5):ctx.rect(cx-13,cy-28,26,20);ctx.fill();
-      ctx.fillStyle='#5c3317';
-      ctx.beginPath();ctx.roundRect?ctx.roundRect(cx-10,cy-26,20,16,3):ctx.rect(cx-10,cy-26,20,16);ctx.fill();
-      // Upholstery hint
-      ctx.strokeStyle='rgba(255,200,120,.2)';ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(cx-6,cy-22);ctx.lineTo(cx+6,cy-22);ctx.stroke();
-      // Chair seat
-      const sg=ctx.createLinearGradient(cx-14,cy-6,cx+14,cy+4);
-      sg.addColorStop(0,'#a87848');sg.addColorStop(1,'#7a5030');
-      ctx.fillStyle=sg;ctx.beginPath();ctx.ellipse(cx,cy,17,7,0,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='#5c3317';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(cx,cy,17,7,0,0,Math.PI*2);ctx.stroke();
-      // Chair legs
-      ctx.strokeStyle='#6b3a1a';ctx.lineWidth=2.5;
-      [[-8,5],[8,5]].forEach(([lx,lz])=>{
-        ctx.beginPath();ctx.moveTo(cx+lx,cy+5);ctx.lineTo(cx+lx*1.15,H-6);ctx.stroke();
-      });
-    });
-    // Table shadow
-    ctx.fillStyle='rgba(80,50,10,.12)';
-    ctx.beginPath();ctx.ellipse(tx,ty+32,46,11,0,0,Math.PI*2);ctx.fill();
-    // Table leg
-    ctx.fillStyle='#7a4f28';ctx.fillRect(tx-5,ty+12,10,H-ty-12);
-    ctx.fillStyle='#5c3317';ctx.fillRect(tx-14,H-18,28,8);
-    // Table top
-    const tg=ctx.createLinearGradient(tx-46,ty-14,tx+46,ty+14);
-    tg.addColorStop(0,'#d8b878');tg.addColorStop(.4,'#c8a060');tg.addColorStop(1,'#a07840');
-    ctx.fillStyle=tg;ctx.beginPath();ctx.ellipse(tx,ty,46,16,0,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#7a5030';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(tx,ty,46,16,0,0,Math.PI*2);ctx.stroke();
-    // Highlight edge
-    ctx.strokeStyle='rgba(255,220,140,.35)';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(tx,ty-3,42,13,0,0,Math.PI*2);ctx.stroke();
-    // Small vase on table
-    ctx.fillStyle='#dfc8a0';ctx.fillRect(tx-3,ty-22,6,12);
-    ctx.fillStyle='#c8302a';ctx.beginPath();ctx.arc(tx,ty-23,5,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#a02018';ctx.beginPath();ctx.arc(tx,ty-23,3,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.3)';ctx.beginPath();ctx.arc(tx-1,ty-25,1.5,0,Math.PI*2);ctx.fill();
-  });
-}
-
-function drawCounter(ctx,W,H){
-  const cy=H*.58;
-  // Counter back wall
-  ctx.fillStyle='#5a3015';ctx.fillRect(W-198,cy-62,198,H-cy+62);
-  // Wood panel texture on counter back
-  ctx.strokeStyle='rgba(100,55,15,.3)';ctx.lineWidth=1;
-  for(let py=cy-58;py<H;py+=18){ctx.beginPath();ctx.moveTo(W-196,py);ctx.lineTo(W,py);ctx.stroke();}
-  // Display case glass
-  ctx.fillStyle='rgba(190,230,248,.18)';
-  ctx.strokeStyle='#c8a860';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.roundRect?ctx.roundRect(W-188,cy-58,138,42,4):ctx.rect(W-188,cy-58,138,42);
-  ctx.fill();ctx.stroke();
-  // Items in display case
-  const sItems=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
-  sItems.slice(0,4).forEach((id,i)=>drawSmallItem(ctx,W-180+i*32,cy-46,id));
-  // Counter top
-  const cg=ctx.createLinearGradient(W-198,cy-52,W,cy-52);
-  cg.addColorStop(0,'#b89860');cg.addColorStop(.5,'#c8a870');cg.addColorStop(1,'#a07840');
-  ctx.fillStyle=cg;ctx.fillRect(W-200,cy-54,205,18);
-  ctx.strokeStyle='rgba(255,220,140,.35)';ctx.lineWidth=1;ctx.strokeRect(W-198,cy-52,201,14);
-  ctx.strokeStyle='#7a5030';ctx.lineWidth=2;ctx.strokeRect(W-200,cy-54,205,18);
-  // Tip jar
-  ctx.fillStyle='rgba(180,220,240,.45)';ctx.strokeStyle='#90b0c0';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.roundRect?ctx.roundRect(W-92,cy-50,22,16,4):ctx.rect(W-92,cy-50,22,16);
-  ctx.fill();ctx.stroke();
-  ctx.fillStyle='rgba(200,140,50,.8)';ctx.fillRect(W-89,cy-46,16,3);
-  // Coffee machine
-  drawCoffeeMachine(ctx,W-52,cy-88);
-  // Divider
-  ctx.fillStyle='#4a2800';ctx.fillRect(W-202,cy-54,14,H-cy+54);
-}
-
-function drawCoffeeMachine(ctx,x,y){
-  // Body gradient
-  const mg=ctx.createLinearGradient(x-20,y,x+22,y);
-  mg.addColorStop(0,'#4a4a4a');mg.addColorStop(.45,'#333');mg.addColorStop(1,'#1a1a1a');
-  ctx.fillStyle=mg;
-  ctx.beginPath();ctx.roundRect?ctx.roundRect(x-20,y,42,52,7):ctx.rect(x-20,y,42,52);
-  ctx.fill();
-  // Caramel top accent
-  ctx.fillStyle='#c8873a';ctx.fillRect(x-20,y,42,6);
-  // Screen/display
-  ctx.fillStyle='#101828';ctx.fillRect(x-14,y+9,28,14);
-  ctx.fillStyle='rgba(80,200,100,.7)';ctx.fillRect(x-10,y+11,7,4);
-  ctx.fillStyle='rgba(80,200,100,.4)';ctx.fillRect(x-10,y+16,5,2);
-  // Pressure gauge
-  ctx.fillStyle='#222';ctx.beginPath();ctx.arc(x+10,y+12,5,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#c8873a';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x+10,y+12,4,-.5,1.2);ctx.stroke();
-  ctx.strokeStyle='#ff4444';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+10,y+12);ctx.lineTo(x+13,y+9);ctx.stroke();
-  // Group head
-  ctx.fillStyle='#888';ctx.fillRect(x-12,y+26,24,8);
-  ctx.fillStyle='#666';ctx.beginPath();ctx.arc(x,y+30,4.5,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#444';ctx.beginPath();ctx.arc(x,y+30,2.5,0,Math.PI*2);ctx.fill();
-  // Portafilter handles
-  ctx.strokeStyle='#999';ctx.lineWidth=2.5;ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(x-7,y+34);ctx.lineTo(x-10,y+44);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(x+7,y+34);ctx.lineTo(x+10,y+44);ctx.stroke();
-  // Water tray
-  ctx.fillStyle='#555';ctx.fillRect(x-18,y+46,36,7);
-  ctx.strokeStyle='#777';ctx.lineWidth=1;
-  for(let i=0;i<4;i++)ctx.strokeRect(x-14+i*9,y+47,7,4);
-  // Steam wand
-  ctx.strokeStyle='#aaa';ctx.lineWidth=3;ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(x+18,y+22);ctx.lineTo(x+22,y+38);ctx.stroke();
-  ctx.fillStyle='#888';ctx.beginPath();ctx.arc(x+22,y+40,3,0,Math.PI*2);ctx.fill();
-  // Steam wisps
-  ctx.strokeStyle='rgba(220,220,220,.5)';ctx.lineWidth=1.5;ctx.lineCap='round';
-  [x-5,x+3].forEach(sx=>{
-    ctx.beginPath();ctx.moveTo(sx,y-2);ctx.quadraticCurveTo(sx-4,y-12,sx+2,y-20);ctx.stroke();
-  });
-}
-
-function drawSmallItem(ctx,x,y,id){
-  const drink=['espresso','cappuccino','latte','lemonade','matcha_latte'].includes(id);
-  if(drink){
-    const cc={espresso:'#3d1c00',cappuccino:'#c4956a',latte:'#d4a87a',lemonade:'#ffe066',matcha_latte:'#4a7c59'}[id]||'#8b5e3c';
-    ctx.fillStyle='#e8c4a0';ctx.beginPath();ctx.ellipse(x+8,y+15,10,4,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=cc;ctx.beginPath();ctx.moveTo(x+2,y+4);ctx.lineTo(x+1,y+15);ctx.lineTo(x+15,y+15);ctx.lineTo(x+14,y+4);ctx.closePath();ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.3)';ctx.beginPath();ctx.ellipse(x+8,y+4,6,2,0,0,Math.PI*2);ctx.fill();
-  } else {
-    const fc={croissant:'#f4c777',cinnamon_bun:'#c8873a',muffin:'#7b6fa0',baguette:'#e8c87a',eclair:'#5c3317'}[id]||'#c8a060';
-    ctx.fillStyle='#e8c4a0';ctx.beginPath();ctx.ellipse(x+8,y+14,10,4,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=fc;ctx.beginPath();ctx.arc(x+8,y+9,7,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.2)';ctx.beginPath();ctx.arc(x+6,y+7,3,0,Math.PI*2);ctx.fill();
-  }
-}
-
-function drawEatingItem(ctx,x,y,id){
-  const drink=['espresso','cappuccino','latte','lemonade','matcha_latte'].includes(id);
-  if(drink){
-    // Saucer
-    ctx.fillStyle='#e8c8a8';ctx.beginPath();ctx.ellipse(x,y+2,15,5,0,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#c8a880';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(x,y+2,15,5,0,0,Math.PI*2);ctx.stroke();
-    // Cup
-    const cc=id==='lemonade'?'#ffe066':id==='matcha_latte'?'#4a7c59':'#5c3317';
-    ctx.fillStyle=cc;
-    ctx.beginPath();ctx.moveTo(x-7,y-12);ctx.lineTo(x-8,y+2);ctx.lineTo(x+8,y+2);ctx.lineTo(x+7,y-12);ctx.closePath();ctx.fill();
-    // Drink top
-    const dc=id==='lemonade'?'#ffe066a0':id==='matcha_latte'?'#6b9b6a90':'#6b3010a0';
-    ctx.fillStyle=dc;ctx.beginPath();ctx.ellipse(x,y-12,7,2.5,0,0,Math.PI*2);ctx.fill();
-    // Handle
-    ctx.strokeStyle=cc;ctx.lineWidth=2;ctx.lineCap='round';
-    ctx.beginPath();ctx.arc(x+9,y-6,4.5,-.5,.9);ctx.stroke();
-    // Steam
-    ctx.strokeStyle='rgba(200,200,200,.4)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(x,y-14);ctx.quadraticCurveTo(x-3,y-20,x,y-26);ctx.stroke();
-  } else {
-    // Plate
-    ctx.fillStyle='#e8c8a8';ctx.beginPath();ctx.ellipse(x,y,17,6,0,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#c8a880';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(x,y,17,6,0,0,Math.PI*2);ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,.3)';ctx.beginPath();ctx.ellipse(x-4,y-2,5,2,-.3,0,Math.PI*2);ctx.fill();
-    // Food
-    const fc={croissant:'#f4c777',cinnamon_bun:'#c8873a',muffin:'#8b6fa0',baguette:'#e8c87a',
-      eclair:'#5c3317',honey_cake:'#c8873a',almond_croissant:'#e8c87a',breakfast:'#f4c777'}[id]||'#c8a060';
-    ctx.fillStyle=fc;ctx.beginPath();ctx.arc(x,y-6,8,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(0,0,0,.08)';ctx.beginPath();ctx.arc(x-1,y-7,5,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.2)';ctx.beginPath();ctx.arc(x-2,y-8,2.5,0,Math.PI*2);ctx.fill();
-  }
-}
-
-function drawBubble(ctx,x,y,text,warn=false){
-  ctx.save();ctx.translate(x,y-55);
-  const w=Math.max(82,text.length*6.2+20),h=34;
-  const accent=warn?'#c0392b':'#c8873a';
-  ctx.fillStyle='#fff';ctx.strokeStyle=accent;ctx.lineWidth=2;
-  ctx.beginPath();
-  if(ctx.roundRect)ctx.roundRect(-w/2,-h,w,h,8);else ctx.rect(-w/2,-h,w,h);
-  ctx.fill();ctx.stroke();
-  ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(-7,0);ctx.lineTo(7,0);ctx.lineTo(0,10);ctx.closePath();ctx.fill();
-  ctx.strokeStyle=accent;ctx.lineWidth=1;ctx.moveTo(-7,0);ctx.lineTo(0,10);ctx.lineTo(7,0);ctx.stroke();
-  ctx.fillStyle=warn?'#c0392b':'#1C0A00';ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='center';
-  ctx.fillText(text,0,-h/2+4);
-  ctx.restore();
-}
-
-// ─── DRAW CUSTOMER ───────────────────────────────────────
-function drawCust(ctx,c,x,y,flip){
-  ctx.save();
-  ctx.translate(x,y);
-  if(flip)ctx.scale(-1,1);
-  const t=c.type;
-  const sitting=c.state==='eating';
-  const walk=Math.sin(bobT+c.id*3);
-
-  // Ground shadow
-  ctx.fillStyle='rgba(0,0,0,.07)';
-  ctx.beginPath();ctx.ellipse(0,26,16,5,0,0,Math.PI*2);ctx.fill();
-
-  if(sitting){
-    // Sitting: thighs horizontal, lower legs hanging
-    const lc=t.id==='bizlady'?'#1a2a4a':t.id==='granny'?'#6b4090':'#3a4060';
-    ctx.fillStyle=lc;
-    ctx.fillRect(-14,0,12,8);ctx.fillRect(2,0,12,8);
-    ctx.fillRect(-11,8,8,14);ctx.fillRect(3,8,8,14);
-    // Shoes
-    ctx.fillStyle='#2a1a08';
-    ctx.beginPath();ctx.ellipse(-7,23,7,4,.1,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(7,23,7,4,-.1,0,Math.PI*2);ctx.fill();
-  } else {
-    // Walking
-    const lc=t.id==='bizlady'?'#1a2a4a':t.id==='granny'?'#6b4090':'#3a4060';
-    ctx.fillStyle=lc;
-    ctx.save();ctx.translate(-5,0);ctx.rotate(walk*.2);ctx.fillRect(-4,0,8,24);ctx.restore();
-    ctx.save();ctx.translate(5,0);ctx.rotate(-walk*.2);ctx.fillRect(-4,0,8,24);ctx.restore();
-    // Shoes
-    ctx.fillStyle='#2a1a08';
-    ctx.beginPath();ctx.ellipse(-5+walk*5,25,7,4,.1,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(5-walk*5,25,7,4,-.1,0,Math.PI*2);ctx.fill();
-  }
-
-  // Skirt for granny
-  if(t.id==='granny'){
-    ctx.fillStyle='#9b59b6';
-    ctx.beginPath();ctx.moveTo(-16,-5);ctx.lineTo(16,-5);
-    ctx.quadraticCurveTo(18,6,12,16);ctx.lineTo(-12,16);ctx.quadraticCurveTo(-18,6,-16,-5);
-    ctx.closePath();ctx.fill();
-    ctx.fillStyle='rgba(180,130,210,.3)';
-    ctx.beginPath();ctx.moveTo(-12,-5);ctx.lineTo(12,-5);ctx.lineTo(10,16);ctx.lineTo(-10,16);ctx.closePath();ctx.fill();
-  }
-  // Skirt/blazer for bizlady
-  if(t.id==='bizlady'){
-    ctx.fillStyle='#1a2a4a';ctx.fillRect(-11,-24,22,24);
-    ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(-2,-24,4,20);
-  }
-
-  // Body
-  if(!['granny','bizlady'].includes(t.id)){
-    ctx.fillStyle=t.shirt;
-    ctx.beginPath();
-    ctx.moveTo(-12,-2);ctx.lineTo(-13,-22);ctx.lineTo(-10,-25);ctx.lineTo(10,-25);
-    ctx.lineTo(13,-22);ctx.lineTo(12,-2);ctx.quadraticCurveTo(8,2,-0,2);
-    ctx.quadraticCurveTo(-8,2,-12,-2);ctx.closePath();ctx.fill();
-    // Shirt highlight
-    ctx.fillStyle='rgba(255,255,255,.1)';ctx.fillRect(-4,-25,8,18);
-  }
-
-  // Arms
-  ctx.fillStyle=t.shirt;
-  if(sitting){
-    ctx.fillRect(-20,-16,8,18);ctx.fillRect(12,-16,8,18);
-    ctx.fillStyle='#f0c090';
-    ctx.beginPath();ctx.arc(-16,3,5,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(16,3,5,0,Math.PI*2);ctx.fill();
-  } else {
-    const arm=walk*12;
-    ctx.save();ctx.translate(-12,-20);ctx.rotate((arm+14)*Math.PI/180);
-    ctx.fillRect(-3,0,7,18);
-    ctx.fillStyle='#f0c090';ctx.beginPath();ctx.arc(2,20,4.5,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-    ctx.save();ctx.translate(12,-20);ctx.rotate((-arm-14)*Math.PI/180);
-    ctx.fillStyle=t.shirt;ctx.fillRect(-4,0,7,18);
-    ctx.fillStyle='#f0c090';ctx.beginPath();ctx.arc(-2,20,4.5,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-  }
-
-  // Neck
-  ctx.fillStyle='#e8b080';ctx.fillRect(-4,-28,8,7);
-
-  // Head
-  ctx.fillStyle='#f2c898';ctx.beginPath();ctx.arc(0,-38,13,0,Math.PI*2);ctx.fill();
-  // Face shading
-  ctx.fillStyle='rgba(200,140,80,.12)';ctx.beginPath();ctx.arc(3,-36,9,0,Math.PI*2);ctx.fill();
-  // Ears
-  ctx.fillStyle='#e8b080';
-  ctx.beginPath();ctx.arc(-13,-38,4,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(13,-38,4,0,Math.PI*2);ctx.fill();
-
-  // Hair styles
-  ctx.fillStyle=t.hair;
-  if(t.id==='hipster'){
-    // Man bun
-    ctx.beginPath();ctx.arc(0,-50,8,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(0,-43,13,Math.PI,0);ctx.fill();
-    ctx.fillRect(-13,-44,26,8);
-    // Beard
-    ctx.fillStyle='rgba(44,26,10,.75)';
-    ctx.beginPath();ctx.arc(0,-30,7,0.15,Math.PI-.15);ctx.fill();
-    // Glasses
-    ctx.strokeStyle='#444';ctx.lineWidth=1.8;
-    ctx.strokeRect(-12,-41,9,7);ctx.strokeRect(3,-41,9,7);
-    ctx.beginPath();ctx.moveTo(-3,-37);ctx.lineTo(3,-37);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(-13,-37);ctx.lineTo(-16,-36);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(12,-37);ctx.lineTo(15,-36);ctx.stroke();
-    // Lens glare
-    ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillRect(-11,-40,3,2);ctx.fillRect(4,-40,3,2);
-  } else if(t.id==='student'){
-    ctx.beginPath();ctx.arc(0,-47,11,Math.PI,0);ctx.fill();
-    ctx.fillRect(-11,-47,22,10);
-    // Backpack
-    ctx.fillStyle='#e74c3c';
-    ctx.beginPath();ctx.roundRect?ctx.roundRect(13,-24,12,20,3):ctx.rect(13,-24,12,20);
-    ctx.fill();
-    ctx.fillStyle='#c0392b';ctx.fillRect(14,-22,10,4);
-    ctx.fillStyle='rgba(255,255,255,.2)';ctx.fillRect(15,-20,8,12);
-  } else if(t.id==='bizlady'){
-    ctx.beginPath();ctx.arc(0,-48,12,Math.PI*.05,Math.PI*.95);ctx.fill();
-    ctx.fillRect(-12,-48,24,11);
-    ctx.beginPath();ctx.arc(0,-53,7,0,Math.PI*2);ctx.fill();
-    // Briefcase
-    ctx.fillStyle='#2c3e50';
-    ctx.beginPath();ctx.roundRect?ctx.roundRect(13,-16,14,11,2):ctx.rect(13,-16,14,11);
-    ctx.fill();
-    ctx.strokeStyle='#4a6080';ctx.lineWidth=1;ctx.strokeRect(15,-18,10,5);
-    ctx.fillStyle='#8aa0b8';ctx.fillRect(17,-19,6,3);
-  } else if(t.id==='tourist'){
-    ctx.beginPath();ctx.arc(0,-47,11,Math.PI*.1,Math.PI*.9);ctx.fill();
-    // Hat brim
-    ctx.fillStyle='#e67e22';
-    ctx.beginPath();ctx.ellipse(0,-52,16,5,0,0,Math.PI*2);ctx.fill();
-    // Hat crown
-    ctx.fillRect(-9,-63,18,13);
-    ctx.fillStyle='#d35400';ctx.beginPath();ctx.ellipse(0,-63,9,3,0,0,Math.PI*2);ctx.fill();
-    // Hat band
-    ctx.fillStyle='rgba(255,255,255,.4)';ctx.fillRect(-9,-55,18,3);
-    // Camera
-    ctx.fillStyle='#2c3e50';ctx.fillRect(-22,-18,14,10);
-    ctx.fillStyle='#7f8c8d';ctx.beginPath();ctx.arc(-15,-13,4,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#bdc3c7';ctx.beginPath();ctx.arc(-15,-13,2.5,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(100,180,220,.5)';ctx.beginPath();ctx.arc(-15,-13,1.5,0,Math.PI*2);ctx.fill();
-    // Camera strap
-    ctx.strokeStyle='#555';ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(-8,-9);ctx.quadraticCurveTo(0,-4,8,-12);ctx.stroke();
-  } else if(t.id==='granny'){
-    ctx.fillStyle='#e0e0e0';
-    ctx.beginPath();ctx.arc(0,-47,11,Math.PI,0);ctx.fill();
-    ctx.fillRect(-11,-47,22,10);
-    ctx.beginPath();ctx.arc(0,-52,6,0,Math.PI*2);ctx.fill();
-    // Shawl
-    ctx.fillStyle='rgba(155,89,182,.35)';
-    ctx.beginPath();ctx.moveTo(-16,-24);ctx.lineTo(16,-24);ctx.lineTo(12,0);ctx.lineTo(-12,0);ctx.closePath();ctx.fill();
-    // Grandma glasses
-    ctx.strokeStyle='#999';ctx.lineWidth=1.5;
-    ctx.strokeRect(-12,-42,9,7);ctx.strokeRect(3,-42,9,7);
-    ctx.beginPath();ctx.moveTo(-3,-38);ctx.lineTo(3,-38);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(-13,-38);ctx.lineTo(-16,-37);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(12,-38);ctx.lineTo(15,-37);ctx.stroke();
-  } else if(t.id==='mom'){
-    ctx.beginPath();ctx.arc(0,-47,11,Math.PI*.1,Math.PI*.9);ctx.fill();
-    ctx.fillRect(-11,-47,22,10);
-    // Stroller
-    if(!sitting){
-      ctx.fillStyle='#f06fa0';
-      ctx.beginPath();ctx.roundRect?ctx.roundRect(14,-20,22,16,5):ctx.rect(14,-20,22,16);
-      ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,.4)';ctx.fillRect(16,-18,6,10);
-      ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(22,-12,3,0,Math.PI*2);ctx.fill();
-      // Handle
-      ctx.strokeStyle='#d05080';ctx.lineWidth=2.5;ctx.lineCap='round';
-      ctx.beginPath();ctx.moveTo(14,-20);ctx.lineTo(12,-6);ctx.stroke();
-      // Wheels
-      ctx.fillStyle='#333';
-      ctx.beginPath();ctx.arc(16,-4,4.5,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(33,-4,4.5,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='#666';
-      ctx.beginPath();ctx.arc(16,-4,2.5,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(33,-4,2.5,0,Math.PI*2);ctx.fill();
-    }
-  } else {
-    ctx.beginPath();ctx.arc(0,-47,11,Math.PI*.1,Math.PI*.9);ctx.fill();ctx.fillRect(-11,-47,22,10);
-  }
-
-  // Eyes (white + iris)
-  ctx.fillStyle='#fff';
-  ctx.beginPath();ctx.arc(-5,-38,3.5,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(5,-38,3.5,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#1C0A00';
-  ctx.beginPath();ctx.arc(-5,-38,2,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(5,-38,2,0,Math.PI*2);ctx.fill();
-  // Eye shine
-  ctx.fillStyle='rgba(255,255,255,.85)';
-  ctx.beginPath();ctx.arc(-4,-39,1,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(6,-39,1,0,Math.PI*2);ctx.fill();
-
-  // Eyebrows
-  ctx.strokeStyle='rgba(44,26,10,.65)';ctx.lineWidth=1.8;ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(-9,-43);ctx.quadraticCurveTo(-5,-45,-2,-42);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(9,-43);ctx.quadraticCurveTo(5,-45,2,-42);ctx.stroke();
-
-  // Nose
-  ctx.fillStyle='rgba(180,120,70,.4)';ctx.beginPath();ctx.arc(0,-34,2,0,Math.PI*2);ctx.fill();
-
-  // Smile
-  ctx.strokeStyle='rgba(44,26,10,.55)';ctx.lineWidth=1.5;ctx.lineCap='round';
-  ctx.beginPath();ctx.arc(0,-31,4,.2,Math.PI-.2);ctx.stroke();
-
-  // Rosy cheeks
-  ctx.fillStyle='rgba(220,110,90,.13)';
-  ctx.beginPath();ctx.arc(-9,-34,5,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(9,-34,5,0,Math.PI*2);ctx.fill();
-
-  ctx.restore();
-}
-
-// ─── END DAY ─────────────────────────────────────────────
+// ─── END DAY ───────────────────────────────────────────────
 function endDay(){
   if(!dayRunning)return;
   dayRunning=false;if(animId)cancelAnimationFrame(animId);
   custs=[];queue=[];Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
   if(S.dayEarned>S.totalStats.maxDay)S.totalStats.maxDay=S.dayEarned;
   if(S.rep>=80)S.totalStats.repDays++;
-  if(S.day>=5)S.totalStats.day5=true;
+  if(S.day>=3)S.totalStats.day5=true;
   const sold=Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0);
   if(sold>10)S.rep=Math.min(100,S.rep+3);
   if(S.dayStats.unhappy>3)S.rep=Math.max(0,S.rep-3);
-  S.dayDone=true;updateNavState();
-  save();switchPhase('evening');
+  if(S.decor['plant'])S.rep=Math.min(100,S.rep+2);
+  S.dayDone=true;
+  dayPaused=false;
+  document.getElementById('day-card').style.display='none';
+  updateToolbar();
+  checkUnlocks();
+  renderEveningCard();
+  save();
 }
 
-// ─── EVENING ─────────────────────────────────────────────
-function renderEvening(){
-  document.getElementById('ev-earned').textContent=`${S.dayStats.earned} ₽`;
+// ─── EVENING CARD ──────────────────────────────────────────
+function renderEveningCard(){
+  const card=document.getElementById('evening-card');
+  card.style.display='block';
   const ts=Object.values(S.dayStats.sold).reduce((a,b)=>a+b,0);
-  document.getElementById('ev-sold').textContent=ts;
-  document.getElementById('ev-rep').textContent=`${Math.round(S.rep)}%`;
-  const sb=document.getElementById('sales-bars');sb.innerHTML='';
-  const sorted=Object.entries(S.dayStats.sold).sort((a,b)=>b[1]-a[1]);
-  const mx=sorted[0]?sorted[0][1]:1;
-  sorted.forEach(([id,cnt])=>{
-    const r=RECIPES.find(x=>x.id===id);if(!r)return;
-    const row=document.createElement('div');row.className='sbr';
-    row.innerHTML=`<span class="nm">${r.name}</span><div class="bar-bg"><div class="bar-f" style="width:0%" data-p="${cnt/mx*100}"></div></div><span class="cnt">${cnt}</span>`;
-    sb.appendChild(row);
-  });
-  setTimeout(()=>document.querySelectorAll('.bar-f').forEach(el=>el.style.width=el.dataset.p+'%'),80);
-  const ll=document.getElementById('lft-list');ll.innerHTML='';
-  let hasL=false;
-  Object.keys(S.showcase).forEach(id=>{
-    const q=S.showcase[id]||0;if(!q)return;hasL=true;
-    const r=RECIPES.find(x=>x.id===id);
-    const d=document.createElement('div');d.className='lft-item';
-    d.innerHTML=`${recipeIcon(id,28)}<span class="ln">${r?r.name:id}</span><span class="lq">${q} шт × ${Math.round((r?r.price:50)*.5)}₽</span>`;
-    ll.appendChild(d);
-  });
-  if(!hasL)ll.innerHTML='<div style="color:rgba(28,10,0,.4);font-size:13px">Всё продано! 🎉</div>';
-  // Goals evaluation
-  const goalsEv=document.getElementById('goals-ev-sec');
+  // Goals
+  let goalsHtml='',bonus=0;
   if(S.goals&&S.goals.length){
-    goalsEv.style.display='block';
-    const gl=document.getElementById('goals-ev-list');gl.innerHTML='';
-    let bonus=0;
     S.goals.forEach(g=>{
       const done=g.check&&g.check();
       if(done)bonus+=g.reward;
-      const el=document.createElement('div');el.className='goal-item'+(done?' done':'');
-      el.innerHTML=`<span class="goal-chk">${done?'✅':'❌'}</span><span class="goal-desc">${g.desc}</span><span class="goal-rwd">${done?'+'+g.reward+'₽':'—'}</span>`;
-      gl.appendChild(el);
+      goalsHtml+=`<div class="ev-goal${done?' done':''}"><span>${done?'✅':'❌'}</span><span style="flex:1">${g.desc}</span><span>${done?'+'+g.reward+'₽':'—'}</span></div>`;
     });
-    const bonusEl=document.getElementById('goals-bonus');
-    if(bonus>0&&!S.goalsRewarded){
-      S.goalsRewarded=true;S.money+=bonus;updateHdr();
-      bonusEl.textContent=`🎉 Бонус за цели: +${bonus}₽`;fanfare();save();
-    }else{bonusEl.textContent=bonus>0?`Бонус за цели: +${bonus}₽ (уже начислен)`:(bonus===0?'Цели не выполнены':'');}
-  }else{goalsEv.style.display='none';}
-  checkUnlocks();
+    if(bonus>0&&!S.goalsRewarded){S.goalsRewarded=true;S.money+=bonus;updateHdr();}
+  }
+  // Leftovers
+  let lftHtml='';
+  const lftItems=Object.keys(S.showcase).filter(k=>S.showcase[k]>0);
+  if(lftItems.length){
+    lftHtml=lftItems.map(id=>{const r=RECIPES.find(x=>x.id===id);return`<span class="ev-lft-tag">${r?r.name:id} ×${S.showcase[id]}</span>`;}).join('');
+  }
+  // Sales bars
+  const sorted=Object.entries(S.dayStats.sold).sort((a,b)=>b[1]-a[1]);
+  const mx=sorted[0]?sorted[0][1]:1;
+  const barsHtml=sorted.slice(0,5).map(([id,cnt])=>{
+    const r=RECIPES.find(x=>x.id===id);
+    return`<div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
+      <span style="font-size:11px;width:120px;font-weight:600">${r?r.name:id}</span>
+      <div style="flex:1;height:12px;background:rgba(28,10,0,.08);border-radius:6px;overflow:hidden"><div style="height:100%;background:var(--caramel);border-radius:6px;width:${cnt/mx*100}%"></div></div>
+      <span style="font-size:11px;font-weight:700;color:var(--caramel)">${cnt}</span>
+    </div>`;
+  }).join('');
+  card.innerHTML=`
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700">День ${S.day} завершён!</div>
+      <div class="ev-stats" style="margin:0">
+        <div class="ev-stat"><div class="ev-v">${S.dayStats.earned}₽</div><div class="ev-l">Выручка</div></div>
+        <div class="ev-stat"><div class="ev-v">${ts}</div><div class="ev-l">Продано</div></div>
+        <div class="ev-stat"><div class="ev-v">${Math.round(S.rep)}%</div><div class="ev-l">Репутация</div></div>
+      </div>
+    </div>
+    ${barsHtml?`<div style="margin-bottom:8px">${barsHtml}</div>`:''}
+    ${goalsHtml?`<div class="ev-goals">${goalsHtml}</div>`:''}
+    ${bonus>0?`<div class="ev-bonus">🎉 Бонус за цели: +${bonus}₽</div>`:''}
+    ${lftHtml?`<div class="ev-leftovers"><span style="font-size:11px;font-weight:600">Остатки:</span>${lftHtml}
+      <button class="btn btn-s" style="font-size:11px;padding:4px 10px" onclick="sellLeftovers()">Продать −50%</button>
+      <button class="btn btn-o" style="font-size:11px;padding:4px 10px" onclick="throwLeftovers()">Выбросить</button>
+    </div>`:'<div style="font-size:12px;color:var(--sage);font-weight:600;margin-bottom:8px">✨ Всё продано!</div>'}
+    <div id="unlock-area"></div>
+  `;
 }
 
 function checkUnlocks(){
-  const u=document.getElementById('unlock-sec');u.style.display='none';
   let unlock=null;
-  if(S.totalStats.croissants>=20&&!S.unlocked.includes('almond_croissant'))unlock={id:'almond_croissant',desc:'Продал 20 круассанов!'};
-  else if(S.totalStats.maxDay>=5000&&!S.unlocked.includes('honey_cake'))unlock={id:'honey_cake',desc:'Выручка 5000₽ за день!'};
-  else if(S.totalStats.exps>=1&&!S.unlocked.includes('recipe_of_day'))unlock={id:'recipe_of_day',desc:'Удачный эксперимент!'};
-  else if(S.totalStats.day5&&!S.unlocked.includes('matcha_latte'))unlock={id:'matcha_latte',desc:'5 дней позади!'};
-  else if(S.totalStats.repDays>=3&&!S.unlocked.includes('breakfast'))unlock={id:'breakfast',desc:'Репутация 80%+ три дня!'};
+  if(S.totalStats.croissants>=20&&!S.unlocked.includes('almond_croissant'))
+    unlock={id:'almond_croissant',desc:'Продал 20 круассанов!'};
+  else if(S.dayStats.earned>=1000&&!S.unlocked.includes('honey_cake'))
+    unlock={id:'honey_cake',desc:'1000₽ за день!'};
+  else if(S.totalStats.exps>=1&&!S.unlocked.includes('recipe_of_day'))
+    unlock={id:'recipe_of_day',desc:'Первый удачный эксперимент!'};
+  else if(S.totalStats.day5&&!S.unlocked.includes('matcha_latte'))
+    unlock={id:'matcha_latte',desc:'3 дня в деле!'};
+  else if(S.totalStats.repDays>=3&&!S.unlocked.includes('breakfast'))
+    unlock={id:'breakfast',desc:'Репутация 80%+ три дня!'};
+  else if(S.totalStats.eclairs>=10&&!S.unlocked.includes('chocolate_croissant'))
+    unlock={id:'chocolate_croissant',desc:'Продал 10 эклеров!'};
+  else if(S.day>=5&&!S.unlocked.includes('waffle'))
+    unlock={id:'waffle',desc:'5 дней работы!'};
+  else if(S.totalStats.maxDay>=2000&&!S.unlocked.includes('tart'))
+    unlock={id:'tart',desc:'2000₽ за один день!'};
+  else if(S.totalStats.lattes>=15&&!S.unlocked.includes('honey_latte'))
+    unlock={id:'honey_latte',desc:'Продал 15 латте!'};
+  else if(S.totalStats.maxDay>=3000&&!S.unlocked.includes('hot_chocolate'))
+    unlock={id:'hot_chocolate',desc:'3000₽ за один день!'};
+  else if(S.day>=8&&!S.unlocked.includes('vanilla_latte'))
+    unlock={id:'vanilla_latte',desc:'8-й день работы!'};
+  else if(S.dayStats.earned>=1500&&!S.unlocked.includes('cheesecake'))
+    unlock={id:'cheesecake',desc:'1500₽ за день!'};
   if(unlock){
     S.unlocked.push(unlock.id);
     const r=RECIPES.find(x=>x.id===unlock.id);
-    document.getElementById('unlock-name').textContent=r?r.name:unlock.id;
-    document.getElementById('unlock-desc').textContent=unlock.desc;
-    u.style.display='block';fanfare();save();
+    setTimeout(()=>{
+      const a=document.getElementById('unlock-area');
+      if(a)a.innerHTML=`<div class="ev-unlock">🎉 Новый рецепт разблокирован: <strong>${r?r.name:unlock.id}</strong> — ${unlock.desc}</div>`;
+    },500);
+    fanfare();save();
   }
 }
 
 function sellLeftovers(){
   let e=0;
   Object.keys(S.showcase).forEach(id=>{const r=RECIPES.find(x=>x.id===id),q=S.showcase[id]||0;if(q&&r)e+=Math.round(r.price*.5)*q;});
-  S.money+=e;S.showcase={};notify(`Продано остатков на ${e}₽`,'g');updateHdr();renderEvening();
+  S.money+=e;S.showcase={};notify(`Продано остатков на ${e}₽`,'g');updateHdr();renderEveningCard();
 }
-function throwLeftovers(){S.showcase={};notify('Остатки выброшены','i');renderEvening();}
+function throwLeftovers(){S.showcase={};notify('Остатки выброшены','i');renderEveningCard();}
 
 function nextDay(){
   S.day++;S.weather=WEATHERS[Math.floor(Math.random()*WEATHERS.length)];
@@ -1618,8 +998,13 @@ function nextDay(){
   S.dayStats={earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}};
   S.dayEarned=0;S.dayOpen=false;S.dayDone=false;S.goalsRewarded=false;
   S.goals=[];pickGoals();
-  updateNavState();
-  S.money+=50;updateHdr();save();switchPhase('morning');
+  document.getElementById('evening-card').style.display='none';
+  document.getElementById('day-card').style.display='none';
+  document.getElementById('open-btn-wrap').style.display='block';
+  updateToolbar();updateHdr();save();
+  renderWorkbench();
+  S.money+=50;updateHdr();
+  notify(`День ${S.day} начинается! +50₽ на утро`,'g');
 }
 
 // ─── DECOR ────────────────────────────────────────────────
@@ -1631,7 +1016,7 @@ function renderDecor(){
     const d=document.createElement('div');d.className='di-item';
     d.innerHTML=`<div class="dico">${item.icon}</div>
     <div class="dinfo"><div class="dtitle">${item.name}</div><div class="ddesc">${item.desc}</div></div>
-    ${owned?'<span class="owned-badge">Куплено</span>':`<div><div class="dprice">${item.price}₽</div><button class="btn btn-p" style="font-size:11px;padding:5px 10px;margin-top:3px" onclick="buyDecor('${item.id}')">Купить</button></div>`}`;
+    ${owned?'<span class="owned-badge">Куплено</span>':`<div style="text-align:right"><div class="dprice">${item.price}₽</div><button class="btn btn-p" style="font-size:11px;padding:4px 9px;margin-top:3px" onclick="buyDecor('${item.id}')">Купить</button></div>`}`;
     l.appendChild(d);
   });
 }
@@ -1639,11 +1024,9 @@ function renderDecor(){
 function drawDecorPreview(){
   const dc=document.getElementById('dc'),dctx=dc.getContext('2d'),W=dc.width,H=dc.height;
   dctx.clearRect(0,0,W,H);
-  // Wall
   const wg=dctx.createLinearGradient(0,0,0,H*.6);
   wg.addColorStop(0,'#fdf0d8');wg.addColorStop(1,'#f0dfc0');
   dctx.fillStyle=wg;dctx.fillRect(0,0,W,H*.6);
-  // Floor
   const fg=dctx.createLinearGradient(0,H*.6,0,H);
   fg.addColorStop(0,'#d8c4a0');fg.addColorStop(1,'#c8b48a');
   dctx.fillStyle=fg;dctx.fillRect(0,H*.6,W,H*.4);
@@ -1651,8 +1034,7 @@ function drawDecorPreview(){
   for(let x=0;x<W;x+=60){dctx.beginPath();dctx.moveTo(x,H*.6);dctx.lineTo(x,H);dctx.stroke();}
   for(let y=H*.6;y<H;y+=40){dctx.beginPath();dctx.moveTo(0,y);dctx.lineTo(W,y);dctx.stroke();}
   dctx.fillStyle='#a07040';dctx.fillRect(0,H*.6,W,7);
-  // Windows
-  [[60,25],[280,25]].forEach(([x,y])=>{
+  [[60,25],[270,25]].forEach(([x,y])=>{
     dctx.fillStyle='#8b5e3c';dctx.fillRect(x,y,80,75);
     dctx.fillStyle='rgba(135,200,235,.65)';dctx.fillRect(x+4,y+4,72,67);
     dctx.strokeStyle='rgba(255,255,255,.4)';dctx.lineWidth=1.5;
@@ -1660,26 +1042,51 @@ function drawDecorPreview(){
     dctx.beginPath();dctx.moveTo(x+4,y+38);dctx.lineTo(x+76,y+38);dctx.stroke();
     dctx.fillStyle='#a07040';dctx.fillRect(x-4,y+75,88,7);
   });
-  // Decor
-  if(S.decor['painting'])drawPainting(dctx,160,25);
-  if(S.decor['plant'])drawPlant(dctx,W-60,H*.55);
-  if(S.decor['menu_board']){dctx.fillStyle='#2c3e50';dctx.fillRect(420,25,110,80);dctx.strokeStyle='#c8873a';dctx.lineWidth=2;dctx.strokeRect(420,25,110,80);}
+  if(S.decor['painting'])drawPainting(dctx,160,20);
+  if(S.decor['plant'])drawPlant(dctx,W-55,H*.55);
+  if(S.decor['menu_board']){dctx.fillStyle='#2c3e50';dctx.fillRect(390,22,100,78);dctx.strokeStyle='#c8873a';dctx.lineWidth=2;dctx.strokeRect(390,22,100,78);}
   if(S.decor['lighting']){
     const lg=dctx.createRadialGradient(W/2,0,5,W/2,0,W*.7);
     lg.addColorStop(0,'rgba(255,220,100,.2)');lg.addColorStop(1,'rgba(255,220,100,0)');
     dctx.fillStyle=lg;dctx.fillRect(0,0,W,H);
   }
-  if(S.decor['jazz']){dctx.font='20px serif';dctx.fillStyle='rgba(142,68,173,.5)';dctx.fillText('♪',W-35,60);dctx.fillText('♫',W-60,45);}
+  if(S.decor['jazz']){dctx.font='18px serif';dctx.fillStyle='rgba(142,68,173,.55)';dctx.fillText('♪',W-32,55);dctx.fillText('♫',W-55,40);}
   if(S.decor['table']){
     [[100,H*.62],[230,H*.62],[360,H*.62]].forEach(([tx,ty])=>{
-      dctx.fillStyle='#a07040';dctx.beginPath();dctx.ellipse(tx,ty,40,13,0,0,Math.PI*2);dctx.fill();
-      dctx.strokeStyle='#8b5e3c';dctx.lineWidth=1.5;dctx.beginPath();dctx.ellipse(tx,ty,40,13,0,0,Math.PI*2);dctx.stroke();
-      dctx.fillStyle='#8b5e3c';dctx.fillRect(tx-5,ty+10,8,H-ty-10);
+      dctx.fillStyle='#a07040';dctx.beginPath();dctx.ellipse(tx,ty,36,12,0,0,Math.PI*2);dctx.fill();
+      dctx.strokeStyle='#8b5e3c';dctx.lineWidth=1.5;dctx.beginPath();dctx.ellipse(tx,ty,36,12,0,0,Math.PI*2);dctx.stroke();
+      dctx.fillStyle='#8b5e3c';dctx.fillRect(tx-4,ty+10,7,H-ty-10);
     });
   }
-  // Counter
-  dctx.fillStyle='#6b3a1a';dctx.fillRect(W-160,H*.58,160,H*.42);
-  dctx.fillStyle='#a07040';dctx.fillRect(W-165,H*.55,168,15);
+  dctx.fillStyle='#6b3a1a';dctx.fillRect(W-150,H*.58,150,H*.42);
+  dctx.fillStyle='#a07040';dctx.fillRect(W-155,H*.55,158,14);
+}
+
+function drawPainting(ctx,x,y){
+  ctx.fillStyle='#8b5e3c';ctx.fillRect(x,y,95,70);
+  const pg=ctx.createLinearGradient(x+5,y+5,x+90,y+65);
+  pg.addColorStop(0,'#87ceeb');pg.addColorStop(1,'#6aade4');
+  ctx.fillStyle=pg;ctx.fillRect(x+5,y+5,85,60);
+  ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+28,y+42,14,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#c8873a';ctx.beginPath();ctx.arc(x+58,y+33,11,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#8b5e3c';ctx.lineWidth=4;ctx.strokeRect(x,y,95,70);
+}
+
+function drawMenuBoard(ctx,x,y){
+  ctx.fillStyle='#2c3e50';ctx.fillRect(x,y,120,85);
+  ctx.strokeStyle='#c8873a';ctx.lineWidth=3;ctx.strokeRect(x,y,120,85);
+  ctx.fillStyle='#f5e6c8';ctx.font='bold 12px Nunito,sans-serif';ctx.textAlign='center';
+  ctx.fillText('МЕНЮ ДНЯ',x+60,y+20);
+  ctx.font='10px Nunito,sans-serif';ctx.fillStyle='rgba(245,230,200,.75)';
+  ['Круассан 80₽','Латте 150₽','Эклер 120₽'].forEach((t,i)=>ctx.fillText(t,x+60,y+36+i*14));
+}
+
+function drawPlant(ctx,x,y){
+  [[0,-18,16],[- 11,-7,12],[11,-10,11]].forEach(([dx,dy,r])=>{
+    ctx.fillStyle='#4a7c59';ctx.beginPath();ctx.arc(x+dx,y+dy,r,Math.PI,0);ctx.fill();
+  });
+  ctx.fillStyle='#8b5e3c';ctx.fillRect(x-9,y,18,24);
+  ctx.fillStyle='#a07040';ctx.fillRect(x-11,y-2,22,5);
 }
 
 function buyDecor(id){
@@ -1687,20 +1094,27 @@ function buyDecor(id){
   if(S.decor[id]){notify('Уже куплено','i');return;}
   if(S.money<item.price){notify(`Нужно ${item.price}₽`,'b');return;}
   S.money-=item.price;S.decor[id]=true;
-  notify(`${item.name} добавлен!`,'g');fanfare();updateHdr();save();renderDecor();
+  notify(`${item.name} добавлен!`,'g');fanfare();updateHdr();save();
+  renderDecor();
 }
 
-// ─── INIT ─────────────────────────────────────────────────
+// ─── INIT ──────────────────────────────────────────────────
 async function init(){
   await load();
-  // Ensure new state fields exist after load
   if(!S.goals)S.goals=[];
   if(!S.prevWantedMissing)S.prevWantedMissing={};
   if(!S.dayStats.byType)S.dayStats.byType={};
   if(!S.dayStats.wantedMissing)S.dayStats.wantedMissing={};
+  if(!S.totalStats.eclairs)S.totalStats.eclairs=0;
+  if(!S.totalStats.lattes)S.totalStats.lattes=0;
   if(S.goals.length===0)pickGoals();
-  updateHdr();updateNavState();
-  switchPhase('morning');
+  // If we were in the middle of a day, reset to morning state
+  if(S.dayOpen&&!S.dayDone){
+    S.dayOpen=false;
+    S.dayStats={earned:0,sold:{},unhappy:0,exp:0,byType:{},wantedMissing:{}};
+  }
+  updateHdr();updateToolbar();
+  renderWorkbench();
 }
 init();
 </script>
