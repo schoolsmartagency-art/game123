@@ -50,14 +50,23 @@ body{display:flex;flex-direction:column;font-family:'Nunito',sans-serif;backgrou
 #center-panel{flex-shrink:0}
 
 /* DAY CARD */
-#day-card{background:var(--espresso);color:var(--cream);padding:10px 20px;border-bottom:3px solid var(--caramel)}
+#day-card{background:var(--espresso);color:var(--cream);padding:10px 20px 14px;border-bottom:3px solid var(--caramel)}
+#cafe-scene{background:linear-gradient(180deg,#3a2418 0%,#2c1810 70%,#241208 100%);border-radius:11px;padding:10px 14px;margin-bottom:10px;position:relative;overflow:hidden;border:1px solid rgba(200,135,58,.3)}
+#cafe-decor-row{position:absolute;top:6px;right:10px;font-size:14px;display:flex;gap:6px;opacity:.85}
+#cafe-counter{display:flex;align-items:center;gap:12px;min-height:46px}
+#cafe-counter .counter-icon{font-size:30px}
+#cafe-active-cust{flex:1;font-size:13px;font-weight:600}
+#cafe-seats{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed rgba(245,230,200,.18);flex-wrap:wrap}
+.seat-slot{width:34px;height:34px;border-radius:8px;background:rgba(245,230,200,.07);display:flex;align-items:center;justify-content:center;font-size:18px;position:relative}
+.seat-slot.occupied{background:rgba(200,135,58,.18)}
+.seat-slot .seat-bar{position:absolute;bottom:2px;left:3px;right:3px;height:2px;background:rgba(245,230,200,.2);border-radius:2px;overflow:hidden}
+.seat-slot .seat-bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:var(--p,0%);background:var(--sage)}
 #time-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 #time-lbl{font-size:15px;font-weight:700;color:var(--caramel);min-width:44px}
 #timebar-wrap{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
 #day-timebar{height:100%;background:var(--caramel);border-radius:4px;transition:width .5s linear}
 .time-cap{font-size:11px;opacity:.55}
 #cust-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
-#cust-info{flex:1;font-size:13px;font-weight:600;min-height:20px}
 #eating-info{font-size:11px;color:rgba(245,230,200,.55)}
 #queue-display{display:flex;gap:5px;align-items:flex-end}
 .q-av{text-align:center;cursor:default}
@@ -206,9 +215,17 @@ body{display:flex;flex-direction:column;font-family:'Nunito',sans-serif;backgrou
       <span class="time-cap">16:00</span>
       <span id="day-earned-hdr">0 ₽</span>
     </div>
+    <div id="cafe-scene">
+      <div id="cafe-decor-row"></div>
+      <div id="cafe-counter">
+        <div class="counter-icon">☕</div>
+        <div id="cafe-active-cust">Ждём первых гостей...</div>
+      </div>
+      <div id="cafe-seats"></div>
+    </div>
     <div id="cust-row">
-      <div id="cust-info">Ждём первых гостей...</div>
       <div id="eating-info"></div>
+      <span class="time-cap" id="queue-lbl" style="display:none">Очередь:</span>
       <div id="queue-display"></div>
     </div>
     <div id="sell-row">
@@ -725,6 +742,7 @@ function initDay(){
   Object.keys(seatOccupied).forEach(k=>delete seatOccupied[k]);
   document.getElementById('day-earned-hdr').textContent='0 ₽';
   document.getElementById('day-log-line').textContent='';
+  renderCafeDecorRow();
   updateQueueDisplay();
   setTimeout(spawnCust,1500);
   if(animId)cancelAnimationFrame(animId);
@@ -766,7 +784,7 @@ function initDay(){
         if(f&&f.want&&S.showcase[f.want]>0){activeCust=f;setTimeout(()=>{if(activeCust===f)doSell();},200);}
       }
       if(!activeCust&&queue.length){activeCust=queue[0];updateCustUI();}
-      else if(!queue.length&&!activeCust){document.getElementById('cust-info').textContent='Ждём гостей...';}
+      else if(!queue.length&&!activeCust){document.getElementById('cafe-active-cust').textContent='Ждём гостей...';}
       updateQueueDisplay();
     }
     animId=requestAnimationFrame(loop);
@@ -783,7 +801,7 @@ function leaveAngry(c){
   S.rep=Math.max(0,S.rep-2);S.dayStats.unhappy++;
   addLog(`😤 ${c.type.name} ушёл недовольным!`,'b');
   queue=queue.filter(x=>x!==c);c.state='gone';
-  if(activeCust===c){activeCust=null;if(queue.length){activeCust=queue[0];updateCustUI();}else document.getElementById('cust-info').textContent='Ждём гостей...';}
+  if(activeCust===c){activeCust=null;if(queue.length){activeCust=queue[0];updateCustUI();}else document.getElementById('cafe-active-cust').textContent='Ждём гостей...';}
   updateQueueDisplay();updateHdr();boop();
 }
 
@@ -792,12 +810,13 @@ function updateCustUI(){
   const avail=(S.showcase[activeCust.want]||0)>0;
   const clr=avail?'var(--sage)':'var(--red)';
   const sfx=avail?'':`&nbsp;<span style="color:var(--red)">❌ нет в наличии</span>`;
-  document.getElementById('cust-info').innerHTML=`${activeCust.type.emoji} <b>${activeCust.type.name}</b> хочет: <span style="color:${clr};font-weight:700">${recipeIcon(activeCust.want,16)} ${activeCust.wantName()}</span>${sfx}`;
+  document.getElementById('cafe-active-cust').innerHTML=`${activeCust.type.emoji} <b>${activeCust.type.name}</b> хочет: <span style="color:${clr};font-weight:700">${recipeIcon(activeCust.want,16)} ${activeCust.wantName()}</span>${sfx}`;
 }
 
 function updateQueueDisplay(){
   const el=document.getElementById('queue-display');if(!el)return;
   el.innerHTML='';
+  document.getElementById('queue-lbl').style.display=queue.length?'inline':'none';
   queue.slice(0,5).forEach(c=>{
     const pct=Math.max(0,1-c.waitTime/c.patience);
     const div=document.createElement('div');div.className='q-av'+(pct<.3?' angry':'');
@@ -807,6 +826,31 @@ function updateQueueDisplay(){
   });
   const eating=custs.filter(c=>c.state==='eating').length;
   document.getElementById('eating-info').textContent=eating?`🍽 ${eating} едят`:'';
+  renderSeats();
+}
+
+function renderSeats(){
+  const el=document.getElementById('cafe-seats');if(!el)return;
+  el.innerHTML='';
+  for(let i=0;i<MAX_SEATS;i++){
+    const c=custs.find(x=>x.state==='eating'&&x.seatIdx===i);
+    const div=document.createElement('div');
+    div.className='seat-slot'+(c?' occupied':'');
+    if(c){
+      const pct=Math.round(Math.min(1,c.eatTime/c.eatDur)*100);
+      div.title=`${c.type.name} ест`;
+      div.innerHTML=`${c.type.emoji}<div class="seat-bar" style="--p:${pct}%"></div>`;
+    }else{
+      div.textContent='🪑';div.style.opacity='.4';
+    }
+    el.appendChild(div);
+  }
+}
+
+function renderCafeDecorRow(){
+  const el=document.getElementById('cafe-decor-row');if(!el)return;
+  const map={painting:'🖼',plant:'🪴',lighting:'💡',jazz:'🎵',menu_board:'📋',table:'🟫'};
+  el.innerHTML=Object.keys(map).filter(k=>S.decor[k]).map(k=>map[k]).join(' ');
 }
 
 function addLog(msg,cls=''){
@@ -846,7 +890,7 @@ function doSell(){
   addLog(`+${earned}₽ — ${r.name}${tip>0?` (+${tip}₽ чаев.)`:''}`, 'g');
   updateHdr();renderSidebar();ding();
   if(queue.length){activeCust=queue[0];updateCustUI();}
-  else document.getElementById('cust-info').textContent='Ждём гостей...';
+  else document.getElementById('cafe-active-cust').textContent='Ждём гостей...';
   save();
 }
 
@@ -857,7 +901,7 @@ function rejectCust(){
   queue=queue.filter(x=>x!==c);activeCust=null;
   addLog(`${c.type.emoji} ${c.type.name} ушёл без покупки`);updateHdr();
   if(queue.length){activeCust=queue[0];updateCustUI();}
-  else document.getElementById('cust-info').textContent='Ждём гостей...';
+  else document.getElementById('cafe-active-cust').textContent='Ждём гостей...';
 }
 
 function toggleAuto(){
