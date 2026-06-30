@@ -51,16 +51,24 @@ body{display:flex;flex-direction:column;font-family:'Nunito',sans-serif;backgrou
 
 /* DAY CARD */
 #day-card{background:var(--espresso);color:var(--cream);padding:10px 20px 14px;border-bottom:3px solid var(--caramel)}
-#cafe-scene{background:linear-gradient(180deg,#3a2418 0%,#2c1810 70%,#241208 100%);border-radius:11px;padding:10px 14px;margin-bottom:10px;position:relative;overflow:hidden;border:1px solid rgba(200,135,58,.3)}
-#cafe-decor-row{position:absolute;top:6px;right:10px;font-size:14px;display:flex;gap:6px;opacity:.85}
-#cafe-counter{display:flex;align-items:center;gap:12px;min-height:46px}
-#cafe-counter .counter-icon{font-size:30px}
-#cafe-active-cust{flex:1;font-size:13px;font-weight:600}
-#cafe-seats{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed rgba(245,230,200,.18);flex-wrap:wrap}
-.seat-slot{width:34px;height:34px;border-radius:8px;background:rgba(245,230,200,.07);display:flex;align-items:center;justify-content:center;font-size:18px;position:relative}
-.seat-slot.occupied{background:rgba(200,135,58,.18)}
-.seat-slot .seat-bar{position:absolute;bottom:2px;left:3px;right:3px;height:2px;background:rgba(245,230,200,.2);border-radius:2px;overflow:hidden}
-.seat-slot .seat-bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:var(--p,0%);background:var(--sage)}
+#cafe-scene{position:relative;overflow:hidden;border-radius:13px;margin-bottom:10px;border:1px solid rgba(200,135,58,.35);
+  background:linear-gradient(180deg,#5a3d28 0%,#5a3d28 56%,#7a5435 56%,#6b4a2e 100%);
+  box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
+#cafe-windows{display:flex;gap:18px;padding:10px 16px 0;position:relative;z-index:1}
+.cafe-window{width:56px;height:40px;background:linear-gradient(180deg,#aee4f5,#7ec9e8);border:3px solid #3d2a18;border-radius:3px;position:relative;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.cafe-window::before,.cafe-window::after{content:'';position:absolute;background:#3d2a18}
+.cafe-window::before{left:50%;top:0;bottom:0;width:3px;transform:translateX(-50%)}
+.cafe-window::after{top:50%;left:0;right:0;height:3px;transform:translateY(-50%)}
+#cafe-deco-icons{margin-left:auto;display:flex;gap:8px;align-items:flex-start;font-size:18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+#cafe-counter-bar{display:flex;align-items:center;gap:12px;margin:8px 14px 0;padding:9px 14px;background:linear-gradient(180deg,#3d2a18,#2c1d10);border-radius:10px 10px 4px 4px;border-bottom:4px solid #241509;position:relative;z-index:1;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+#cafe-counter-bar .counter-icon{font-size:28px}
+#cafe-active-cust{flex:1;font-size:13px;font-weight:600;color:var(--cream)}
+.cafe-floor{display:flex;gap:14px;padding:14px 16px 12px;flex-wrap:wrap;position:relative;z-index:1}
+.seat-slot{width:50px;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
+.seat-slot .table-top{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#c9925a,#9c6a3a);border:2px solid #6b4423;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 3px 5px rgba(0,0,0,.3)}
+.seat-slot.occupied .table-top{background:radial-gradient(circle at 35% 30%,#e3b27a,#b5814a)}
+.seat-slot .seat-bar{width:36px;height:3px;background:rgba(0,0,0,.25);border-radius:2px;overflow:hidden}
+.seat-slot .seat-bar::after{content:'';display:block;height:100%;width:var(--p,0%);background:var(--sage)}
 #time-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 #time-lbl{font-size:15px;font-weight:700;color:var(--caramel);min-width:44px}
 #timebar-wrap{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
@@ -216,12 +224,16 @@ body{display:flex;flex-direction:column;font-family:'Nunito',sans-serif;backgrou
       <span id="day-earned-hdr">0 ₽</span>
     </div>
     <div id="cafe-scene">
-      <div id="cafe-decor-row"></div>
-      <div id="cafe-counter">
+      <div id="cafe-windows">
+        <div class="cafe-window"></div>
+        <div class="cafe-window"></div>
+        <div id="cafe-deco-icons"></div>
+      </div>
+      <div id="cafe-counter-bar">
         <div class="counter-icon">☕</div>
         <div id="cafe-active-cust">Ждём первых гостей...</div>
       </div>
-      <div id="cafe-seats"></div>
+      <div id="cafe-seats" class="cafe-floor"></div>
     </div>
     <div id="cust-row">
       <div id="eating-info"></div>
@@ -839,16 +851,16 @@ function renderSeats(){
     if(c){
       const pct=Math.round(Math.min(1,c.eatTime/c.eatDur)*100);
       div.title=`${c.type.name} ест`;
-      div.innerHTML=`${c.type.emoji}<div class="seat-bar" style="--p:${pct}%"></div>`;
+      div.innerHTML=`<div class="table-top">${c.type.emoji}</div><div class="seat-bar" style="--p:${pct}%"></div>`;
     }else{
-      div.textContent='🪑';div.style.opacity='.4';
+      div.innerHTML=`<div class="table-top" style="opacity:.5">🪑</div><div class="seat-bar"></div>`;
     }
     el.appendChild(div);
   }
 }
 
 function renderCafeDecorRow(){
-  const el=document.getElementById('cafe-decor-row');if(!el)return;
+  const el=document.getElementById('cafe-deco-icons');if(!el)return;
   const map={painting:'🖼',plant:'🪴',lighting:'💡',jazz:'🎵',menu_board:'📋',table:'🟫'};
   el.innerHTML=Object.keys(map).filter(k=>S.decor[k]).map(k=>map[k]).join(' ');
 }
